@@ -3,6 +3,8 @@
 
 using namespace ijengine;
 
+#include <ijengine/level_factory.h>
+
 class StrifeOfMythologyLevelFactory : public LevelFactory {
 public:
     Level *make_level(const string& level_id);

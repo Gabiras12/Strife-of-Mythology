@@ -10,6 +10,8 @@ StrifeOfMythology::StrifeOfMythology(const string& title, int w, int h) :
     m_translator.add_translation(SystemEvent(0, SystemEvent::QUIT), GameEvent(GAME_EVENT_QUIT));
     event::register_translator(&m_translator);
     level::register_factory(&m_level_factory);
+
+    resources::set_textures_dir("res");
 }
 
 StrifeOfMythology::~StrifeOfMythology()
@@ -21,5 +23,6 @@ StrifeOfMythology::~StrifeOfMythology()
 int
 StrifeOfMythology::run(const string& level_id)
 {
+printf("aqui\n");
     return m_game.run(level_id);
 }

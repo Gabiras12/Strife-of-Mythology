@@ -8,10 +8,8 @@ StrifeOfMythologyLevelFactory::make_level(const string& level_id)
         return new ColorLevel(255, 0, 0, "green");
     else if (level_id == "green")
         return new ColorLevel(0, 255, 0, "blue");
-    else if (level_id == "blue")
-        return new ColorLevel(0, 0, 255, "red");
-    else
-        return nullptr;
+
+    return nullptr;
 }
 
 void

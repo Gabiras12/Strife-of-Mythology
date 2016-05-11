@@ -2,6 +2,8 @@
 #include "../include/strife_of_mythology.h"
 #include <ijengine/exception.h>
 
+using namespace std;
+
 int main(int argc, char const *argv[])
 {
     int rc;
