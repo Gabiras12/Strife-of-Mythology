@@ -1,49 +1,19 @@
 #include <iostream>
-
-namespace Game {
-  bool init()
-  {
-    return true;
-  }
-
-  void quit()
-  {
-    return;
-  }
-
-  void get_input()
-  {
-    return;
-  }
-
-  void update()
-  {
-    return;
-  }
-
-  void draw()
-  {
-    return;
-  }
-};
-
+#include "../include/strife_of_mythology.h"
+#include <ijengine/exception.h>
 
 int main(int argc, char const *argv[])
 {
-  if (Game::init()) {
-    bool quit = false;
+    int rc;
 
-    quit = true;
-    while (not quit) {
-      Game::get_input();
-      Game::update();
-      Game::draw();
+    try
+    {
+        StrifeOfMythology game("SomTD", 640, 480);
+        rc = game.run("red");
+    } catch (Exception& ex)
+    {
+        cout << ex.what() << endl;
     }
 
-    Game::quit();
-
-  } else {
-    std::cout << "Error at init!" << std::endl;
-  }
-  return 0;
+    return rc;
 }
