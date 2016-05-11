@@ -41,14 +41,14 @@ void
 ColorLevel::draw_self(Canvas *canvas, unsigned, unsigned)
 {
     if (not m_texture)
-        m_texture = resources::get_texture(canvas, "slopeE.png");
+        m_texture = resources::get_texture("slopeE.png");
 
     vector< shared_ptr<Texture> > textures;
 
-    textures.push_back(resources::get_texture(canvas, "slopeE.png"));
-    textures.push_back(resources::get_texture(canvas, "slopeN.png"));
-    textures.push_back(resources::get_texture(canvas, "slopeS.png"));
-    textures.push_back(resources::get_texture(canvas, "slopeW.png"));
+    textures.push_back(resources::get_texture("slopeE.png"));
+    textures.push_back(resources::get_texture("slopeN.png"));
+    textures.push_back(resources::get_texture("slopeS.png"));
+    textures.push_back(resources::get_texture("slopeW.png"));
 
     canvas->clear();
 
@@ -70,9 +70,6 @@ ColorLevel::draw_self(Canvas *canvas, unsigned, unsigned)
                 int text = (i + j) % 4;
                 canvas->draw(textures[text].get(), xs + x0 - m_texture->w() / 2, ys + y0);
             }
-
-        unsigned delay = 3000000;
-        while(delay--);
     }
 }
 
