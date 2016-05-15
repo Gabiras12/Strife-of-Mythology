@@ -23,6 +23,5 @@ StrifeOfMythology::~StrifeOfMythology()
 int
 StrifeOfMythology::run(const string& level_id)
 {
-printf("aqui\n");
     return m_game.run(level_id);
 }
