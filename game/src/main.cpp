@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../include/strife_of_mythology.h"
+#include "../include/game.h"
 #include <ijengine/exception.h>
 
 using namespace std;
@@ -10,9 +10,9 @@ int main(int argc, char const *argv[])
 
     try
     {
-        StrifeOfMythology game("SomTD", 640, 480);
-        rc = game.run("red");
-    } catch (Exception& ex)
+        SoMTD::Game game("SomTD", 640, 480);
+        rc = game.run("map001");
+    } catch (ijengine::Exception& ex)
     {
         cout << ex.what() << endl;
     }
