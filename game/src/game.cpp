@@ -1,6 +1,8 @@
 #include "game.h"
+#include <vector>
 
 #include <ijengine/system_event.h>
+#include <ijengine/keyboard_event.h>
 
 namespace SoMTD {
 
@@ -12,8 +14,11 @@ namespace SoMTD {
         m_translator.add_translation(ijengine::SystemEvent(0, ijengine::SystemEvent::QUIT), ijengine::GameEvent(GAME_EVENT_QUIT));
         ijengine::event::register_translator(&m_translator);
         ijengine::level::register_factory(&m_level_factory);
-
         ijengine::resources::set_textures_dir("res");
+
+        ijengine::KeyboardEvent b_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::B, ijengine::KeyboardEvent::NONE);
+        m_translator.add_translation(b_button_event, ijengine::GameEvent(GAME_EVENT_QUIT));
+
     }
 
     Game::~Game()
