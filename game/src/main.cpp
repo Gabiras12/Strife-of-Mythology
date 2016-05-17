@@ -1,49 +1,21 @@
 #include <iostream>
+#include "../include/game.h"
+#include <ijengine/exception.h>
 
-namespace Game {
-  bool init()
-  {
-    return true;
-  }
-
-  void quit()
-  {
-    return;
-  }
-
-  void get_input()
-  {
-    return;
-  }
-
-  void update()
-  {
-    return;
-  }
-
-  void draw()
-  {
-    return;
-  }
-};
-
+using namespace std;
 
 int main(int argc, char const *argv[])
 {
-  if (Game::init()) {
-    bool quit = false;
+    int rc;
 
-    quit = true;
-    while (not quit) {
-      Game::get_input();
-      Game::update();
-      Game::draw();
+    try
+    {
+        SoMTD::Game game("SomTD", 640, 480);
+        rc = game.run("map001");
+    } catch (ijengine::Exception& ex)
+    {
+        cout << ex.what() << endl;
     }
 
-    Game::quit();
-
-  } else {
-    std::cout << "Error at init!" << std::endl;
-  }
-  return 0;
+    return rc;
 }
