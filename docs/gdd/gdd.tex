@@ -1,0 +1,400 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Thin Sectioned Essay
+% LaTeX Template
+% Version 1.0 (3/8/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original Author:
+% Nicolas Diaz (nsdiaz@uc.cl) with extensive modifications by:
+% Vel (vel@latextemplates.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%   PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt]{article} % Font size (can be 10pt, 11pt or 12pt) and paper size (remove a4paper for US letter paper)
+
+\usepackage[utf8]{inputenc} % Set utf8 code
+\usepackage[protrusion=true,expansion=true]{microtype} % Better typography
+\usepackage[portuguese]{babel}
+\usepackage{graphicx} % Required for including pictures
+\usepackage{wrapfig} % Allows in-line images
+\usepackage[pagebackref]{hyperref}
+
+\usepackage{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Required for accented characters
+
+\usepackage{wallpaper}
+\usepackage[font={color=white,bf},figurename=Fig.,labelfont={it}]{caption}
+\usepackage{lipsum, xcolor, etoolbox, footmisc, bigfoot}
+
+\usepackage{tabu}
+\hypersetup{
+    colorlinks=false,
+    pdfborder={0 0 0},
+}
+
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+
+\linespread{1.05} % Change line spacing here, Palatino benefits from a slight increase by default
+
+\makeatletter
+\renewcommand\@biblabel[1]{\textbf{#1.}} % Change the square brackets for each bibliography item from '[1]' to '1.'
+\renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
+
+\renewcommand{\maketitle}{ % Customize the title - do not edit title and author name here, see the TITLE block below
+
+
+\begin{center} % Right align
+{\LARGE\@title} % Increase the font size of the title
+
+\vspace{20pt} % Some vertical space between the title and author name
+
+\end{center}
+}
+
+\patchcmd{\ps@plain}{\thepage}{\textcolor{white}{\thepage}}{}{}
+\makeatother
+
+\begin{document}
+
+\ThisTileWallPaper{\paperwidth}{\paperheight}{res/wallpaper_header.jpg}
+\color{white}
+\pagestyle{plain}
+\def\footnotelayout{\color{white}}
+\renewcommand\thefootnote{\textcolor{white}{\arabic{footnote}}}
+\begin{titlepage}
+ \vfill
+  \begin{center}
+   {\textbf{{{\Huge  Strife Of Mythology Tower Defense}}}}\\[6cm]
+
+
+   {{\huge Game Design Document}}\\[6cm]
+
+   \hspace{.45\textwidth} %posiciona a minipage
+  \vfill
+
+\vspace{2cm}
+
+\large \textbf{Brasília}
+
+\large \textbf{Abril de 2016}
+\end{center}
+\end{titlepage}
+\newpage
+\color{black}
+\tableofcontents
+
+\newpage
+
+%----------------------------------------------------------------------------------------
+%   DOC BODY
+%----------------------------------------------------------------------------------------
+
+\TileWallPaper{\paperwidth}{\paperheight}{res/wallpaper_body.jpg}
+\color{white}
+
+\section*{Tabela de Revisão}
+
+
+\begin{table}[h]
+
+  \taburulecolor{white}
+  \color{white}
+\begin{tabu}{|l|l|p{60mm}|l|}
+
+\hline 
+\textbf{Versão}     & \textbf{Data}     & \textbf{Descrição}                              			& \textbf{Autor}    \\ \hline
+0.1                 & 05/03/16        & Objetivo / História / Controles                    			& Marcelo Martins     \\ \hline
+0.2                 & 06/03/16        & Requisitos Tecnológicos                            			& Marcelo Martins     \\ \hline
+0.3                 & 13/03/16        & Aplicando correções propostas                      			& Marcelo Martins     \\ \hline
+0.4                 & 12/04/16      & Adição dos Personagens / Refinamento dos itens anteriores   	& Marcelo Martins     \\ \hline
+0.5                 & 29/04/2015        & Rascunho das telas				                   			& Jônntas Lennon     \\ \hline
+0.5                 & 10/05/2015        & telas / Personagens				                   			& Jônntas Lennon     \\ \hline
+
+\end{tabu}
+\end{table}
+
+\newpage
+
+\section{Objetivo do jogo}
+
+O \textit{\textbf{SoMTD}} é um jogo de estilo\textit{ Tower Defense}, onde o objetivo é impedir que as \textit{waves} de monstros avancem pela caminho utilizando torres que atacam estas \textit{waves}, estas torres são pertencentes a três Deuses.
+ A medida em que as \textit{waves} são vencidas, elas ficam mais fortes e difíceis de derrotar. Nisto haverá um recurso que servirá para evoluir e construir novas torres, o qual será obtido conforme os monstros forem derrotados.
+
+\section{Glossário}
+\begin{itemize}
+\item \textbf{Wave}: Inimigos que nascem em conjunto em momentos do jogo.
+\item \textbf{Caminho}: Caminho pré-determinado que será seguido pelas \textit{waves}. Caso um inimigo chegue ao fim da trilha, o jogador sofre uma punição.
+\item \textbf{Tower Defense}: Um estilo de jogo onde um jogador deve impedir unidades inimigas de completarem seu objetivo utilizando torres.
+\item \textbf{Health Point(HP)}: Atributo referente a vida \textit{player}.
+\end{itemize}
+ 
+\section{Conceito do jogo}
+
+As torres pertencem  três Deuses sendo eles:
+\begin{itemize}
+\item Hades.
+\item Zeus.
+\item Poseidom.
+\end{itemize}
+
+Cada Deus terá um conjunto de Torres a seu dispor, divididas em 2 categorias sendo que cada categoria possuirá uma singularidade em relação as demais, possuindo assim vantagens em relação a alguns tipos de monstros e desvantagens em relação a outros tipos de monstros.
+
+Ao iniciar o jogo, o jogador terá uma quantidade de ouro suficiente para adquirir e colocar torres de forma estratégica, tentando evitar a passagem dos inimigos pela trilha, sendo que no início do jogo apenas um tipo de torre por Deus estará disponível, tais torres podem ser evoluídas ao passo que a torre selecionada consiga destruir os monstros. 
+
+A mudança de cenário ocorrerá ao decorrer do jogo, a medida em que as \textit{waves} forem derrotadas o jogador alcançará pontos de performance, que ao completar a barra referente a estes pontos, ocorrerá uma troca de era, havendo assim a mudança de fase e consequentemente de cenário. 
+
+O final do jogo pode-se dar de duas formas:
+
+\begin{enumerate}
+\item O jogador posicionou as torres da forma que ele acreditava ser a forma mais estratégica, contudo não era a melhor forma, e ele não conseguiu suportar a \textit{wave},fazendo com que os inimigos cheguem ao final da trilha, com isso ele irá acumular penalidades, atingindo o máximo de penalidades aparecera a mensagem de \textit{Game Over};
+\item O jogador consegue posicionar as torres da forma mais estratégica, conseguindo assim, suportar todas as \textit{waves} impostas, caso isso ocorra, ele irá receber uma mensagem de \textit{You Win}.
+
+\end{enumerate}
+
+\section{Gameplay}
+
+\subsection{Progressão do Jogo}
+
+\subsection{Timer}
+
+\section{Mecânicas do Jogo}
+
+\subsection{Exploração Vertical}
+
+\subsubsection{Movimentação}
+A movimentação das waves será em um caminho pré-determinado, cabendo ao jogador apenas posicionar as torres com o mouse próxima a esse caminho, não havendo assim movimentação por parte do jogador principal.
+
+\subsubsection{Resolução}
+\newpage
+
+\section{Telas}
+
+\subsection{Recursos}
+
+O jogo contará com 3 recursos distintos para realizar a progressão da base e dos personagens, sendo eles Data, Matéria e Energia.
+
+\subsection{Estrutura}
+
+\section{Personagens}
+
+\section{Saúde}
+
+\section{Telas}
+
+\subsection{Tela de Abertura}
+
+A tela de abertura do jogo dará acesso para outras três telas, que são: \textit{Play Game}, \textit{Options} e \textit{Credits}.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.25]{res/map_example.png}
+\caption{Abertura}
+\label{Abertura}
+\end{figure}
+
+\newpage
+
+\subsection{Tela de Play Game}
+
+A tela de \textit{Play Game} é a tela onde o jogador poderá criar um novo jogo ou carregar algum \textit{slot} salvo anteriormente.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.25]{res/map_example.png}
+\caption{Play Game}
+\label{Play Game}
+\end{figure}
+
+\subsection{Tela de Options}
+
+A tela de \textit{Options} é a tela onde o jogador poderá configurar o volume do e a resolução do jogo da maneira que este achar mais adequado.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.25]{res/map_example.png}
+\caption{Options}
+\label{Options}
+\end{figure}
+
+\subsection{Tela de Credits}
+
+Na tela de \textit{Credits} poderá ser observado o nome e a função dos integrantes do time de desenvolvimento da Tiamat.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.25]{res/map_example.png}
+\caption{Credits}
+\label{Credits}
+\end{figure}
+
+\newpage
+
+\section{Câmera e HUD}
+
+\subsection{Câmera}
+
+A câmera do jogo será 2D estática em um mapa isométrico, como exemplificado pela imagem abaixo.
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.25]{res/map_example.png}
+\caption{Tela Barracks}
+\label{Tela Barracks}
+\end{figure}
+
+\subsection{HUD}
+
+O HUD (Heads-Up Display) será composto de um menu inferior o qual será dividido em três secções,, sendo elas:
+\begin{itemize}
+\item Um circulo contendo o Deus selecionado, ao clicar neste Deus, automaticamente ocorrerá a troca para o próximo Deus.
+\item A direita do circulo tem-se uma barra de HP, que decairá quando as waves atravessarem o caminho, além das informações de gold disponíveis para incrementar as torres.
+\item Finalizando tem-se as informações referentes aos Tiers das torres, associadas aos Deuses.
+\end{itemize}
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.25]{res/map_example.png}
+\caption{Tela Barracks}
+\label{Tela Barracks}
+\end{figure}
+
+Na tela \textit{é apresentado} todos os equipamentos no qual o personagem poderá utilizar durante o combate que se passarão durante a exploração vertical.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.25]{res/map_example.png}
+\caption{Tela Equip}
+\label{Tela Equip}
+\end{figure}
+
+\newpage
+
+\section{Personagens Principais}
+
+\subsection{Deuses}
+\subsection{Torres}
+\subsection{Waves}
+
+
+\section{Colecionáveis}
+
+\section{Esquema de controle e interface com o usuário}
+
+O jogador movimentará somente o mouse, utilizando o mesmo para colocar as torres na posição desejada, sendo que o mesmo seleciona a torre desejada no menu inferior, o mouse indica que a torre foi selecionada, com a torre sobrepondo o cursor do mouse.
+Para indicar o alcance de ataque da torre, um circulo em volta do cursor será formado, caso o local para adicionar a torre sejá inválido este circulo ficará avermelhado.  
+
+
+\begin{figure}
+\begin{center}
+  \includegraphics[scale=0.2]{res/torreSelecionada}\caption{Exemplo de direcionamento de Torres} \quad
+  \includegraphics[scale=0.2]{res/localInvalido.png}\caption{Exemplo posicionamento invalido}  \quad
+  \includegraphics[scale=0.3]{res/mouse.jpg}\caption{Mouse} \quad
+\end{center}
+\end{figure}
+
+\newpage
+
+\section{Front End}
+
+O \textit{Front End} o jogo terá terá cinco telas principais, sendo elas, menu de \textit{Abertura}, \textit{Fases}, \textit{Gameplay} e \textit{Créditos}. A seguir uma representação das telas do jogo.
+
+\subsection{Menu de Abertura}
+Nesta tela haverá quatro opções para o jogador,\textit{New Game} que levará o jogador para a tela de \textit{Gameplay} e \textit{Exit} que fechara o jogo, e \textit{Crédits} para exibição dos créditos.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.4]{res/abertura.png}
+\caption{Exemplo de Abertura}
+\label{Logo da Tiamat}
+\end{figure}
+
+\subsection{Fases}
+Nesta tela o jogador escolhe as fases que desejá jogar, ao inicio do jogo somente a primeira fase encontra-se disponível, para abrir as subsequentes é necessário sobreviver nas fases anteriores.
+
+As fases abertas estarão com uma imagem do mapa visível, já as imagens fechadas estarão cinzas.
+
+Nesta tela, haverá também um ícone para voltar a tela anterior.  
+
+Ao selecionar uma fase, aparecerá uma mensagem pedindo a confirmação da escolha e o jogador será redirecionado para a página de \textit{Gameplay}, caso concorde.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=1]{res/fases.jpg}
+\caption{Exemplo da tela de fases}
+\label{Logo da Tiamat}
+\end{figure}
+
+\subsection{Gameplay}
+Tela principal do jogo, nesta tela tem-se um menu na parte inferior da tela, com as informações do Deus, e das torres, bem como a vida do jogador.
+
+Na parte superior direita haverá um relógio contendo o tempo restante de fase.
+
+Na parte superior central tem-se informações sobre as \textit{waves}.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.8]{res/gameplay.png}
+\caption{Exemplo de Gameplay}
+\label{Logo da Tiamat}
+\end{figure}
+
+\newpage
+
+A logo a seguir o logo dos responsáveis pelo desenvolvimento do jogo.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=1.1]{res/logo.png}
+\caption{Logo da Tiamat}
+\label{Logo da Tiamat}
+\end{figure}
+
+A logo a seguinte representa a API utilizada durante o desenvolvimento.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.3]{res/Sdl-logo.png}
+\caption{Logo da SDL}
+\label{Logo da SDL}
+\end{figure}
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.3]{res/classification.png}
+\caption{Classificação Indicativa}
+\label{Classificação Indicativa}
+\end{figure}
+
+A classificação indicativa definida foi de 12 anos, devido a possíveis traços de violência no jogo, . 
+
+
+\newpage
+
+\section{Requisitos tecnológicos}
+
+\begin{figure}[!htp]
+\begin{center}
+  \includegraphics[scale=0.04]{res/audacity.png} \quad
+  \includegraphics[scale=0.3]{res/adobe_illustrator.png} \quad
+  \includegraphics[scale=0.25]{res/Sdl-logo.png} \quad
+  \includegraphics[scale=0.3]{res/Sublime_Text_Logo.png} \quad
+  \includegraphics[scale=0.2]{res/cpp.png} \quad
+  \includegraphics[scale=0.13]{res/git.png} \quad
+  \includegraphics[scale=0.5]{res/linux.png} \quad
+\caption{Recursos Tecnológicos} \label{gdimotes}
+\end{center}
+\end{figure}
+
+\section*{Informações de contato}
+{\Huge \textbf{strifeofmythology@gmail.com}}
+
+\end{document}
