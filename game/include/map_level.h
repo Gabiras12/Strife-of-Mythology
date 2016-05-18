@@ -16,6 +16,7 @@ namespace SoMTD {
         string next() const;
         int grid[80][80];
         void load_config_from_file();
+        void load_tiles();
 
     protected:
         void update_self(unsigned now, unsigned last);
