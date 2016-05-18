@@ -8,7 +8,8 @@ namespace SoMTD {
         ~Player();
         const int gold();
         int m_gold;
-    private:
+        int m_x;
+        int m_y;
     };
 }
 

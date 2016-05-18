@@ -1,7 +1,7 @@
 #ifndef SOMTD_MAP_LEVEL_H
 #define SOMTD_MAP_LEVEL_H
 
-#include <ijengine/gameobject.h>
+#include <ijengine/game_object.h>
 #include <ijengine/game_events_listener.h>
 #include <ijengine/level.h>
 #include <ijengine/texture.h>

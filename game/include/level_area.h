@@ -1,7 +1,7 @@
 #ifndef SOMTD_LEVEL_AREA_H
 #define SOMTD_LEVEL_AREA_H
 
-#include <ijengine/gameobject.h>
+#include <ijengine/game_object.h>
 #include <ijengine/game_events_listener.h>
 #include <ijengine/texture.h>
 
@@ -10,7 +10,7 @@
 namespace SoMTD {
     class LevelArea : public ijengine::GameObject, public ijengine::GameEventsListener {
     public:
-        LevelArea(std::string texture_name, unsigned id, int x, int y);
+        LevelArea(std::string texture_name, unsigned id, int x, int y, int item_priority = 0);
         ~LevelArea();
 
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);
@@ -26,6 +26,7 @@ namespace SoMTD {
         unsigned m_id;
         int m_start;
         bool m_done;
+        int m_priority;
     };
 }
 
