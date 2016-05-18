@@ -26,10 +26,6 @@ SoMTD::Tower::~Tower()
 bool
 SoMTD::Tower::on_event(const ijengine::GameEvent& event)
 {
-    if (event.type() == 0x04) {
-        add_children(new SoMTD::Tower("tower_42.png", 9, m_x, m_y));
-        return true;
-    }
     return false;
 }
 

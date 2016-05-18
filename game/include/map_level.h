@@ -10,6 +10,8 @@
 #include <memory>
 #include <fstream>
 
+#include "player.h"
+
 namespace SoMTD {
     class MapLevel : public ijengine::Level, public ijengine::GameEventsListener {
     public:
@@ -35,6 +37,7 @@ namespace SoMTD {
 
         std::shared_ptr< ijengine::Texture > m_texture;
         std::pair<int, int> screen_coordinates(int map_x, int map_y, int tw, int th);
+        Player *m_player;
     };
 }
 

@@ -14,14 +14,19 @@
 #include "map_level.h"
 #include "level_area.h"
 #include "tower.h"
+#include "player.h"
 
 SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level) :
     m_done(false),
+    m_player(new Player),
     m_next(next_level),
     m_start(-1),
     m_texture(nullptr),
     m_current(current_level)
 {
+    if (current_level == "map002") {
+        m_player->m_gold = 999999;
+    }
     memset(grid, 0, sizeof grid);
     ijengine::event::register_listener(this);
 
@@ -33,6 +38,7 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level)
 SoMTD::MapLevel::~MapLevel()
 {
     ijengine::event::unregister_listener(this);
+    delete m_player;
 }
 
 void
@@ -141,7 +147,12 @@ bool
 SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
 {
     if (event.type() == 0x04) {
-        add_children(new SoMTD::LevelArea("tower_42.png", 9, m_children.size()-50, 3));
+        if (m_player->m_gold >= 100) {
+            add_children(new SoMTD::LevelArea("tower_42.png", 9, m_children.size()-50, 3));
+            m_player->m_gold -= 100;
+        } else {
+            printf("You need moar gold! (%d)\n", m_player->m_gold);
+        }
         return true;
     } else if (event.type() == 0x08) {
         m_done = true;
