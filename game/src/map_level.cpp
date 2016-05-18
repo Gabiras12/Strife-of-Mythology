@@ -27,6 +27,7 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level)
 
     load_config_from_file();
     load_tiles();
+    load_hud();
 }
 
 SoMTD::MapLevel::~MapLevel()
@@ -102,7 +103,6 @@ SoMTD::MapLevel::load_config_from_file()
     }
 }
 
-
 bool
 SoMTD::MapLevel::done() const
 {
@@ -118,16 +118,14 @@ SoMTD::MapLevel::next() const
 void
 SoMTD::MapLevel::update_self(unsigned now, unsigned)
 {
-    if (m_start == -1)
-        m_start = now;
-    if (now - m_start > 5000)
-        m_done = true;
 }
 
 void
 SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 {
     canvas->clear();
+    std::shared_ptr< ijengine::Texture > hud_texture = ijengine::resources::get_texture("hud.png");
+    canvas->draw(hud_texture.get(), 0, 480-hud_texture.get()->h());
 }
 
 std::pair<int, int>
@@ -145,7 +143,15 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
     if (event.type() == 0x04) {
         add_children(new SoMTD::LevelArea("tower_42.png", 9, m_children.size()-50, 3));
         return true;
+    } else if (event.type() == 0x08) {
+        m_done = true;
+        return true;
     }
     return false;
+}
+
+void
+SoMTD::MapLevel::load_hud()
+{
 }
 

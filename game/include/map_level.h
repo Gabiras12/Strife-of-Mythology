@@ -21,6 +21,7 @@ namespace SoMTD {
         void load_config_from_file();
         void load_tiles();
         bool on_event(const ijengine::GameEvent& event);
+        void load_hud();
 
     protected:
         void update_self(unsigned now, unsigned last);
