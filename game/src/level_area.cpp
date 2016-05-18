@@ -32,7 +32,7 @@ SoMTD::LevelArea::on_event(const ijengine::GameEvent& event)
 void
 SoMTD::LevelArea::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 {
-    std::pair<int, int> p = screen_coordinates(m_x, m_y, m_texture->w(), m_texture->h());
+    std::pair<int, int> p = screen_coordinates(m_x, m_y, 100, 58);
     int x_pos = p.first;
     int y_pos = p.second;
 

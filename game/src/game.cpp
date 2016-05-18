@@ -27,6 +27,18 @@ namespace SoMTD {
         m_translator.add_translation(a_button_event, ijengine::GameEvent(0x04));
         ijengine::KeyboardEvent c_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::C, ijengine::KeyboardEvent::NONE);
         m_translator.add_translation(c_button_event, ijengine::GameEvent(0x08));
+
+        ijengine::KeyboardEvent right_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::RIGHT, ijengine::KeyboardEvent::NONE);
+        m_translator.add_translation(right_button_event, ijengine::GameEvent(16));
+
+        ijengine::KeyboardEvent left_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::LEFT, ijengine::KeyboardEvent::NONE);
+        m_translator.add_translation(left_button_event, ijengine::GameEvent(32));
+
+        ijengine::KeyboardEvent up_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::UP, ijengine::KeyboardEvent::NONE);
+        m_translator.add_translation(up_button_event, ijengine::GameEvent(64));
+
+        ijengine::KeyboardEvent down_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::DOWN, ijengine::KeyboardEvent::NONE);
+        m_translator.add_translation(down_button_event, ijengine::GameEvent(128));
     }
 
     Game::~Game()

@@ -48,7 +48,6 @@ SoMTD::Tower::update_self(unsigned now, unsigned)
         m_start = now;
     if (now - m_start > 5000)
         m_done = true;
-
 }
 
 std::pair<int, int>
