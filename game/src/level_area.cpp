@@ -8,11 +8,13 @@
 
 #include "level_area.h"
 
-SoMTD::LevelArea::LevelArea(std::string texture_name, unsigned id, int x, int y) :
+SoMTD::LevelArea::LevelArea(std::string texture_name, unsigned id, int x, int y, int p) :
     m_id(id),
     m_x(x),
     m_y(y),
-    m_start(-1)
+    m_start(-1),
+    m_priority(p)
+
 {
     m_texture = ijengine::resources::get_texture(texture_name);
     ijengine::event::register_listener(this);

@@ -50,35 +50,35 @@ SoMTD::MapLevel::load_tiles()
         for (int j=0; j < 12; ++j) {
             switch (grid[i][j]) {
                 case 1:
-                    add_children(new SoMTD::LevelArea("slopeE.png", 1, j, i));
+                    add_child(new SoMTD::LevelArea("slopeE.png", 1, j, i, 0));
                 break;
 
                 case 2:
-                    add_children(new SoMTD::LevelArea("slopeN.png", 2, j, i));
+                    add_child(new SoMTD::LevelArea("slopeN.png", 2, j, i, 0));
                 break;
 
                 case 3:
-                    add_children(new SoMTD::LevelArea("slopeW.png", 3, j, i));
+                    add_child(new SoMTD::LevelArea("slopeW.png", 3, j, i, 0));
                 break;
 
                 case 4:
-                    add_children(new SoMTD::LevelArea("slopeS.png", 4, j, i));
+                    add_child(new SoMTD::LevelArea("slopeS.png", 4, j, i, 0));
                 break;
 
                 case 5:
-                    add_children(new SoMTD::LevelArea("waterfallEndE.png", 5, j, i));
+                    add_child(new SoMTD::LevelArea("waterfallEndE.png", 5, j, i, 0));
                 break;
 
                 case 6:
-                    add_children(new SoMTD::LevelArea("waterfallEndN.png", 6, j, i));
+                    add_child(new SoMTD::LevelArea("waterfallEndN.png", 6, j, i, 0));
                 break;
 
                 case 7:
-                    add_children(new SoMTD::LevelArea("waterfallEndW.png", 7, j, i));
+                    add_child(new SoMTD::LevelArea("waterfallEndW.png", 7, j, i, 0));
                 break;
 
                 case 8:
-                    add_children(new SoMTD::LevelArea("waterfallEndS.png", 8, j, i));
+                    add_child(new SoMTD::LevelArea("waterfallEndS.png", 8, j, i, 0));
                 break;
 
                 default:
@@ -163,7 +163,7 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
 
     if (event.type() == 0x04) {
         if (m_player->m_gold >= 100) {
-            add_children(new SoMTD::LevelArea("tower_42.png", 9, m_player->m_x, m_player->m_y));
+            add_child(new SoMTD::LevelArea("tower_42.png", 9, m_player->m_x, m_player->m_y, 150));
             m_player->m_gold -= 100;
         } else {
             printf("You need moar gold! (%d)\n", m_player->m_gold);

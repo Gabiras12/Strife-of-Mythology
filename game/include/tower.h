@@ -1,7 +1,7 @@
 #ifndef SOMTD_TOWER_H
 #define SOMTD_TOWER_H
 
-#include <ijengine/gameobject.h>
+#include <ijengine/game_object.h>
 #include <ijengine/game_events_listener.h>
 #include <ijengine/texture.h>
 
