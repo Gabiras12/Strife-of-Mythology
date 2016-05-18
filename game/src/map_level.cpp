@@ -1,5 +1,7 @@
 #include <vector>
 
+#include "game.h"
+
 #include <ijengine/engine.h>
 #include <ijengine/canvas.h>
 #include <ijengine/rectangle.h>
@@ -11,6 +13,7 @@
 
 #include "map_level.h"
 #include "level_area.h"
+#include "tower.h"
 
 SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level) :
     m_done(false),
@@ -20,9 +23,15 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level)
     m_current(current_level)
 {
     memset(grid, 0, sizeof grid);
+    ijengine::event::register_listener(this);
 
     load_config_from_file();
     load_tiles();
+}
+
+SoMTD::MapLevel::~MapLevel()
+{
+    ijengine::event::unregister_listener(this);
 }
 
 void
@@ -48,19 +57,19 @@ SoMTD::MapLevel::load_tiles()
                 break;
 
                 case 5:
-                    add_children(new SoMTD::LevelArea("waterfallEndE.png", 4, j, i));
+                    add_children(new SoMTD::LevelArea("waterfallEndE.png", 5, j, i));
                 break;
 
                 case 6:
-                    add_children(new SoMTD::LevelArea("waterfallEndN.png", 4, j, i));
+                    add_children(new SoMTD::LevelArea("waterfallEndN.png", 6, j, i));
                 break;
 
                 case 7:
-                    add_children(new SoMTD::LevelArea("waterfallEndW.png", 4, j, i));
+                    add_children(new SoMTD::LevelArea("waterfallEndW.png", 7, j, i));
                 break;
 
                 case 8:
-                    add_children(new SoMTD::LevelArea("waterfallEndS.png", 4, j, i));
+                    add_children(new SoMTD::LevelArea("waterfallEndS.png", 8, j, i));
                 break;
 
                 default:
@@ -128,5 +137,15 @@ SoMTD::MapLevel::screen_coordinates(int map_x, int map_y, int tw, int th)
     int ys = (map_x + map_y) * (th / 2);
 
     return std::pair<int, int>(xs, ys);
+}
+
+bool
+SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
+{
+    if (event.type() == 0x04) {
+        add_children(new SoMTD::LevelArea("tower_42.png", 9, m_children.size()-50, 3));
+        return true;
+    }
+    return false;
 }
 

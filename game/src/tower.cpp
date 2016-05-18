@@ -6,9 +6,9 @@
 #include <ijengine/engine.h>
 #include <ijengine/texture.h>
 
-#include "level_area.h"
+#include "tower.h"
 
-SoMTD::LevelArea::LevelArea(std::string texture_name, unsigned id, int x, int y) :
+SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y) :
     m_id(id),
     m_x(x),
     m_y(y),
@@ -18,19 +18,23 @@ SoMTD::LevelArea::LevelArea(std::string texture_name, unsigned id, int x, int y)
     ijengine::event::register_listener(this);
 }
 
-SoMTD::LevelArea::~LevelArea()
+SoMTD::Tower::~Tower()
 {
     ijengine::event::unregister_listener(this);
 }
 
 bool
-SoMTD::LevelArea::on_event(const ijengine::GameEvent& event)
+SoMTD::Tower::on_event(const ijengine::GameEvent& event)
 {
+    if (event.type() == 0x04) {
+        add_children(new SoMTD::Tower("tower_42.png", 9, m_x, m_y));
+        return true;
+    }
     return false;
 }
 
 void
-SoMTD::LevelArea::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
+SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 {
     std::pair<int, int> p = screen_coordinates(m_x, m_y, m_texture->w(), m_texture->h());
     int x_pos = p.first;
@@ -42,7 +46,7 @@ SoMTD::LevelArea::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 }
 
 void
-SoMTD::LevelArea::update_self(unsigned now, unsigned)
+SoMTD::Tower::update_self(unsigned now, unsigned)
 {
     if (m_start == -1)
         m_start = now;
@@ -52,7 +56,7 @@ SoMTD::LevelArea::update_self(unsigned now, unsigned)
 }
 
 std::pair<int, int>
-SoMTD::LevelArea::screen_coordinates(int map_x, int map_y, int tw, int th)
+SoMTD::Tower::screen_coordinates(int map_x, int map_y, int tw, int th)
 {
     int xs = (map_x - map_y) * (tw / 2);
     int ys = (map_x + map_y) * (th / 2);
