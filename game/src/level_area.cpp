@@ -14,7 +14,6 @@ SoMTD::LevelArea::LevelArea(std::string texture_name, unsigned id, int x, int y,
     m_y(y),
     m_start(-1),
     m_priority(p)
-
 {
     m_texture = ijengine::resources::get_texture(texture_name);
     ijengine::event::register_listener(this);
@@ -41,6 +40,7 @@ SoMTD::LevelArea::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
     // x0 = half of window width, the coeficient for the isometry
     int x0 = 640/2;
     canvas->draw(m_texture.get(), x_pos + x0 - m_texture->w()/2, y_pos);
+    // printf("tile, priority: %d\n", m_priority);
 }
 
 void
@@ -50,7 +50,6 @@ SoMTD::LevelArea::update_self(unsigned now, unsigned)
         m_start = now;
     if (now - m_start > 5000)
         m_done = true;
-
 }
 
 std::pair<int, int>

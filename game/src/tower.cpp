@@ -12,7 +12,8 @@ SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y) :
     m_id(id),
     m_x(x),
     m_y(y),
-    m_start(-1)
+    m_start(-1),
+    m_priority(0)
 {
     m_texture = ijengine::resources::get_texture(texture_name);
     ijengine::event::register_listener(this);
@@ -39,6 +40,7 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
     // x0 = half of window width, the coeficient for the isometry
     int x0 = 640/2;
     canvas->draw(m_texture.get(), x_pos + x0 - m_texture->w()/2, y_pos);
+    // printf("Tower, priority: %d\n", m_priority);
 }
 
 void

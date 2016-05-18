@@ -126,6 +126,7 @@ SoMTD::MapLevel::next() const
 void
 SoMTD::MapLevel::update_self(unsigned now, unsigned)
 {
+
 }
 
 void
@@ -159,14 +160,21 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
     int myx = m_player->m_x;
     int myy = m_player->m_y;
 
-    printf("myx: %d, myy: %d\n", myx, myy);
+    // printf("myx: %d, myy: %d\n", myx, myy);
 
     if (event.type() == 0x04) {
         if (m_player->m_gold >= 100) {
-            add_child(new SoMTD::LevelArea("tower_42.png", 9, m_player->m_x, m_player->m_y, 150));
+            printf("Adicioando torre.\n");
+            SoMTD::Tower *m_tower = new SoMTD::Tower("tower_42.png", 9, m_player->m_x, m_player->m_y);
+            m_tower->set_priority(60000);
+            add_child(m_tower);
             m_player->m_gold -= 100;
+            for (auto it : m_children) {
+                printf(" %d, ", it->priority());
+            }
+            printf("\n");
         } else {
-            printf("You need moar gold! (%d)\n", m_player->m_gold);
+            // printf("You need moar gold! (%d)\n", m_player->m_gold);
         }
         return true;
     } else if (event.type() == 8) {

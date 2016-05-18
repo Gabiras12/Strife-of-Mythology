@@ -10,7 +10,7 @@
 namespace SoMTD {
     class LevelArea : public ijengine::GameObject, public ijengine::GameEventsListener {
     public:
-        LevelArea(std::string texture_name, unsigned id, int x, int y, int item_priority);
+        LevelArea(std::string texture_name, unsigned id, int x, int y, int item_priority = 0);
         ~LevelArea();
 
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);

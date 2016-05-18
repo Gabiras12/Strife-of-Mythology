@@ -26,6 +26,7 @@ namespace SoMTD {
         unsigned m_id;
         int m_start;
         bool m_done;
+        int m_priority;
     };
 }
 
