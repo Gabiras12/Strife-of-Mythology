@@ -32,7 +32,7 @@ SoMTD::MapLevel::load_tiles()
         for (int j=0; j < 12; ++j) {
             switch (grid[i][j]) {
                 case 1:
-                    // add_children(new SoMTD::LevelArea("slopeE.png", 1, j, i));
+                    add_children(new SoMTD::LevelArea("slopeE.png", 1, j, i));
                 break;
 
                 case 2:
@@ -40,11 +40,27 @@ SoMTD::MapLevel::load_tiles()
                 break;
 
                 case 3:
-                    // add_children(new SoMTD::LevelArea("slopeW.png", 3, j, i));
+                    add_children(new SoMTD::LevelArea("slopeW.png", 3, j, i));
                 break;
 
                 case 4:
-                    // add_children(new SoMTD::LevelArea("slopeS.png", 4, j, i));
+                    add_children(new SoMTD::LevelArea("slopeS.png", 4, j, i));
+                break;
+
+                case 5:
+                    add_children(new SoMTD::LevelArea("waterfallEndE.png", 4, j, i));
+                break;
+
+                case 6:
+                    add_children(new SoMTD::LevelArea("waterfallEndN.png", 4, j, i));
+                break;
+
+                case 7:
+                    add_children(new SoMTD::LevelArea("waterfallEndW.png", 4, j, i));
+                break;
+
+                case 8:
+                    add_children(new SoMTD::LevelArea("waterfallEndS.png", 4, j, i));
                 break;
 
                 default:
@@ -57,6 +73,7 @@ SoMTD::MapLevel::load_tiles()
 void
 SoMTD::MapLevel::load_config_from_file()
 {
+    // fetch data from a file with its level id
     if (not m_current.empty()) {
         std::string path("res/");
         path = path.append(m_current);
@@ -64,7 +81,8 @@ SoMTD::MapLevel::load_config_from_file()
 
         std::ifstream map_data(path);
         if (map_data.is_open()) {
-            // 30 is the expected number of tiles per rows and columns
+            // 9 = number of rows
+            // 12 = number of cols
             for (int i=0; i < 9; ++i) {
                 for (int j=0; j < 12; ++j) {
                     map_data >> grid[i][j];
@@ -101,88 +119,6 @@ void
 SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 {
     canvas->clear();
-
-    // int x0 = 640/2;
-    // int y0 = 0;
-    // int xs;
-    // int ys;
-    // std::pair<int, int> p;
-    // for (int i=0; i < 8; ++i) {
-    //     for (int j=0; j < 11; ++j) {
-    //         switch (grid[i][j]) {
-    //             case 1:
-    //                 m_texture = ijengine::resources::get_texture("slopeE.png");
-    //                 p = screen_coordinates(j, i, m_texture->w(), m_texture->h());
-    //                 xs = p.first;
-    //                 ys = p.second;
-    //                 canvas->draw(m_texture.get(), xs + x0 - m_texture->w()/2, ys+y0 );
-    //             break;
-    //
-    //             case 2:
-    //                 m_texture = ijengine::resources::get_texture("slopeN.png");
-    //                 p = screen_coordinates(j, i, m_texture->w(), m_texture->h());
-    //                 xs = p.first;
-    //                 ys = p.second;
-    //                 canvas->draw(m_texture.get(), xs + x0 - m_texture->w()/2, ys+y0 );
-    //             break;
-    //
-    //             case 3:
-    //                 m_texture = ijengine::resources::get_texture("slopeW.png");
-    //                 p = screen_coordinates(j, i, m_texture->w(), m_texture->h());
-    //                 xs = p.first;
-    //                 ys = p.second;
-    //                 canvas->draw(m_texture.get(), xs + x0 - m_texture->w()/2, ys+y0 );
-    //             break;
-    //
-    //             case 4:
-    //                 m_texture = ijengine::resources::get_texture("slopeS.png");
-    //                 p = screen_coordinates(j, i, m_texture->w(), m_texture->h());
-    //                 xs = p.first;
-    //                 ys = p.second;
-    //                 canvas->draw(m_texture.get(), xs + x0 - m_texture->w()/2, ys+y0 );
-    //             break;
-    //
-    //             case 5:
-    //                 m_texture = ijengine::resources::get_texture("waterfallEndE.png");
-    //                 p = screen_coordinates(j, i, m_texture->w(), m_texture->h());
-    //                 xs = p.first;
-    //                 ys = p.second;
-    //                 canvas->draw(m_texture.get(), xs + x0 - m_texture->w()/2, ys+y0 );
-    //             break;
-    //
-    //             case 6:
-    //                 m_texture = ijengine::resources::get_texture("waterfallEndN.png");
-    //                 p = screen_coordinates(j, i, m_texture->w(), m_texture->h());
-    //                 xs = p.first;
-    //                 ys = p.second;
-    //                 canvas->draw(m_texture.get(), xs + x0 - m_texture->w()/2, ys+y0 );
-    //             break;
-    //
-    //             case 7:
-    //                 m_texture = ijengine::resources::get_texture("waterfallEndW.png");
-    //                 p = screen_coordinates(j, i, m_texture->w(), m_texture->h());
-    //                 xs = p.first;
-    //                 ys = p.second;
-    //                 canvas->draw(m_texture.get(), xs + x0 - m_texture->w()/2, ys+y0 );
-    //
-    //             break;
-    //
-    //             case 8:
-    //                 m_texture = ijengine::resources::get_texture("waterfallEndS.png");
-    //                 p = screen_coordinates(j, i, m_texture->w(), m_texture->h());
-    //                 xs = p.first;
-    //                 ys = p.second;
-    //                 canvas->draw(m_texture.get(), xs + x0 - m_texture->w()/2, ys+y0 );
-    //             break;
-    //
-    //
-    //
-    //             default:
-    //             break;
-    //
-    //         }
-    //     }
-    // }
 }
 
 std::pair<int, int>
