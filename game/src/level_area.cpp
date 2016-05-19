@@ -9,13 +9,13 @@
 #include "level_area.h"
 
 SoMTD::LevelArea::LevelArea(std::string texture_name, unsigned id, int x, int y, int p) :
+    m_texture(ijengine::resources::get_texture(texture_name)),
     m_id(id),
     m_x(x),
     m_y(y),
-    m_start(-1),
     m_priority(p)
 {
-    m_texture = ijengine::resources::get_texture(texture_name);
+    m_start = -1;
     ijengine::event::register_listener(this);
 }
 
@@ -25,7 +25,7 @@ SoMTD::LevelArea::~LevelArea()
 }
 
 bool
-SoMTD::LevelArea::on_event(const ijengine::GameEvent& event)
+SoMTD::LevelArea::on_event(const ijengine::GameEvent&)
 {
     return false;
 }

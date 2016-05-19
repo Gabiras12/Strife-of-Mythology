@@ -50,7 +50,6 @@ namespace SoMTD {
     int
     Game::run(const string& level_id)
     {
-        printf("running level %s\n", level_id.c_str());
         return m_game.run(level_id);
     }
 }

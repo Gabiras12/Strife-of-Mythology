@@ -19,11 +19,11 @@ namespace SoMTD {
         std::pair<int, int> screen_coordinates(int map_x, int map_y, int tw, int th);
     private:
         std::shared_ptr<ijengine::Texture> m_texture;
+        unsigned m_id;
         int m_x;
         int m_y;
         int m_w;
         int m_h;
-        unsigned m_id;
         int m_start;
         bool m_done;
         int m_priority;

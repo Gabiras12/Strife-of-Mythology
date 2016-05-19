@@ -15,10 +15,11 @@
 namespace SoMTD {
     class MapLevel : public ijengine::Level, public ijengine::GameEventsListener {
     public:
-        MapLevel(const string& actual_map = "", const string& next_map = "");
+        MapLevel(const string& actual_map = "", const string& next_map = "", const string& audio_path = "");
         ~MapLevel();
         bool done() const;
         string next() const;
+        string audio() const;
         int grid[80][80];
         void load_config_from_file();
         void load_tiles();
@@ -30,14 +31,15 @@ namespace SoMTD {
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);
 
     private:
-        bool m_done;
         std::string m_next;
-        int m_start;
         std::string m_current;
-
-        std::shared_ptr< ijengine::Texture > m_texture;
-        std::pair<int, int> screen_coordinates(int map_x, int map_y, int tw, int th);
+        std::string m_audio_path;
+        bool m_done;
         Player *m_player;
+        int m_start;
+        std::shared_ptr< ijengine::Texture > m_texture;
+
+        std::pair<int, int> screen_coordinates(int map_x, int map_y, int tw, int th);
     };
 }
 

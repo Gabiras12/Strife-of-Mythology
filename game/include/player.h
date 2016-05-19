@@ -6,10 +6,10 @@ namespace SoMTD {
     public:
         Player();
         ~Player();
-        const int gold();
+        int gold() const;
         int m_gold;
-        int m_x;
         int m_y;
+        int m_x;
     };
 }
 

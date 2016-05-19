@@ -15,14 +15,16 @@
 #include "level_area.h"
 #include "tower.h"
 #include "player.h"
+#include "panel.h"
 
-SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level) :
+SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level, const string& audio_file_path) :
+    m_next(next_level),
+    m_current(current_level),
+    m_audio_path(audio_file_path),
     m_done(false),
     m_player(new Player),
-    m_next(next_level),
     m_start(-1),
-    m_texture(nullptr),
-    m_current(current_level)
+    m_texture(nullptr)
 {
     if (current_level == "map002") {
         m_player->m_gold = 999999;
@@ -124,7 +126,7 @@ SoMTD::MapLevel::next() const
 }
 
 void
-SoMTD::MapLevel::update_self(unsigned now, unsigned)
+SoMTD::MapLevel::update_self(unsigned, unsigned)
 {
 
 }
@@ -133,8 +135,6 @@ void
 SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 {
     canvas->clear();
-    std::shared_ptr< ijengine::Texture > hud_texture = ijengine::resources::get_texture("hud.png");
-    canvas->draw(hud_texture.get(), 0, 480-hud_texture.get()->h());
 
     int i = m_player->m_x;
     int j = m_player->m_y;
@@ -165,13 +165,9 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
         if (m_player->m_gold >= 100) {
             SoMTD::Tower *m_tower = new SoMTD::Tower("tower_42.png", 9, m_player->m_x, m_player->m_y);
             add_child(m_tower);
-            m_tower->set_priority(60000);
+            m_tower->set_priority(50000);
             m_player->m_gold -= 100;
             printf("Adicionando torre.\n");
-            for (auto it : m_children) {
-                printf(" %d, ", it->priority());
-            }
-            printf("\n");
         } else {
             printf("You need moar gold! (%d)\n", m_player->m_gold);
         }
@@ -213,5 +209,15 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
 void
 SoMTD::MapLevel::load_hud()
 {
+    std::shared_ptr< ijengine::Texture > hud_texture = ijengine::resources::get_texture("hud.png");
+    SoMTD::Panel *hud_main_panel = new SoMTD::Panel("hud.png", 0, 0, 480-hud_texture->h());
+    hud_main_panel->set_priority(500000);
+
+    add_child(hud_main_panel);
 }
 
+std::string
+SoMTD::MapLevel::audio() const
+{
+    return m_audio_path;
+}
