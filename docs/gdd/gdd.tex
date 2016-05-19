@@ -188,12 +188,6 @@ O jogo contará com 3 recursos distintos para realizar a progressão da base e d
 
 \subsection{Estrutura}
 
-\section{Personagens}
-
-\newpage
-
-\section{Saúde}
-
 \newpage
 
 \section{Câmera e HUD}
@@ -237,13 +231,54 @@ Na tela \textit{é apresentado} todos os equipamentos no qual o personagem poder
 
 \section{Personagens Principais}
 
+Glossário:
+\begin{itemize}
+\item HP - Health Point : refere-se aos pontos de vida.
+\item Def - Defense : refere-se neste contexto, aos pontos de ataques ao monstro, a defesa aqui é o nível de resistência a ataques comuns.
+\item Sp - Speed : refere-se a velocidade com que as waves se movem.
+\end{itemize}
+
 \subsection{Deuses}
+Como dito nas secções anteriores, haverão 3 Deuses:
+
+{\large \textbf{Zeus}}:, sendo um Deus, cujo as torres utilizam predominantemente raios para atacar, possuirá dano maior em inimigos do tipo fly.
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.25]{res/characters/zeus.png}
+\caption{Exemplo de Zeus}
+\label{zeus}
+\end{figure}
+
+{\large \textbf{Poseidon}}: suas torres utilizam o poder das águas para atacar, possuirá dano maior em  inimigos do tipo speed.
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.25]{res/characters/poseidom.png}
+\caption{Exemplo de poseidom}
+\label{poseidom}
+\end{figure}
+
+{\large \textbf{Hades}}: sendo um Deus que utiliza maldições para atacar, possuirá dano maior em inimigos do tipo tanker.
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.25]{res/characters/hades.png}
+\caption{Exemplo de hades}
+\label{satiro}
+\end{figure}
+
 \subsection{Torres}
+Serão duas torres para cada Deus, sendo divididas em dois níveis, para subir de nível e liberar a torre de tier superior é necessário conseguir uma quantia \textit{gold}, hávera também uma torre de tier três, para chegar nesta torre é necessário conseguir acumular uma grande quantia de \textit{gold}. 
+
 \subsection{Waves} 
 
 Haverão diversas \textit{waves}, onde estarão divididas entre 4 categorias, sendo elas normal, tanker, fly e  speed, havendo também um tipo especial de monstro o \textit{Boss}.
 
 \textbf{{ {\large Normal}}} – os inimigos do tipo normal, não terão nenhum beneficio, eles serão \textbf{sátiros}.
+\begin{itemize}
+\item HP - 50
+\item Def - 50
+\item Sp -50
+\end{itemize}
+
 \begin{figure}[!htp]
 \centering
 \includegraphics[scale=0.25]{res/characters/satiro.jpg}
@@ -252,6 +287,12 @@ Haverão diversas \textit{waves}, onde estarão divididas entre 4 categorias, se
 \end{figure}
 
 \textbf{{\large Tanker}} – Os \textit{tankers}, serão inimigos que possuirão um HP mais alto do que os outros monstros, sendo necessário vários ataques para causar danos, eles serão os \textit{cyclops}.
+\begin{itemize}
+\item HP - 150
+\item Def - 50
+\item Sp - 50
+\end{itemize}
+
 \begin{figure}[!htp]
 \centering
 \includegraphics[scale=0.4]{res/characters/cyclops.jpg} \quad
@@ -261,8 +302,18 @@ Haverão diversas \textit{waves}, onde estarão divididas entre 4 categorias, se
 \end{figure}
 
 \textbf{{\large Fly}} – Os \textit{Fly}, serão inimigos que possuirão uma defesa elevada sendo necessário ataques fortes para causar dano, porém mantém um hp normal, estes inimigos são as \textit{harpias}.
+\begin{itemize}
+\item HP - 50
+\item Def - 100
+\item Sp -50
+\end{itemize}
 
 \textbf{{\large Speed}} – Os \textit{Centauros}, serão os inimigos do tipo \textit{speed}, estes possuirão uma alta velocidade, porém um baixo hp.
+\begin{itemize}
+\item HP - 50
+\item Def - 50
+\item Sp -80
+\end{itemize}
 
 \begin{figure}[!htp]
 \centering
@@ -272,6 +323,23 @@ Haverão diversas \textit{waves}, onde estarão divididas entre 4 categorias, se
 \end{figure}
 
 \textbf{{\large Boss}} – Os \textit{Centauros}, o \textit{boss} poderá ser qualquer um dos inimigos anteriores, porém ele irá possuir um tamanho maior do que o de um inimigo comum, além de possuir maior defesa e \textit{HP}.
+\begin{itemize}
+\item HP - 200
+\item Def - 150
+\item Sp - 30
+\end{itemize}
+
+\newpage
+
+\section{Saúde}
+
+O jogador terá uma barra de vida com 50 HP, a qual decairá a medida que os inimigos atravessem o mapa, sendo que cada tipo de inimigo tem uma pontuação diferente, sendo elas.
+\begin{itemize}
+ \item Norma = 2 
+ \item Tanker = 5
+ \item Speed = 3
+ \item Fly = 3
+ \end{itemize} 
 
 \newpage
 
@@ -302,14 +370,13 @@ Um circulo em volta do cursor será formado, para indicar o alcance de ataque da
 
 \section{Front End}
 
-O \textit{Front End} do jogo terá  cinco telas principais, sendo elas, menu de \textit{Abertura}, \textit{Fases}, \textit{Gameplay} e \textit{Créditos} e \textit{Opções}, além de uma tela auxiliar de carregamento \textit{loading screen}. A seguir uma representação das telas do jogo.
+O \textit{Front End} do jogo terá  quatro telas principais, sendo elas, menu de \textit{Abertura}, \textit{Fases}, \textit{Gameplay} e \textit{Créditos}, além de uma tela auxiliar de carregamento \textit{loading screen}. A seguir uma representação das telas do jogo.
 
 \subsection{Tela de Abertura}
-A tela de abertura do jogo dará acesso para outras três telas, que são: \textit{Gameplay}, \textit{Options} e \textit{Credits}.
+A tela de abertura do jogo dará acesso para outras duas telas, que são: \textit{Gameplay} e \textit{Credits}.
 
 Nesta tela haverá a imagem do jogo ao fundo, e um menu com as seguintes opções para o jogador: 
 \textit{Play Game} que levará o jogador para a tela de \textit{Gameplay}.
-\textit{Opções} redireciona o jogador para a tela de opções.
 \textit{Crédits} para exibição dos créditos.
 \textit{Exit} que fechara o jogo.
 
@@ -340,7 +407,12 @@ Ao selecionar uma fase, aparecerá uma mensagem pedindo a confirmação da escol
 
 \subsection{Tela de Gameplay}
 
-Tela principal do jogo, nesta tela tem-se um menu na parte inferior da tela, com as informações do Deus, e das torres, bem como a vida do jogador.
+Tela principal do jogo, nesta tela tem-se um menu na parte inferior da tela, com as informações do Deus no quadro inferior esquerdo, ao clicar no Deus sua torre é selecionada e aparece no quadro inferior direito.
+No quadro inferior central tem-se as informações sobre as torres, sendo que as torres disponíveis ficam com a imagem da torre visível já as torres indisponíveis ficam com um "\textbf{x}", há também um pequeno quadro indicando quanto de \textit{gold} falta para evoluir a torre e liberar o próximo tier.
+
+Para adicionar uma nova torre o jogador deverá clicar na torre no box inferior direito e arrasta-lá no mapa até a posição desejado.
+
+O mapa fica no centro da tela, ocupando o máximo de área possível.
 
 Na parte superior direita haverá um relógio contendo o tempo restante de fase.
 
@@ -348,34 +420,14 @@ Na parte superior central tem-se informações sobre as \textit{waves}.
 
 \begin{figure}[!htp]
 \centering
-\includegraphics[scale=0.8]{res/gameplay.png}
+\includegraphics[scale=0.5]{res/gameplay.jpg}
 \caption{Exemplo de Gameplay}
-\end{figure}
-
-\newpage
-
-\subsection{Tela de Opções}
-
-Na tela de \textit{Opções} o jogador poderá alterar as configurações de volume e tamanho da tela.
-
-\begin{figure}[!htp]
-\centering
-\includegraphics[scale=0.25]{res/map_example.png}
-\caption{Tela de Opções}
-\label{Tela de Opções}
 \end{figure}
 
 \newpage
 \subsection{Tela de Créditos}
 
 Na tela de \textit{Cr} exibe-se o nome e a função de cada um dos integrantes da equipe, sendo de \textit{Desnvolvimento}, \textit{artes} e \textit{música}.
-
-\begin{figure}[!htp]
-\centering
-\includegraphics[scale=0.25]{res/map_example.png}
-\caption{Credits}
-\label{Credits}
-\end{figure}
 
 \newpage
 
