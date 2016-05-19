@@ -118,7 +118,10 @@
 0.3                 & 13/03/16        & Aplicando correções propostas                      			& Marcelo Martins     \\ \hline
 0.4                 & 12/04/16      & Adição dos Personagens / Refinamento dos itens anteriores   	& Marcelo Martins     \\ \hline
 0.5                 & 29/04/2015        & Rascunho das telas				                   			& Jônntas Lennon     \\ \hline
-0.5                 & 10/05/2015        & telas / Personagens				                   			& Jônntas Lennon     \\ \hline
+0.6                 & 10/05/2015        & telas / Personagens				                   			& Jônntas Lennon     \\ \hline
+0.7                 & 18/05/2015        & Economia				                   			& Jônntas e Marcelo     \\ \hline
+0.8                 & 18/05/2015        & Personagens				                   			& Jônntas e Marcelo     \\ \hline
+
 
 \end{tabu}
 \end{table}
@@ -167,6 +170,8 @@ O final do jogo pode-se dar de duas formas:
 
 \subsection{Timer}
 
+\newpage
+
 \section{Mecânicas do Jogo}
 
 \subsection{Exploração Vertical}
@@ -177,8 +182,6 @@ A movimentação das waves será em um caminho pré-determinado, cabendo ao joga
 \subsubsection{Resolução}
 \newpage
 
-\section{Telas}
-
 \subsection{Recursos}
 
 O jogo contará com 3 recursos distintos para realizar a progressão da base e dos personagens, sendo eles Data, Matéria e Energia.
@@ -187,55 +190,9 @@ O jogo contará com 3 recursos distintos para realizar a progressão da base e d
 
 \section{Personagens}
 
-\section{Saúde}
-
-\section{Telas}
-
-\subsection{Tela de Abertura}
-
-A tela de abertura do jogo dará acesso para outras três telas, que são: \textit{Play Game}, \textit{Options} e \textit{Credits}.
-
-\begin{figure}[!htp]
-\centering
-\includegraphics[scale=0.25]{res/map_example.png}
-\caption{Abertura}
-\label{Abertura}
-\end{figure}
-
 \newpage
 
-\subsection{Tela de Play Game}
-
-A tela de \textit{Play Game} é a tela onde o jogador poderá criar um novo jogo ou carregar algum \textit{slot} salvo anteriormente.
-
-\begin{figure}[!htp]
-\centering
-\includegraphics[scale=0.25]{res/map_example.png}
-\caption{Play Game}
-\label{Play Game}
-\end{figure}
-
-\subsection{Tela de Options}
-
-A tela de \textit{Options} é a tela onde o jogador poderá configurar o volume do e a resolução do jogo da maneira que este achar mais adequado.
-
-\begin{figure}[!htp]
-\centering
-\includegraphics[scale=0.25]{res/map_example.png}
-\caption{Options}
-\label{Options}
-\end{figure}
-
-\subsection{Tela de Credits}
-
-Na tela de \textit{Credits} poderá ser observado o nome e a função dos integrantes do time de desenvolvimento da Tiamat.
-
-\begin{figure}[!htp]
-\centering
-\includegraphics[scale=0.25]{res/map_example.png}
-\caption{Credits}
-\label{Credits}
-\end{figure}
+\section{Saúde}
 
 \newpage
 
@@ -247,24 +204,24 @@ A câmera do jogo será 2D estática em um mapa isométrico, como exemplificado 
 \begin{figure}[!htp]
 \centering
 \includegraphics[scale=0.25]{res/map_example.png}
-\caption{Tela Barracks}
+\caption{Tela Câmera}
 \label{Tela Barracks}
 \end{figure}
 
 \subsection{HUD}
 
-O HUD (Heads-Up Display) será composto de um menu inferior o qual será dividido em três secções,, sendo elas:
+O HUD (Heads-Up Display) será composto de um menu inferior o qual será dividido em três secções, sendo elas:
 \begin{itemize}
 \item Um circulo contendo o Deus selecionado, ao clicar neste Deus, automaticamente ocorrerá a troca para o próximo Deus.
-\item A direita do circulo tem-se uma barra de HP, que decairá quando as waves atravessarem o caminho, além das informações de gold disponíveis para incrementar as torres.
-\item Finalizando tem-se as informações referentes aos Tiers das torres, associadas aos Deuses.
+\item A direita do circulo tem-se uma barra de HP, que decairá quando as \textit{waves} atravessarem o caminho, além das informações de gold disponíveis para incrementar as torres.
+\item Finalizando tem-se as informações referentes aos \textit{Tiers} das torres, associadas aos Deuses.
 \end{itemize}
 
 \begin{figure}[!htp]
 \centering
 \includegraphics[scale=0.25]{res/map_example.png}
-\caption{Tela Barracks}
-\label{Tela Barracks}
+\caption{Hud}
+\label{HUD}
 \end{figure}
 
 Na tela \textit{é apresentado} todos os equipamentos no qual o personagem poderá utilizar durante o combate que se passarão durante a exploração vertical.
@@ -282,42 +239,88 @@ Na tela \textit{é apresentado} todos os equipamentos no qual o personagem poder
 
 \subsection{Deuses}
 \subsection{Torres}
-\subsection{Waves}
+\subsection{Waves} 
 
+Haverão diversas \textit{waves}, onde estarão divididas entre 4 categorias, sendo elas normal, tanker, fly e  speed, havendo também um tipo especial de monstro o \textit{Boss}.
 
-\section{Colecionáveis}
+\textbf{{ {\large Normal}}} – os inimigos do tipo normal, não terão nenhum beneficio, eles serão \textbf{sátiros}.
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.25]{res/characters/satiro.jpg}
+\caption{Exemplo de sátiro}
+\label{satiro}
+\end{figure}
+
+\textbf{{\large Tanker}} – Os \textit{tankers}, serão inimigos que possuirão um HP mais alto do que os outros monstros, sendo necessário vários ataques para causar danos, eles serão os \textit{cyclops}.
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.4]{res/characters/cyclops.jpg} \quad
+\includegraphics[scale=0.7]{res/characters/harpia.png}
+\caption{Exemplo de cyclops e harpia}
+\label{cyclops}
+\end{figure}
+
+\textbf{{\large Fly}} – Os \textit{Fly}, serão inimigos que possuirão uma defesa elevada sendo necessário ataques fortes para causar dano, porém mantém um hp normal, estes inimigos são as \textit{harpias}.
+
+\textbf{{\large Speed}} – Os \textit{Centauros}, serão os inimigos do tipo \textit{speed}, estes possuirão uma alta velocidade, porém um baixo hp.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.6]{res/characters/centauro.jpg}
+\caption{Exemplo de centauros}
+\label{cyclops}
+\end{figure}
+
+\textbf{{\large Boss}} – Os \textit{Centauros}, o \textit{boss} poderá ser qualquer um dos inimigos anteriores, porém ele irá possuir um tamanho maior do que o de um inimigo comum, além de possuir maior defesa e \textit{HP}.
+
+\newpage
+
+\section{Economia}
+
+A única remuneração do jogo será em \textit{gold}, o qual terá como intuito incrementar as torres.  
+
+Toda pontuação do jogador será obtido através dos monstros derrotados, quanto mais forte for o inimigo  maior será a recompensa em ouro, sendo que cada um dos monstros possuem uma pontuação diferente.
+
+No inicio do jogo, tem-se disponível a quantia de ouro suficiente para a compra de somente duas torres, que podem ser de qualquer um dos Deuses.  
+
+O \textit{gold} será representado por um imagem de ouro e uma quantia ao lado da imagem, essa representação será posicionada no canto superior direito da tela.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=1.25]{res/gold.png}
+\caption{Gold}
+\label{Tela Equip}
+\end{figure}
 
 \section{Esquema de controle e interface com o usuário}
 
 O jogador movimentará somente o mouse, utilizando o mesmo para colocar as torres na posição desejada, sendo que o mesmo seleciona a torre desejada no menu inferior, o mouse indica que a torre foi selecionada, com a torre sobrepondo o cursor do mouse.
-Para indicar o alcance de ataque da torre, um circulo em volta do cursor será formado, caso o local para adicionar a torre sejá inválido este circulo ficará avermelhado.  
 
-
-\begin{figure}
-\begin{center}
-  \includegraphics[scale=0.2]{res/torreSelecionada}\caption{Exemplo de direcionamento de Torres} \quad
-  \includegraphics[scale=0.2]{res/localInvalido.png}\caption{Exemplo posicionamento invalido}  \quad
-  \includegraphics[scale=0.3]{res/mouse.jpg}\caption{Mouse} \quad
-\end{center}
-\end{figure}
+Um circulo em volta do cursor será formado, para indicar o alcance de ataque da torre, caso o local para adicionar a torre sejá inválido este circulo ficará avermelhado.  
 
 \newpage
 
 \section{Front End}
 
-O \textit{Front End} o jogo terá terá cinco telas principais, sendo elas, menu de \textit{Abertura}, \textit{Fases}, \textit{Gameplay} e \textit{Créditos}. A seguir uma representação das telas do jogo.
+O \textit{Front End} do jogo terá  cinco telas principais, sendo elas, menu de \textit{Abertura}, \textit{Fases}, \textit{Gameplay} e \textit{Créditos} e \textit{Opções}, além de uma tela auxiliar de carregamento \textit{loading screen}. A seguir uma representação das telas do jogo.
 
-\subsection{Menu de Abertura}
-Nesta tela haverá quatro opções para o jogador,\textit{New Game} que levará o jogador para a tela de \textit{Gameplay} e \textit{Exit} que fechara o jogo, e \textit{Crédits} para exibição dos créditos.
+\subsection{Tela de Abertura}
+A tela de abertura do jogo dará acesso para outras três telas, que são: \textit{Gameplay}, \textit{Options} e \textit{Credits}.
+
+Nesta tela haverá a imagem do jogo ao fundo, e um menu com as seguintes opções para o jogador: 
+\textit{Play Game} que levará o jogador para a tela de \textit{Gameplay}.
+\textit{Opções} redireciona o jogador para a tela de opções.
+\textit{Crédits} para exibição dos créditos.
+\textit{Exit} que fechara o jogo.
 
 \begin{figure}[!htp]
 \centering
 \includegraphics[scale=0.4]{res/abertura.png}
 \caption{Exemplo de Abertura}
-\label{Logo da Tiamat}
+\label{Abertura}
 \end{figure}
 
-\subsection{Fases}
+\subsection{Tela de Fases}
 Nesta tela o jogador escolhe as fases que desejá jogar, ao inicio do jogo somente a primeira fase encontra-se disponível, para abrir as subsequentes é necessário sobreviver nas fases anteriores.
 
 As fases abertas estarão com uma imagem do mapa visível, já as imagens fechadas estarão cinzas.
@@ -330,10 +333,13 @@ Ao selecionar uma fase, aparecerá uma mensagem pedindo a confirmação da escol
 \centering
 \includegraphics[scale=1]{res/fases.jpg}
 \caption{Exemplo da tela de fases}
-\label{Logo da Tiamat}
+\label{Fases}
 \end{figure}
 
-\subsection{Gameplay}
+\newpage
+
+\subsection{Tela de Gameplay}
+
 Tela principal do jogo, nesta tela tem-se um menu na parte inferior da tela, com as informações do Deus, e das torres, bem como a vida do jogador.
 
 Na parte superior direita haverá um relógio contendo o tempo restante de fase.
@@ -344,18 +350,43 @@ Na parte superior central tem-se informações sobre as \textit{waves}.
 \centering
 \includegraphics[scale=0.8]{res/gameplay.png}
 \caption{Exemplo de Gameplay}
-\label{Logo da Tiamat}
 \end{figure}
 
 \newpage
 
-A logo a seguir o logo dos responsáveis pelo desenvolvimento do jogo.
+\subsection{Tela de Opções}
+
+Na tela de \textit{Opções} o jogador poderá alterar as configurações de volume e tamanho da tela.
 
 \begin{figure}[!htp]
 \centering
+\includegraphics[scale=0.25]{res/map_example.png}
+\caption{Tela de Opções}
+\label{Tela de Opções}
+\end{figure}
+
+\newpage
+\subsection{Tela de Créditos}
+
+Na tela de \textit{Cr} exibe-se o nome e a função de cada um dos integrantes da equipe, sendo de \textit{Desnvolvimento}, \textit{artes} e \textit{música}.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.25]{res/map_example.png}
+\caption{Credits}
+\label{Credits}
+\end{figure}
+
+\newpage
+
+\subsection{Logo}
+
+A logo a seguir o logo do SomTD].
+\begin{figure}[!htp]
+\centering
 \includegraphics[scale=1.1]{res/logo.png}
-\caption{Logo da Tiamat}
-\label{Logo da Tiamat}
+\caption{Logo do SomTD}
+\label{Logo do SomTD}
 \end{figure}
 
 A logo a seguinte representa a API utilizada durante o desenvolvimento.
