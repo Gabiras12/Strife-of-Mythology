@@ -10,7 +10,7 @@ int main()
 
     try
     {
-        SoMTD::Game game("SomTD", 640, 480);
+        SoMTD::Game game("SomTD", 1024, 700);
         rc = game.run("map001");
     } catch (ijengine::Exception& ex)
     {

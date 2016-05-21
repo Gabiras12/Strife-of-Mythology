@@ -48,8 +48,8 @@ SoMTD::MapLevel::~MapLevel()
 void
 SoMTD::MapLevel::load_tiles()
 {
-    for (int i=0; i < 9; ++i) {
-        for (int j=0; j < 12; ++j) {
+    for (int i=0; i < 10; ++i) {
+        for (int j=0; j < 10; ++j) {
             switch (grid[i][j]) {
                 case 1:
                     add_child(new SoMTD::LevelArea("slopeE.png", 1, j, i, 0));
@@ -72,7 +72,7 @@ SoMTD::MapLevel::load_tiles()
                 break;
 
                 case 6:
-                    add_child(new SoMTD::LevelArea("waterfallEndN.png", 6, j, i, 0));
+                    add_child(new SoMTD::LevelArea("tile_grama.png", 6, j, i, 0));
                 break;
 
                 case 7:
@@ -103,8 +103,8 @@ SoMTD::MapLevel::load_config_from_file()
         if (map_data.is_open()) {
             // 9 = number of rows
             // 12 = number of cols
-            for (int i=0; i < 9; ++i) {
-                for (int j=0; j < 12; ++j) {
+            for (int i=0; i < 10; ++i) {
+                for (int j=0; j < 10; ++j) {
                     map_data >> grid[i][j];
                 }
             }
@@ -210,7 +210,7 @@ void
 SoMTD::MapLevel::load_hud()
 {
     std::shared_ptr< ijengine::Texture > hud_texture = ijengine::resources::get_texture("hud.png");
-    SoMTD::Panel *hud_main_panel = new SoMTD::Panel("hud.png", 0, 0, 480-hud_texture->h());
+    SoMTD::Panel *hud_main_panel = new SoMTD::Panel("hud.png", 0, 0, 700-hud_texture->h());
     hud_main_panel->set_priority(500000);
 
     add_child(hud_main_panel);

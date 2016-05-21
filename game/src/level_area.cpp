@@ -38,8 +38,9 @@ SoMTD::LevelArea::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
     int y_pos = p.second;
 
     // x0 = half of window width, the coeficient for the isometry
-    int x0 = 640/2;
-    canvas->draw(m_texture.get(), x_pos + x0 - m_texture->w()/2, y_pos);
+    int x0 = 1024/2;
+    int y0 = 29;
+    canvas->draw(m_texture.get(), x_pos + x0 - m_texture->w()/2, y_pos + y0);
     // printf("tile, priority: %d\n", m_priority);
 }
 
