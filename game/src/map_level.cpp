@@ -17,6 +17,7 @@
 #include "player.h"
 #include "panel.h"
 #include "texture_bar.h"
+#include "button.h"
 
 SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level, const string& audio_file_path) :
     m_next(next_level),
@@ -151,9 +152,6 @@ SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
     } else if (m_player->state == 0x04) {
         highlight_area = ijengine::resources::get_texture("not_enough_gold.png");
     }
-    canvas->draw(highlight_area.get(), 1024 - highlight_area->w(), 150);
-    ijengine::Rectangle rect { 15, 15, 173, 26 };
-    canvas->draw(rect);
 }
 
 std::pair<int, int>
@@ -237,6 +235,35 @@ SoMTD::MapLevel::load_hud()
     SoMTD::Panel *coins_panel = new SoMTD::Panel("coins_panel.png", 0, 1024-hud_texture->w()-25, 10);
     coins_panel->set_priority(500000);
     add_child(coins_panel);
+
+    hud_texture = ijengine::resources::get_texture("hero_button.png");
+    SoMTD::Button *button1 = new SoMTD::Button("hero_button.png", 0, 20, 600, "hero_button_mouseover.png");
+    button1->set_priority(500100);
+    add_child(button1);
+    
+    hud_texture = ijengine::resources::get_texture("hero_button.png");
+    SoMTD::Button *button2 = new SoMTD::Button("hero_button.png", 0, 20+hud_texture->w(), 600, "hero_button_mouseover.png");
+    button2->set_priority(500100);
+    add_child(button2);
+
+    SoMTD::Button *button3 = new SoMTD::Button("hero_button.png", 0, 20+hud_texture->w()*2, 600, "hero_button_mouseover.png");
+    button3->set_priority(500100);
+    add_child(button3);
+
+    hud_texture = ijengine::resources::get_texture("zeus_panel.png");
+    SoMTD::Panel *zeus_panel = new SoMTD::Panel("zeus_panel.png", 0, 30, 615);
+    zeus_panel->set_priority(500200);
+    add_child(zeus_panel);
+
+    hud_texture = ijengine::resources::get_texture("poseidon_panel.png");
+    SoMTD::Panel *poseidon_panel = new SoMTD::Panel("poseidon_panel.png", 0, 30+72, 605);
+    poseidon_panel->set_priority(500200);
+    add_child(poseidon_panel);
+
+    hud_texture = ijengine::resources::get_texture("hades_panel.png");
+    SoMTD::Panel *hades_panel = new SoMTD::Panel("hades_panel.png", 0, 30+2*70, 610);
+    hades_panel->set_priority(500200);
+    add_child(hades_panel);
 }
 
 std::string
