@@ -28,40 +28,39 @@ SoMTD::LevelArea::~LevelArea()
 bool
 SoMTD::LevelArea::on_event(const ijengine::GameEvent& event)
 {
-    if (event.id() == SoMTD::BUILD_TOWER) {
-    }
     return false;
 }
 
 void
 SoMTD::LevelArea::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 {
-    std::pair<int, int> p = screen_coordinates(m_x, m_y, 100, 58);
+    int myw = m_texture->w();
+    int myh = m_texture->h();
+
+    std::pair<int, int> p = screen_coordinates(m_x, m_y, myw/2, myh/2);
     int x_pos = p.first;
     int y_pos = p.second;
 
     // x0 = half of window width, the coeficient for the isometry
     int x0 = 1024/2;
-    int y0 = 29;
-    canvas->draw(m_texture.get(), x_pos + x0 - m_texture->w()/2, y_pos + y0);
-    // printf("tile, priority: %d\n", m_priority);
+    const int block_offset_region = 11;
+    canvas->draw(m_texture.get(), x_pos+x0 - m_texture->w()/2, y_pos-(block_offset_region*m_y)-(block_offset_region*m_x));
 }
 
 void
 SoMTD::LevelArea::update_self(unsigned now, unsigned)
 {
-    if (m_start == -1)
-        m_start = now;
-    if (now - m_start > 5000)
-        m_done = true;
+    // if (m_start == -1)
+    //     m_start = now;
+    // if (now - m_start > 5000)
+    //     m_done = true;
 }
 
 std::pair<int, int>
 SoMTD::LevelArea::screen_coordinates(int map_x, int map_y, int tw, int th)
 {
-    int xs = (map_x - map_y) * (tw / 2);
-    int ys = (map_x + map_y) * (th / 2);
-
+    int xs = (map_x - map_y) * tw;
+    int ys = (map_x + map_y) * th;;
     return std::pair<int, int>(xs, ys);
 }
 

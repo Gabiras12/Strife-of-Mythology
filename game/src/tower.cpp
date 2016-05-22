@@ -33,13 +33,20 @@ SoMTD::Tower::on_event(const ijengine::GameEvent&)
 void
 SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 {
-    std::pair<int, int> p = screen_coordinates(m_x, m_y, m_texture->w(), m_texture->h());
+    const int myw = 100;
+    const int myh = 81;
+
+    std::pair<int, int> p = screen_coordinates(m_x, m_y, myw, myh);
     int x_pos = p.first;
     int y_pos = p.second;
+    // printf("x_pos: %d, y_pos: %d\n", x_pos, y_pos);
 
     // x0 = half of window width, the coeficient for the isometry
-    int x0 = 640/2;
-    canvas->draw(m_texture.get(), x_pos + x0 - m_texture->w()/2, y_pos);
+    int x0 = 1024/2;
+    // canvas->draw(m_texture.get(), x_pos+x0-((m_y+m_x)*11), y_pos-(11*(m_x-m_y)));
+
+    canvas->draw(m_texture.get(), x_pos+x0 - myw/2, -myh/2+y_pos-11*(m_y)-11*(m_x));
+    // canvas->draw(m_texture.get(), x_pos + x0 - myw/2, y_pos - myh/2);
 }
 
 void

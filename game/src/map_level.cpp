@@ -163,18 +163,30 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
         if (m_player->state == 0x01) {
             double x_pos = event.get_property<double>("x");
             double y_pos = event.get_property<double>("y");
-            if (m_player->m_gold >= 100) {
-                printf("x: %f, y: %f\n", x_pos, y_pos);
-                SoMTD::Tower *m_tower = new SoMTD::Tower("tower_42.png", 9, x_pos/89, y_pos/100);
-                add_child(m_tower);
-                m_tower->set_priority(50000);
-                m_player->m_gold -= 100;
-                printf("Adicionando torre.\n");
-            } else {
-                printf("You need moar gold! (%d)\n", m_player->m_gold);
+
+            int const tile_width = 100;
+            int const h_tw = tile_width/2;
+            int const tile_height = 81+11;
+            int const h_th = tile_height/2;
+            int const x0 = 1024/2;
+            int const offset = 11;
+
+            myx =  (((x_pos+h_tw-x0)/h_tw)+((y_pos)/(h_th-offset)))/2;
+            myy = (((y_pos)/(h_th-offset)) - ((x_pos+h_tw-x0)/h_tw))/2;
+
+            if (myx >= 0 && myy >= 0 && grid[myy][myx] < 8 && myx < 10 && myy < 10) {
+                if (m_player->m_gold >= 100) {
+                    grid[myy][myx] = 88;
+                    SoMTD::Tower *m_tower = new SoMTD::Tower("tower_42.png", 9, myx, myy);
+                    add_child(m_tower);
+                    m_tower->set_priority(50000+(5*myy+5*myx));
+                    m_player->m_gold -= 100;
+                } else {
+                    printf("You need moar gold! (%d)\n", m_player->m_gold);
+                }
+                m_player->state = 0x00;
+                return true;
             }
-            m_player->state = 0x00;
-            return true;
         }
     }
 
