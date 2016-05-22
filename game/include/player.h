@@ -10,6 +10,7 @@ namespace SoMTD {
         int m_gold;
         int m_y;
         int m_x;
+        int state;
     };
 }
 

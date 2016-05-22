@@ -10,7 +10,7 @@ namespace SoMTD {
         m_engine(),
         m_level_factory()
     {
-        m_translator.add_translation(ijengine::SystemEvent(0, ijengine::SystemEvent::QUIT), ijengine::GameEvent(GAME_EVENT_QUIT));
+        // m_translator.translate(ijengine::SystemEvent(0, ijengine::SystemEvent::QUIT), ijengine::game_event::QUIT);
 
         load_keyboard_translations();
         ijengine::event::register_translator(&m_translator);
@@ -21,24 +21,28 @@ namespace SoMTD {
     void
     Game::load_keyboard_translations()
     {
-        ijengine::KeyboardEvent b_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::B, ijengine::KeyboardEvent::NONE);
-        m_translator.add_translation(b_button_event, ijengine::GameEvent(GAME_EVENT_QUIT));
-        ijengine::KeyboardEvent a_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::A, ijengine::KeyboardEvent::NONE);
-        m_translator.add_translation(a_button_event, ijengine::GameEvent(0x04));
-        ijengine::KeyboardEvent c_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::C, ijengine::KeyboardEvent::NONE);
-        m_translator.add_translation(c_button_event, ijengine::GameEvent(0x08));
+        ijengine::KeyboardEvent a_button_event(1, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::A, ijengine::KeyboardEvent::NONE);
+        ijengine::GameEvent ge(16);
+        m_translator.translate(ge, a_button_event);
+        //
+        // ijengine::KeyboardEvent c_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::C, ijengine::KeyboardEvent::NONE);
+        // ijengine::GameEvent ga(0x08);
+        // m_translator.translate(ge, c_button_event);
 
-        ijengine::KeyboardEvent right_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::RIGHT, ijengine::KeyboardEvent::NONE);
-        m_translator.add_translation(right_button_event, ijengine::GameEvent(16));
-
-        ijengine::KeyboardEvent left_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::LEFT, ijengine::KeyboardEvent::NONE);
-        m_translator.add_translation(left_button_event, ijengine::GameEvent(32));
-
-        ijengine::KeyboardEvent up_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::UP, ijengine::KeyboardEvent::NONE);
-        m_translator.add_translation(up_button_event, ijengine::GameEvent(64));
-
-        ijengine::KeyboardEvent down_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::DOWN, ijengine::KeyboardEvent::NONE);
-        m_translator.add_translation(down_button_event, ijengine::GameEvent(128));
+        // ijengine::KeyboardEvent c_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::C, ijengine::KeyboardEvent::NONE);
+        // m_translator.translate(ijengine::GameEvent(0x08), &c_button_event);
+        //
+        // ijengine::KeyboardEvent right_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::RIGHT, ijengine::KeyboardEvent::NONE);
+        // m_translator.translate(ijengine::GameEvent(16), &right_button_event);
+        //
+        // ijengine::KeyboardEvent left_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::LEFT, ijengine::KeyboardEvent::NONE);
+        // m_translator.translate(ijengine::GameEvent(32), &left_button_event);
+        //
+        // ijengine::KeyboardEvent up_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::UP, ijengine::KeyboardEvent::NONE);
+        // m_translator.translate(ijengine::GameEvent(64), &up_button_event);
+        //
+        // ijengine::KeyboardEvent down_button_event(0, ijengine::KeyboardEvent::PRESSED, ijengine::KeyboardEvent::DOWN, ijengine::KeyboardEvent::NONE);
+        // m_translator.translate(ijengine::GameEvent(128), &down_button_event);
     }
 
     Game::~Game()

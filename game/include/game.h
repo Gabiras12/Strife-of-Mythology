@@ -6,8 +6,14 @@
 #include <ijengine/events_translator.h>
 
 #include "level_factory.h"
+#include "translator.h"
 
 namespace SoMTD {
+    enum {
+        MOUSEOVER = 4,
+        CLICK = 5,
+        BUILD_TOWER = 6
+    };
     class Game {
     public:
         Game(const string& title, int w, int h);
@@ -18,7 +24,7 @@ namespace SoMTD {
     private:
         ijengine::Game m_game;
         ijengine::Engine m_engine;
-        ijengine::EventsTranslator m_translator;
+        Translator m_translator;
         LevelFactory m_level_factory;
     };
 }

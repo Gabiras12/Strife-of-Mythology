@@ -7,6 +7,7 @@
 #include <ijengine/texture.h>
 
 #include "level_area.h"
+#include "translator.h"
 
 SoMTD::LevelArea::LevelArea(std::string texture_name, unsigned id, int x, int y, int p) :
     m_texture(ijengine::resources::get_texture(texture_name)),
@@ -25,8 +26,10 @@ SoMTD::LevelArea::~LevelArea()
 }
 
 bool
-SoMTD::LevelArea::on_event(const ijengine::GameEvent&)
+SoMTD::LevelArea::on_event(const ijengine::GameEvent& event)
 {
+    if (event.id() == SoMTD::BUILD_TOWER) {
+    }
     return false;
 }
 

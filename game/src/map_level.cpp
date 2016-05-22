@@ -159,50 +159,30 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
     int myx = m_player->m_x;
     int myy = m_player->m_y;
 
-    // printf("myx: %d, myy: %d\n", myx, myy);
+    if (event.id() == SoMTD::CLICK) {
+        if (m_player->state == 0x01) {
+            double x_pos = event.get_property<double>("x");
+            double y_pos = event.get_property<double>("y");
+            if (m_player->m_gold >= 100) {
+                printf("x: %f, y: %f\n", x_pos, y_pos);
+                SoMTD::Tower *m_tower = new SoMTD::Tower("tower_42.png", 9, x_pos/89, y_pos/100);
+                add_child(m_tower);
+                m_tower->set_priority(50000);
+                m_player->m_gold -= 100;
+                printf("Adicionando torre.\n");
+            } else {
+                printf("You need moar gold! (%d)\n", m_player->m_gold);
+            }
+            m_player->state = 0x00;
+            return true;
+        }
+    }
 
-    if (event.type() == 0x04) {
-        if (m_player->m_gold >= 100) {
-            SoMTD::Tower *m_tower = new SoMTD::Tower("tower_42.png", 9, m_player->m_x, m_player->m_y);
-            add_child(m_tower);
-            m_tower->set_priority(50000);
-            m_player->m_gold -= 100;
-            printf("Adicionando torre.\n");
-        } else {
-            printf("You need moar gold! (%d)\n", m_player->m_gold);
-        }
-        return true;
-    } else if (event.type() == 8) {
-        m_done = true;
-        return true;
-    } else if (event.type() == 16) {
-        if (m_player->m_x < 8) {
-            m_player->m_x += 1;
-            grid[myy][myx] = 88;
-        }
-        return true;
-
-    } else if (event.type() == 32) {
-        if (m_player->m_x > 0) {
-            m_player->m_x -= 1;
-            grid[myy][myx] = 88;
-        }
-        return true;
-
-    } else if (event.type() == 64) {
-        if (m_player->m_y < 8) {
-            m_player->m_y += 1;
-            grid[myy][myx] = 88;
-        }
-        return true;
-
-    } else if (event.type() == 128) {
-        if (m_player->m_y > 0) {
-            m_player->m_y -= 1;
-            grid[myy][myx] = 88;
-        }
+    if (event.id() == SoMTD::BUILD_TOWER) {
+        m_player->state = 0x01;
         return true;
     }
+
     return false;
 }
 
