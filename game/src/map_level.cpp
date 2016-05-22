@@ -29,7 +29,7 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     if (current_level == "map002") {
         m_player->m_gold = 999999;
     } else {
-        m_player->m_gold = 9000;
+        m_player->m_gold = 900;
     }
     memset(grid, 0, sizeof grid);
     ijengine::event::register_listener(this);
@@ -138,10 +138,18 @@ SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 
     int i = m_player->m_x;
     int j = m_player->m_y;
-    if (grid[j][i] == 88) {
-        std::shared_ptr< ijengine::Texture > highlight_area = ijengine::resources::get_texture("waterfallEndE.png");
-        canvas->draw(highlight_area.get(), j*highlight_area->h(), i*highlight_area->w());
+
+    std::shared_ptr< ijengine::Texture > highlight_area;
+    if (m_player->state == 0x00) {
+        highlight_area = ijengine::resources::get_texture("press_b.png");
+    } else if (m_player->state == 0x01) {
+        highlight_area = ijengine::resources::get_texture("click_to_build.png");
+    } else if (m_player->state == 0x03) {
+        highlight_area = ijengine::resources::get_texture("invalid_location.png");
+    } else if (m_player->state == 0x04) {
+        highlight_area = ijengine::resources::get_texture("not_enough_gold.png");
     }
+    canvas->draw(highlight_area.get(), 1024 - highlight_area->w(), 0);
 }
 
 std::pair<int, int>
@@ -181,12 +189,15 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                     add_child(m_tower);
                     m_tower->set_priority(50000+(5*myy+5*myx));
                     m_player->m_gold -= 100;
+                    m_player->state = 0x00;
                 } else {
                     printf("You need moar gold! (%d)\n", m_player->m_gold);
+                    m_player->state = 0x04;
                 }
-                m_player->state = 0x00;
-                return true;
+            } else {
+                m_player->state = 0x03;
             }
+            return true;
         }
     }
 
