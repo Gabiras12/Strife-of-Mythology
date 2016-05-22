@@ -11,6 +11,7 @@ namespace SoMTD {
         int m_y;
         int m_x;
         int state;
+        int m_hp = 50;
     };
 }
 
