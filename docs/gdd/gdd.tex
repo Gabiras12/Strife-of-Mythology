@@ -139,7 +139,10 @@ O \textit{\textbf{SoMTD}} é um jogo de estilo\textit{ Tower Defense}, onde o ob
 \item \textbf{Caminho}: Caminho pré-determinado que será seguido pelas \textit{waves}. Caso um inimigo chegue ao fim da trilha, o jogador sofre uma punição.
 \item \textbf{Tower Defense}: Um estilo de jogo onde um jogador deve impedir unidades inimigas de completarem seu objetivo utilizando torres.
 \item \textbf{Health Point(HP)}: Atributo referente a vida \textit{player}.
-\end{itemize}
+\item \textbf{Def} - Defense : refere-se neste contexto, aos pontos de ataques ao monstro, a defesa aqui é o nível de resistência a ataques comuns.
+\item \textbf{Sp} - Speed : refere-se a velocidade com que as waves se movem.
+\item \textbf{gold}: única remuneração do jogo.
+\end{itemize} 
  
 \section{Conceito do jogo}
 
@@ -173,9 +176,6 @@ O final do jogo pode-se dar de duas formas:
 \newpage
 
 \section{Mecânicas do Jogo}
-
-\subsection{Exploração Vertical}
-
 \subsubsection{Movimentação}
 A movimentação das waves será em um caminho pré-determinado, cabendo ao jogador apenas posicionar as torres com o mouse próxima a esse caminho, não havendo assim movimentação por parte do jogador principal.
 
@@ -230,13 +230,6 @@ Na tela \textit{é apresentado} todos os equipamentos no qual o personagem poder
 \newpage
 
 \section{Personagens Principais}
-
-Glossário:
-\begin{itemize}
-\item HP - Health Point : refere-se aos pontos de vida.
-\item Def - Defense : refere-se neste contexto, aos pontos de ataques ao monstro, a defesa aqui é o nível de resistência a ataques comuns.
-\item Sp - Speed : refere-se a velocidade com que as waves se movem.
-\end{itemize}
 
 \subsection{Deuses}
 Como dito nas secções anteriores, haverão 3 Deuses:
@@ -345,18 +338,49 @@ O jogador terá uma barra de vida com 50 HP, a qual decairá a medida que os ini
 
 \section{Economia}
 
-A única remuneração do jogo será em \textit{gold}, o qual terá como intuito incrementar as torres.  
+A única remuneração do jogo será em \textit{gold}, o qual terá como intuito incrementar as torres, não havendo nenhum tempo especifico para a compra de torres, exceto o tempo inicial de jogo, que o jogador seleciona as torres desejadas antes do jogo iniciar de fato, assim as compras podem ser realizadas em qualquer momento da partida.
 
-Toda pontuação do jogador será obtido através dos monstros derrotados, quanto mais forte for o inimigo  maior será a recompensa em ouro, sendo que cada um dos monstros possuem uma pontuação diferente.
+Os \textit{golds}, são acumulativos ao decorrer das fases, sendo perdidos somente no \textit{game over}.
 
-No inicio do jogo, tem-se disponível a quantia de ouro suficiente para a compra de somente duas torres, que podem ser de qualquer um dos Deuses.  
+Toda pontuação do jogador será obtido através dos monstros derrotados, quanto mais forte for o inimigo  maior será a recompensa em ouro, sendo que cada um dos monstros possuem uma pontuação diferente, tal pontuação possui os seguinte valores:
 
-O \textit{gold} será representado por um imagem de ouro e uma quantia ao lado da imagem, essa representação será posicionada no canto superior direito da tela.
+\begin{itemize}
+ \item Norma = 2 Golds
+ \item Tanker = 5 Golds
+ \item Speed = 3 Golds
+ \item Fly = 3 Golds
+ \end{itemize} 
+ 
+Como as torres tem dois \textit{Tiers}, haverá valores diferentes para as torres de cada \textit{Tiers}, assim para as torres de \textit{Tier 1}, ou seja de nível mais baixo, serão necessários 20 \textit{Golds} para aquisição das mesmas, já para as torres de \textit{Tier 2} será necessária a quantia de 40 \textit{golds} para aquisição das mesmas, caso estas estejam disponíveis, uma vez que para liberar o acesso a torres de \textit{Tier 2} é necessário alcançar 40 golds na torre de \textit{Tier 1} respectiva, por exemplo para liberar as torres de \textit{Tier 2} do \textit{Deus} \textbf{Zeus} é necessário alcançar a marca de 40 golds nas torres de \textit{Tier 1} do \textbf{Zeus}, e assim respectivamente nos outros \textbf{Deuses}.
+
+Não haverá diferenciação nos valores entre as torres por Deuses, somente entre os \textit{Tiers} das torres, assim cada Deus terá torres nos dois \textit{Tiers} existentes.
+ 
+No inicio do jogo, tem-se disponível a quantia de ouro suficiente para a compra de somente duas torres de \textit{Tier 1}, ou seja 40 golds, as quais podem ser de investidas nas torres de qualquer um dos Deuses.  
+
+Caso o jogador se arrependa de ter posicionado uma torre em um local ineficiente, ou por qualquer outro motivo que seja, ele terá a opção de recupera metade do \textit{gold} investido, retirando a torre do local, ou sejá uma torre que custa 20 golds, terá 10 \textit{golds} recuperados.
+ 
+ 
+O \textit{gold} será representado por um imagem de ouro e uma quantia ao lado da imagem, essa representação será posicionada no canto superior direito da tela. Também tem-se uma imagem contendo o valor de \textit{gold} alcançado por cada torre existente, este valor fica no HUD abaixo da torre em questão.
+
+Resumindo tem-se a seguinte lista com os valores das torres:
+\begin{itemize}
+ \item Tier 1 = 20 Golds.
+ \item Tier 2 = 40 Golds.
+ \item Liberar Tier 2 = 40 Golds em uma torre de Tier 1.
+ \item Recuperar torre = perca de metade dos golds.
+\end{itemize} 
 
 \begin{figure}[!htp]
 \centering
 \includegraphics[scale=1.25]{res/gold.png}
-\caption{Gold}
+\caption{Representação Gold}
+\label{Tela Equip}
+\end{figure}
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=1.0]{res/torresGold.png}
+\caption{Representação Gold associado as torres.}
 \label{Tela Equip}
 \end{figure}
 
