@@ -206,25 +206,19 @@ A câmera do jogo será 2D estática em um mapa isométrico, como exemplificado 
 
 O HUD (Heads-Up Display) será composto de um menu inferior o qual será dividido em três secções, sendo elas:
 \begin{itemize}
-\item Um circulo contendo o Deus selecionado, ao clicar neste Deus, automaticamente ocorrerá a troca para o próximo Deus.
-\item A direita do circulo tem-se uma barra de HP, que decairá quando as \textit{waves} atravessarem o caminho, além das informações de gold disponíveis para incrementar as torres.
-\item Finalizando tem-se as informações referentes aos \textit{Tiers} das torres, associadas aos Deuses.
+\item Um box contendo os três Deuses, ao clicar no Deus, atualizara o menu central que contem as três torres, duas de \textit{Tiler 1} e uma de \textit{Tiler 2}, exibindo os valores referentes as torres deste deus.
+\item Continuando no box inferior esquerdo, tem-se um espaço para exibição de uma breve descrição sobre o Deus, que pode ser exibida a medida que o jogador passa o mouse em cima de cada \textit{deus}.
+\item No centro como dito anteriormente tem-se as três torres existentes sendo que as torres disponíveis possuem uma estrela para indicar que as mesmas são selecionáveis, caso a torre esteja bloqueada, um \textit{\textbf{"X"}} ocupa o lugar da estrela. Há também neste box, abaixo da figura das torres uma representação em \textit{gold} alcançada pelas torres deste tipo.
+\item No box do conto inferior direito tem-se a torre selecionada, esta torre fica com um tom mais claro no menu central.
+\item No canto superior esquerdo tem-se a barra de \textit{HP}, do jogador.
+\item Finalizando tem-se no canto superior direito, as informações referentes ao \textit{gold} total alcançado.
 \end{itemize}
 
 \begin{figure}[!htp]
 \centering
-\includegraphics[scale=0.25]{res/map_example.png}
+\includegraphics[scale=0.4]{res/gameplay.jpg}
 \caption{Hud}
 \label{HUD}
-\end{figure}
-
-Na tela \textit{é apresentado} todos os equipamentos no qual o personagem poderá utilizar durante o combate que se passarão durante a exploração vertical.
-
-\begin{figure}[!htp]
-\centering
-\includegraphics[scale=0.25]{res/map_example.png}
-\caption{Tela Equip}
-\label{Tela Equip}
 \end{figure}
 
 \newpage
