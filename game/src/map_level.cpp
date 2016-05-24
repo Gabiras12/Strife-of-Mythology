@@ -152,6 +152,7 @@ SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
     } else if (m_player->state == 0x04) {
         highlight_area = ijengine::resources::get_texture("not_enough_gold.png");
     }
+    canvas->draw(highlight_area.get(), 1024-highlight_area->w(), 160);
 }
 
 std::pair<int, int>
@@ -176,23 +177,30 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
 
             int const tile_width = 100;
             int const h_tw = tile_width/2;
-            int const tile_height = 81+11;
+            int const tile_height = 81;
             int const h_th = tile_height/2;
             int const x0 = 1024/2;
             int const offset = 11;
 
-            myx =  (((x_pos+h_tw-x0)/h_tw)+((y_pos)/(h_th-offset)))/2;
-            myy = (((y_pos)/(h_th-offset)) - ((x_pos+h_tw-x0)/h_tw))/2;
+            printf(" (((%.2f + %d - %d)/%d) + ((%f)/(%d-%d)))/2", x_pos, h_th, x0, h_tw, y_pos, h_th, offset);
+            printf("\n");
+            // myx = ((2*(x_pos-x0)/tile_width) + 1 + (y_pos)/(1-offset))/(1-((offset)/(1-offset)));
+            myx =  (((x_pos+h_th-x0)/h_tw)+((y_pos)/(h_th-offset)))/2;
+            // myy = (((y_pos)/(h_th-offset)) - ((x_pos+h_tw-x0)/h_tw))/2;
+            myy = -1 * ( ((2*(x_pos-x0))/tile_width) + 1 - (y_pos/(h_th + offset)))/2;
 
+            printf("myx: %d, myy: %d\n", myx, myy);
             if (myx >= 0 && myy >= 0 && grid[myy][myx] < 8 && myx < 10 && myy < 10) {
                 if (m_player->m_gold >= 100) {
-                    grid[myy][myx] = 88;
-                    SoMTD::Tower *m_tower = new SoMTD::Tower("tower_42.png", 9, myx, myy);
-                    add_child(m_tower);
-                    m_tower->set_priority(50000+(5*myy+5*myx));
-                    m_player->m_gold -= 100;
-                    m_player->state = 0x00;
-                    m_player->m_hp -= 1;
+                    if (grid[myy][myx] != 88) {
+                        grid[myy][myx] = 88;
+                        SoMTD::Tower *m_tower = new SoMTD::Tower("tower_42.png", 9, myx, myy);
+                        add_child(m_tower);
+                        m_tower->set_priority(50000+(5*myy+5*myx));
+                        m_player->m_gold -= 100;
+                        m_player->state = 0x00;
+                        m_player->m_hp -= 1;
+                    }
                 } else {
                     printf("You need moar gold! (%d)\n", m_player->m_gold);
                     m_player->state = 0x04;
