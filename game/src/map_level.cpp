@@ -194,7 +194,7 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                 if (m_player->m_gold >= 100) {
                     if (grid[myy][myx] != 88) {
                         grid[myy][myx] = 88;
-                        SoMTD::Tower *m_tower = new SoMTD::Tower("tower_42.png", 9, myx, myy);
+                        SoMTD::Tower *m_tower = new SoMTD::Tower("torre1.png", 9, myx, myy);
                         add_child(m_tower);
                         m_tower->set_priority(50000+(5*myy+5*myx));
                         m_player->m_gold -= 100;
@@ -238,6 +238,11 @@ SoMTD::MapLevel::load_hud()
     SoMTD::Panel *upgrade_panel = new SoMTD::Panel("upgrade_panel.png", 0, 0, 700-hud_texture->h());
     upgrade_panel->set_priority(500000);
     add_child(upgrade_panel);
+
+    hud_texture = ijengine::resources::get_texture("upgrade_panel.png");
+    SoMTD::Panel *upgrade_panel2 = new SoMTD::Panel("upgrade_panel.png", 0, 1024 - hud_texture->w(), 700-hud_texture->h());
+    upgrade_panel2->set_priority(500000);
+    add_child(upgrade_panel2);
 
     hud_texture = ijengine::resources::get_texture("coins_panel.png");
     SoMTD::Panel *coins_panel = new SoMTD::Panel("coins_panel.png", 0, 1024-hud_texture->w()-25, 10);
