@@ -54,23 +54,23 @@ SoMTD::MapLevel::load_tiles()
         for (int j=0; j < 10; ++j) {
             switch (grid[i][j]) {
                 case 1:
-                    add_child(new SoMTD::LevelArea("slopeE.png", 1, j, i, 0));
+                    add_child(new SoMTD::LevelArea("caminho1.png", 1, j, i, 0));
                 break;
 
                 case 2:
-                    add_child(new SoMTD::LevelArea("slopeN.png", 2, j, i, 0));
+                    add_child(new SoMTD::LevelArea("caminho2.png", 2, j, i, 0));
                 break;
 
                 case 3:
-                    add_child(new SoMTD::LevelArea("slopeW.png", 3, j, i, 0));
+                    add_child(new SoMTD::LevelArea("curva3.png", 3, j, i, 0));
                 break;
 
                 case 4:
-                    add_child(new SoMTD::LevelArea("slopeS.png", 4, j, i, 0));
+                    add_child(new SoMTD::LevelArea("curva4.png", 4, j, i, 0));
                 break;
 
                 case 5:
-                    add_child(new SoMTD::LevelArea("waterfallEndE.png", 5, j, i, 0));
+                    add_child(new SoMTD::LevelArea("curva1.png", 5, j, i, 0));
                 break;
 
                 case 6:
@@ -78,7 +78,7 @@ SoMTD::MapLevel::load_tiles()
                 break;
 
                 case 7:
-                    add_child(new SoMTD::LevelArea("waterfallEndW.png", 7, j, i, 0));
+                    add_child(new SoMTD::LevelArea("curva2.png", 7, j, i, 0));
                 break;
 
                 case 8:
