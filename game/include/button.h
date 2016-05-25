@@ -5,12 +5,13 @@
 #include <ijengine/game_events_listener.h>
 #include <ijengine/texture.h>
 
+#include "player.h"
 #include <memory>
 
 namespace SoMTD {
     class Button : public ijengine::GameObject, public ijengine::GameEventsListener {
     public:
-        Button(std::string texture_name, unsigned id, int x, int y, std::string mouseover_texture);
+        Button(std::string texture_name, unsigned id, int x, int y, std::string mouseover_texture, Player *m = nullptr);
         ~Button();
 
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);
@@ -29,6 +30,7 @@ namespace SoMTD {
         bool m_done;
         int m_priority;
         bool m_mouseover;
+        Player *m_player;
     };
 }
 

@@ -151,6 +151,8 @@ SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
         highlight_area = ijengine::resources::get_texture("invalid_location.png");
     } else if (m_player->state == 0x04) {
         highlight_area = ijengine::resources::get_texture("not_enough_gold.png");
+    } else {
+        highlight_area = ijengine::resources::get_texture("click_to_build.png");
     }
     canvas->draw(highlight_area.get(), 1024-highlight_area->w(), 160);
 }
@@ -171,7 +173,7 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
     int myy = m_player->m_y;
 
     if (event.id() == SoMTD::CLICK) {
-        if (m_player->state == 0x01) {
+        if (m_player->state == 0x01 || m_player->state == 0x05 || m_player->state == 0x06 || m_player->state == 0x07) {
             double x_pos = event.get_property<double>("x");
             double y_pos = event.get_property<double>("y");
 
@@ -194,19 +196,29 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                 if (m_player->m_gold >= 100) {
                     if (grid[myy][myx] == 6) {
                         grid[myy][myx] = 88;
-                        SoMTD::Tower *m_tower = new SoMTD::Tower("tower_42.png", 9, myx, myy);
-                        add_child(m_tower);
-                        m_tower->set_priority(50000+(5*myy+5*myx));
-                        m_player->m_gold -= 100;
-                        m_player->state = 0x00;
-                        m_player->m_hp -= 1;
+                        SoMTD::Tower *m_tower = nullptr;
+                        if (m_player->state == 0x01) {
+                            m_tower = new SoMTD::Tower("tower_42.png", 9, myx, myy);
+                        } else if (m_player->state == 0x05) {
+                            m_tower = new SoMTD::Tower("torre2.png", 9, myx, myy);
+                        } else if (m_player->state == 0x06) {
+                            m_tower = new SoMTD::Tower("torre1.png", 9, myx, myy);
+                        } else if (m_player->state == 0x07) {
+                            m_tower = new SoMTD::Tower("torre1.png", 9, myx, myy);
+                        }
+
+                        if (m_tower != nullptr) {
+                            m_tower->set_priority(50000+(5*myy+5*myx));
+                            add_child(m_tower);
+                            m_player->m_gold -= 100;
+                            m_player->state = 0x00;
+                            m_player->m_hp -= 1;
+                        }
                     }
                 } else {
                     printf("You need moar gold! (%d)\n", m_player->m_gold);
                     m_player->state = 0x04;
                 }
-            } else {
-                m_player->state = 0x03;
             }
             return true;
         }
@@ -250,16 +262,16 @@ SoMTD::MapLevel::load_hud()
     add_child(coins_panel);
 
     hud_texture = ijengine::resources::get_texture("hero_button.png");
-    SoMTD::Button *button1 = new SoMTD::Button("hero_button.png", 0, 20, 600, "hero_button_mouseover.png");
+    SoMTD::Button *button1 = new SoMTD::Button("hero_button.png", 4, 20, 600, "hero_button_mouseover.png", m_player);
     button1->set_priority(500100);
     add_child(button1);
-    
+
     hud_texture = ijengine::resources::get_texture("hero_button.png");
-    SoMTD::Button *button2 = new SoMTD::Button("hero_button.png", 0, 20+hud_texture->w(), 600, "hero_button_mouseover.png");
+    SoMTD::Button *button2 = new SoMTD::Button("hero_button.png", 3, 20+hud_texture->w(), 600, "hero_button_mouseover.png", m_player);
     button2->set_priority(500100);
     add_child(button2);
 
-    SoMTD::Button *button3 = new SoMTD::Button("hero_button.png", 0, 20+hud_texture->w()*2, 600, "hero_button_mouseover.png");
+    SoMTD::Button *button3 = new SoMTD::Button("hero_button.png", 5, 20+hud_texture->w()*2, 600, "hero_button_mouseover.png", m_player);
     button3->set_priority(500100);
     add_child(button3);
 
