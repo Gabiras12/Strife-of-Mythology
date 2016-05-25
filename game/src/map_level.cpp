@@ -39,7 +39,6 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     load_config_from_file();
     load_tiles();
     load_hud();
-    printf("done: %d\n", m_done);
 }
 
 SoMTD::MapLevel::~MapLevel()

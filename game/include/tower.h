@@ -17,6 +17,7 @@ namespace SoMTD {
         bool on_event(const ijengine::GameEvent& event);
         void update_self(unsigned, unsigned);
         std::pair<int, int> screen_coordinates(int map_x, int map_y, int tw, int th);
+        double m_range = 200.0;
     private:
         std::shared_ptr<ijengine::Texture> m_texture;
         unsigned m_id;
@@ -27,6 +28,9 @@ namespace SoMTD {
         int m_start;
         bool m_done;
         int m_priority;
+        int canvas_x = 1;
+        int canvas_y = 1;
+        bool m_mouseover = false;
     };
 }
 
