@@ -61,7 +61,11 @@ SoMTD::Translator::translate(ijengine::GameEvent& to, const ijengine::KeyboardEv
         case ijengine::KeyboardEvent::B:
             id = SoMTD::Translator::BUILD_TOWER;
             break;
-            
+
+        case ijengine::KeyboardEvent::M:
+            id = 777;
+            break;
+
 
         default:
             done = false;

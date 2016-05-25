@@ -29,7 +29,7 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     m_texture(nullptr)
 {
     if (current_level == "map002") {
-        m_player->m_gold = 999999;
+        m_player->m_gold = 9900;
     } else {
         m_player->m_gold = 90000;
     }
@@ -39,6 +39,7 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     load_config_from_file();
     load_tiles();
     load_hud();
+    printf("done: %d\n", m_done);
 }
 
 SoMTD::MapLevel::~MapLevel()
@@ -128,9 +129,12 @@ SoMTD::MapLevel::next() const
 }
 
 void
-SoMTD::MapLevel::update_self(unsigned, unsigned)
+SoMTD::MapLevel::update_self(unsigned now, unsigned)
 {
-
+    if (m_start == -1)
+        m_start = now;
+    if (not (now - m_start > 1000))
+        m_done = false;
 }
 
 void
@@ -200,9 +204,9 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                         if (m_player->state == 0x01) {
                             m_tower = new SoMTD::Tower("tower_42.png", 9, myx, myy);
                         } else if (m_player->state == 0x05) {
-                            m_tower = new SoMTD::Tower("torre2.png", 9, myx, myy);
+                            m_tower = new SoMTD::Tower("tower_42.png", 9, myx, myy);
                         } else if (m_player->state == 0x06) {
-                            m_tower = new SoMTD::Tower("torre1.png", 9, myx, myy);
+                            m_tower = new SoMTD::Tower("torre2.png", 9, myx, myy);
                         } else if (m_player->state == 0x07) {
                             m_tower = new SoMTD::Tower("torre1.png", 9, myx, myy);
                         }
@@ -222,6 +226,11 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
             }
             return true;
         }
+    }
+
+    if (event.id() == 777) {
+        m_done = true;
+        return true;
     }
 
     if (event.id() == SoMTD::BUILD_TOWER) {
@@ -267,7 +276,7 @@ SoMTD::MapLevel::load_hud()
     add_child(button1);
 
     hud_texture = ijengine::resources::get_texture("hero_button.png");
-    SoMTD::Button *button2 = new SoMTD::Button("hero_button.png", 3, 20+hud_texture->w(), 600, "hero_button_mouseover.png", m_player);
+    SoMTD::Button *button2 = new SoMTD::Button("hero_button.png", 6, 20+hud_texture->w(), 600, "hero_button_mouseover.png", m_player);
     button2->set_priority(500100);
     add_child(button2);
 

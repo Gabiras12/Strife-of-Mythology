@@ -45,7 +45,7 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
     int x0 = 1024/2;
     // canvas->draw(m_texture.get(), x_pos+x0-((m_y+m_x)*11), y_pos-(11*(m_x-m_y)));
 
-    canvas->draw(m_texture.get(), x_pos+x0 - myw/2, -myh/2+y_pos-11*(m_y)-11*(m_x));
+    canvas->draw(m_texture.get(), x_pos+x0 - myw/2, - myh/2 +y_pos-11*(m_y+m_x));
     // canvas->draw(m_texture.get(), x_pos + x0 - myw/2, y_pos - myh/2);
 }
 
