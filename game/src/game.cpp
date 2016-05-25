@@ -16,6 +16,7 @@ namespace SoMTD {
         ijengine::event::register_translator(&m_translator);
         ijengine::level::register_factory(&m_level_factory);
         ijengine::resources::set_textures_dir("res");
+        ijengine::resources::set_fonts_dir("res");
     }
 
     void

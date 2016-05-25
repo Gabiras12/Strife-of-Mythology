@@ -5,12 +5,14 @@
 #include <ijengine/game_events_listener.h>
 #include <ijengine/texture.h>
 
+#include "player.h"
+
 #include <memory>
 
 namespace SoMTD {
     class Panel : public ijengine::GameObject, public ijengine::GameEventsListener {
     public:
-        Panel(std::string texture_name, unsigned id, int x, int y);
+        Panel(std::string texture_name, unsigned id, int x, int y, Player *m = nullptr);
         ~Panel();
 
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);
@@ -27,6 +29,8 @@ namespace SoMTD {
         int m_start;
         bool m_done;
         int m_priority;
+        std::string texture_name_path;
+        Player *m_player;
     };
 }
 

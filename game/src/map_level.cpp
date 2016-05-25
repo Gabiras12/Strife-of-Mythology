@@ -182,19 +182,19 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
             int const x0 = 1024/2;
             int const offset = 11;
 
-            printf(" (((%.2f + %d - %d)/%d) + ((%f)/(%d-%d)))/2", x_pos, h_th, x0, h_tw, y_pos, h_th, offset);
-            printf("\n");
+            // printf(" (((%.2f + %d - %d)/%d) + ((%f)/(%d-%d)))/2", x_pos, h_th, x0, h_tw, y_pos, h_th, offset);
+            // printf("\n");
             // myx = ((2*(x_pos-x0)/tile_width) + 1 + (y_pos)/(1-offset))/(1-((offset)/(1-offset)));
             myx =  (((x_pos+h_th-x0)/h_tw)+((y_pos)/(h_th-offset)))/2;
-            // myy = (((y_pos)/(h_th-offset)) - ((x_pos+h_tw-x0)/h_tw))/2;
-            myy = -1 * ( ((2*(x_pos-x0))/tile_width) + 1 - (y_pos/(h_th + offset)))/2;
+            myy = (((y_pos)/(h_th-offset)) - ((x_pos+h_tw-x0)/h_tw))/2;
+            // myy = -1 * ( ((2*(x_pos-x0))/tile_width) + 1 - (y_pos/(h_th + offset)))/2;
 
-            printf("myx: %d, myy: %d\n", myx, myy);
+            // printf("myx: %d, myy: %d\n", myx, myy);
             if (myx >= 0 && myy >= 0 && grid[myy][myx] < 8 && myx < 10 && myy < 10) {
                 if (m_player->m_gold >= 100) {
-                    if (grid[myy][myx] != 88) {
+                    if (grid[myy][myx] == 6) {
                         grid[myy][myx] = 88;
-                        SoMTD::Tower *m_tower = new SoMTD::Tower("torre1.png", 9, myx, myy);
+                        SoMTD::Tower *m_tower = new SoMTD::Tower("tower_42.png", 9, myx, myy);
                         add_child(m_tower);
                         m_tower->set_priority(50000+(5*myy+5*myx));
                         m_player->m_gold -= 100;
@@ -245,7 +245,7 @@ SoMTD::MapLevel::load_hud()
     add_child(upgrade_panel2);
 
     hud_texture = ijengine::resources::get_texture("coins_panel.png");
-    SoMTD::Panel *coins_panel = new SoMTD::Panel("coins_panel.png", 0, 1024-hud_texture->w()-25, 10);
+    SoMTD::Panel *coins_panel = new SoMTD::Panel("coins_panel.png", 0, 1024-hud_texture->w()-25, 10, m_player);
     coins_panel->set_priority(500000);
     add_child(coins_panel);
 
