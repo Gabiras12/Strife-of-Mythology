@@ -21,12 +21,14 @@ namespace SoMTD {
         string next() const;
         string audio() const;
         int grid[80][80];
-        void load_config_from_file();
+        void load_map_from_file();
         void load_tiles();
         bool on_event(const ijengine::GameEvent& event);
         void load_hud();
+        void load_panels();
 
     protected:
+        void draw_help_text(ijengine::Canvas *c);
         void update_self(unsigned now, unsigned last);
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);
 

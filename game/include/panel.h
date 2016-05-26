@@ -12,7 +12,7 @@
 namespace SoMTD {
     class Panel : public ijengine::GameObject, public ijengine::GameEventsListener {
     public:
-        Panel(std::string texture_name, unsigned id, int x, int y, Player *m = nullptr);
+        Panel(std::string texture_name, unsigned id, int x, int y, Player *m, int my_priority);
         ~Panel();
 
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);

@@ -8,9 +8,10 @@
 
 #include <fstream>
 #include <cstring>
+#include <map>
 
-#include <SDL2/SDL.h>
 
+#include "luascript.h"
 #include "map_level.h"
 #include "level_area.h"
 #include "tower.h"
@@ -28,15 +29,11 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     m_start(-1),
     m_texture(nullptr)
 {
-    if (current_level == "map002") {
-        m_player->m_gold = 9900;
-    } else {
-        m_player->m_gold = 90000;
-    }
+    // reset grid positions
     memset(grid, 0, sizeof grid);
     ijengine::event::register_listener(this);
 
-    load_config_from_file();
+    load_map_from_file();
     load_tiles();
     load_hud();
 }
@@ -93,9 +90,8 @@ SoMTD::MapLevel::load_tiles()
 }
 
 void
-SoMTD::MapLevel::load_config_from_file()
+SoMTD::MapLevel::load_map_from_file()
 {
-    // fetch data from a file with its level id
     if (not m_current.empty()) {
         std::string path("res/");
         path = path.append(m_current);
@@ -103,8 +99,8 @@ SoMTD::MapLevel::load_config_from_file()
 
         std::ifstream map_data(path);
         if (map_data.is_open()) {
-            // 9 = number of rows
-            // 12 = number of cols
+            // 10 = number of rows
+            // 10 = number of cols
             for (int i=0; i < 10; ++i) {
                 for (int j=0; j < 10; ++j) {
                     map_data >> grid[i][j];
@@ -141,23 +137,27 @@ SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 {
     canvas->clear();
     canvas->draw(ijengine::resources::get_texture("background.png").get(), 0, 0);
+    draw_help_text(canvas);
+}
 
-    int i = m_player->m_x;
-    int j = m_player->m_y;
-
-    std::shared_ptr< ijengine::Texture > highlight_area;
-    if (m_player->state == 0x00) {
-        highlight_area = ijengine::resources::get_texture("press_b.png");
-    } else if (m_player->state == 0x01) {
-        highlight_area = ijengine::resources::get_texture("click_to_build.png");
-    } else if (m_player->state == 0x03) {
-        highlight_area = ijengine::resources::get_texture("invalid_location.png");
-    } else if (m_player->state == 0x04) {
-        highlight_area = ijengine::resources::get_texture("not_enough_gold.png");
+void
+SoMTD::MapLevel::draw_help_text(ijengine::Canvas *canvas)
+{
+    std::shared_ptr< ijengine::Texture > help_text;
+    if (m_player->state == SoMTD::Player::PlayerState::IDLE) {
+        help_text = ijengine::resources::get_texture("press_b.png");
+    } else if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
+        help_text = ijengine::resources::get_texture("click_to_build.png");
+    } else if (m_player->state == SoMTD::Player::PlayerState::INVALID_BUILD) {
+        help_text = ijengine::resources::get_texture("invalid_location.png");
+    } else if (m_player->state == SoMTD::Player::PlayerState::NOT_ENOUGH_GOLD) {
+        help_text = ijengine::resources::get_texture("not_enough_gold.png");
     } else {
-        highlight_area = ijengine::resources::get_texture("click_to_build.png");
+        help_text = ijengine::resources::get_texture("click_to_build.png");
     }
-    canvas->draw(highlight_area.get(), 1024-highlight_area->w(), 160);
+    const int window_width = 1024;
+    const int y_position = 160;
+    canvas->draw(help_text.get(), window_width - help_text->w(), y_position);
 }
 
 std::pair<int, int>
@@ -187,40 +187,29 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
             int const x0 = 1024/2;
             int const offset = 11;
 
-            // printf(" (((%.2f + %d - %d)/%d) + ((%f)/(%d-%d)))/2", x_pos, h_th, x0, h_tw, y_pos, h_th, offset);
-            // printf("\n");
-            // myx = ((2*(x_pos-x0)/tile_width) + 1 + (y_pos)/(1-offset))/(1-((offset)/(1-offset)));
             myx =  (((x_pos+h_th-x0)/h_tw)+((y_pos)/(h_th-offset)))/2;
             myy = (((y_pos)/(h_th-offset)) - ((x_pos+h_tw-x0)/h_tw))/2;
-            // myy = -1 * ( ((2*(x_pos-x0))/tile_width) + 1 - (y_pos/(h_th + offset)))/2;
 
-            // printf("myx: %d, myy: %d\n", myx, myy);
             if (myx >= 0 && myy >= 0 && grid[myy][myx] < 8 && myx < 10 && myy < 10) {
                 if (m_player->m_gold >= 100) {
                     if (grid[myy][myx] == 6) {
                         grid[myy][myx] = 88;
                         SoMTD::Tower *m_tower = nullptr;
-                        if (m_player->state == 0x01) {
-                            m_tower = new SoMTD::Tower("tower_42.png", 9, myx, myy);
-                        } else if (m_player->state == 0x05) {
-                            m_tower = new SoMTD::Tower("tower_42.png", 9, myx, myy);
-                        } else if (m_player->state == 0x06) {
-                            m_tower = new SoMTD::Tower("torre2.png", 9, myx, myy);
-                        } else if (m_player->state == 0x07) {
-                            m_tower = new SoMTD::Tower("torre1.png", 9, myx, myy);
-                        }
-
-                        if (m_tower != nullptr) {
+                        if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
+                            std::string tower_name("tower_");
+                            tower_name.append(std::to_string(m_player->desired_tower));
+                            tower_name.append(".png");
+                            m_tower = new SoMTD::Tower(tower_name, 9, myx, myy);
                             m_tower->set_priority(50000+(5*myy+5*myx));
                             add_child(m_tower);
                             m_player->m_gold -= 100;
-                            m_player->state = 0x00;
+                            m_player->state = SoMTD::Player::PlayerState::IDLE;
                             m_player->m_hp -= 1;
                         }
                     }
                 } else {
                     printf("You need moar gold! (%d)\n", m_player->m_gold);
-                    m_player->state = 0x04;
+                    m_player->state = SoMTD::Player::PlayerState::NOT_ENOUGH_GOLD;
                 }
             }
             return true;
@@ -233,70 +222,73 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
     }
 
     if (event.id() == SoMTD::BUILD_TOWER) {
-        m_player->state = 0x01;
+        m_player->state = SoMTD::Player::PlayerState::HOLDING_BUILD;
         return true;
     }
 
     return false;
 }
 
+struct myotherstruct {
+    double x;
+    double y;
+};
+
+struct mystruct {
+    std::string file_path;
+    myotherstruct screen_position;
+};
+
+void
+SoMTD::MapLevel::load_panels()
+{
+    LuaScript panel_list("lua-src/Panel.lua");
+
+    std::string panel_file_path;
+    pair<int, int> panel_screen_position; // x = first, y = second
+    unsigned panel_id;
+    std::shared_ptr< ijengine::Texture > panel_texture;
+    int panel_priority = 0;
+
+    std::vector< std::string > panel_names {
+        "hp_panel", "left_upgrade_panel", "right_upgrade_panel",
+        "coins_panel", "poseidon_panel", "zeus_panel", "hades_panel"
+    };
+
+    for (std::string it : panel_names) {
+        panel_file_path = panel_list.get<std::string>((it + ".file_path").c_str());
+        panel_screen_position.first = panel_list.get<int>((it + ".screen_position.x").c_str());
+        panel_screen_position.second = panel_list.get<int>((it + ".screen_position.y").c_str());
+        panel_id = panel_list.get<unsigned>((it + ".id").c_str());
+        panel_priority = panel_list.get<int>((it + ".priority").c_str());
+        SoMTD::Panel *p = new SoMTD::Panel(panel_file_path, panel_id, panel_screen_position.first, panel_screen_position.second, m_player, panel_priority);
+        add_child(p);
+    }
+}
+
 void
 SoMTD::MapLevel::load_hud()
 {
+    load_panels();
     std::shared_ptr< ijengine::Texture > hud_texture = ijengine::resources::get_texture("buy_panel.png");
-
-    hud_texture = ijengine::resources::get_texture("hp_panel.png");
-    SoMTD::Panel *hp_panel = new SoMTD::Panel("hp_panel.png", 0, 10, 10);
-    hp_panel->set_priority(500000);
-    add_child(hp_panel);
 
     SoMTD::TextureBar *hp_bar = new SoMTD::TextureBar("hp_percentage.png", 0, 58, 22, m_player, 12, 12);
     hp_bar->set_priority(500020);
     add_child(hp_bar);
 
-    hud_texture = ijengine::resources::get_texture("upgrade_panel.png");
-    SoMTD::Panel *upgrade_panel = new SoMTD::Panel("upgrade_panel.png", 0, 0, 700-hud_texture->h());
-    upgrade_panel->set_priority(500000);
-    add_child(upgrade_panel);
-
-    hud_texture = ijengine::resources::get_texture("upgrade_panel.png");
-    SoMTD::Panel *upgrade_panel2 = new SoMTD::Panel("upgrade_panel.png", 0, 1024 - hud_texture->w(), 700-hud_texture->h());
-    upgrade_panel2->set_priority(500000);
-    add_child(upgrade_panel2);
-
-    hud_texture = ijengine::resources::get_texture("coins_panel.png");
-    SoMTD::Panel *coins_panel = new SoMTD::Panel("coins_panel.png", 0, 1024-hud_texture->w()-25, 10, m_player);
-    coins_panel->set_priority(500000);
-    add_child(coins_panel);
-
     hud_texture = ijengine::resources::get_texture("hero_button.png");
     SoMTD::Button *button1 = new SoMTD::Button("hero_button.png", 4, 20, 600, "hero_button_mouseover.png", m_player);
-    button1->set_priority(500100);
+    button1->set_priority(50000);
     add_child(button1);
 
     hud_texture = ijengine::resources::get_texture("hero_button.png");
     SoMTD::Button *button2 = new SoMTD::Button("hero_button.png", 6, 20+hud_texture->w(), 600, "hero_button_mouseover.png", m_player);
-    button2->set_priority(500100);
+    button2->set_priority(50000);
     add_child(button2);
 
     SoMTD::Button *button3 = new SoMTD::Button("hero_button.png", 5, 20+hud_texture->w()*2, 600, "hero_button_mouseover.png", m_player);
-    button3->set_priority(500100);
+    button3->set_priority(50000);
     add_child(button3);
-
-    hud_texture = ijengine::resources::get_texture("zeus_panel.png");
-    SoMTD::Panel *zeus_panel = new SoMTD::Panel("zeus_panel.png", 0, 30, 615);
-    zeus_panel->set_priority(500200);
-    add_child(zeus_panel);
-
-    hud_texture = ijengine::resources::get_texture("poseidon_panel.png");
-    SoMTD::Panel *poseidon_panel = new SoMTD::Panel("poseidon_panel.png", 0, 30+72, 605);
-    poseidon_panel->set_priority(500200);
-    add_child(poseidon_panel);
-
-    hud_texture = ijengine::resources::get_texture("hades_panel.png");
-    SoMTD::Panel *hades_panel = new SoMTD::Panel("hades_panel.png", 0, 30+2*70, 610);
-    hades_panel->set_priority(500200);
-    add_child(hades_panel);
 }
 
 std::string

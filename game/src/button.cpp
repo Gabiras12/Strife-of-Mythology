@@ -47,14 +47,9 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
         double y_pos = event.get_property<double>("y");
 
         if (x_pos >= m_x && x_pos<m_x+m_texture->w() && y_pos>m_y && y_pos<m_y+m_texture->h()) {
-            if (m_id == 5) {
-                m_player->state = 5;
-                return true;
-            } else if (m_id == 4) {
-                m_player->state = 0x06;
-                return true;
-            } else if (m_id == 6) {
-                m_player->state = 0x07;
+            if (m_id == 5 || m_id == 4 || m_id == 6) {
+                m_player->state = SoMTD::Player::PlayerState::HOLDING_BUILD;
+                m_player->desired_tower = m_id-4;
                 return true;
             }
         }

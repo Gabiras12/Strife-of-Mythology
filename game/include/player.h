@@ -4,6 +4,13 @@
 namespace SoMTD {
     class Player {
     public:
+        enum PlayerState {
+            IDLE = 0,
+            HOLDING_BUILD = 1,
+            INVALID_BUILD = 3,
+            NOT_ENOUGH_GOLD = 4
+        };
+
         Player();
         ~Player();
         int gold() const;
@@ -12,6 +19,7 @@ namespace SoMTD {
         int m_x;
         int state;
         int m_hp = 50;
+        int desired_tower = 0;
     };
 }
 

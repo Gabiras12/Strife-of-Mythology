@@ -18,7 +18,6 @@ namespace SoMTD {
     public:
         Game(const string& title, int w, int h);
         ~Game();
-        void load_keyboard_translations();
         int run(const string& level_id);
 
     private:

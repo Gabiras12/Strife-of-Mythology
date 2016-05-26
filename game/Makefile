@@ -16,7 +16,7 @@ CFLAGS = -pedantic -std=c++11 -MMD -g3 -g -fPIC\
 		 -Wsign-promo -Wstrict-null-sentinel -Wswitch-default -Wundef\
 		 -Wzero-as-null-pointer-constant -Wuseless-cast -Wnon-virtual-dtor
 INCLUDES = -Iinclude `sdl2-config --cflags` -I/usr/local/include/ijengine
-LIBS =  -L/usr/local/lib -lijengine `sdl2-config --libs` -lSDL2_image -lSDL2_ttf -lSDL2_mixer -ldl
+LIBS =  -L/usr/local/lib -lijengine `sdl2-config --libs` -lSDL2_image -lSDL2_ttf -lSDL2_mixer -ldl -llua
 
 SRC = ${wildcard $(SRC_DIR)/*.cpp}
 OBJ = ${addprefix $(OBJ_DIR)/, ${notdir ${SRC:.cpp=.o}}}
