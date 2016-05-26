@@ -11,6 +11,7 @@
 #include <fstream>
 
 #include "player.h"
+#include "luascript.h"
 
 namespace SoMTD {
     class MapLevel : public ijengine::Level, public ijengine::GameEventsListener {
@@ -26,11 +27,13 @@ namespace SoMTD {
         bool on_event(const ijengine::GameEvent& event);
         void load_hud();
         void load_panels();
+        void load_buttons();
 
     protected:
         void draw_help_text(ijengine::Canvas *c);
         void update_self(unsigned now, unsigned last);
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);
+        void draw_self_after(ijengine::Canvas *, unsigned, unsigned);
 
     private:
         std::string m_next;
@@ -40,6 +43,7 @@ namespace SoMTD {
         Player *m_player;
         int m_start;
         std::shared_ptr< ijengine::Texture > m_texture;
+        LuaScript *m_actions;
 
         std::pair<int, int> screen_coordinates(int map_x, int map_y, int tw, int th);
     };

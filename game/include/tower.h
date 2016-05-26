@@ -14,6 +14,7 @@ namespace SoMTD {
         ~Tower();
 
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);
+        void draw_self_after(ijengine::Canvas *, unsigned, unsigned) {}
         bool on_event(const ijengine::GameEvent& event);
         void update_self(unsigned, unsigned);
         std::pair<int, int> screen_coordinates(int map_x, int map_y, int tw, int th);

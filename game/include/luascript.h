@@ -24,6 +24,8 @@ class LuaScript {
             lua_pop(L, n);
         }
 
+        int load_function(std::vector<int> args, std::string func_name);
+
         template<typename T>
             T get(const std::string& variableName) {
                 if(!L) {
@@ -79,7 +81,7 @@ class LuaScript {
         }
 
         template<typename T>
-        T lua_get(const std::string& variableName) {
+        T lua_get(const std::string&) {
             return 0;
         }
 
@@ -97,7 +99,7 @@ class LuaScript {
 // Specializations
 
 template <>
-inline bool LuaScript::lua_get<bool>(const std::string& variableName) {
+inline bool LuaScript::lua_get<bool>(const std::string&) {
     return (bool)lua_toboolean(L, -1);
 }
 

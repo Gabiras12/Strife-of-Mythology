@@ -36,10 +36,12 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     load_map_from_file();
     load_tiles();
     load_hud();
+    m_actions = new LuaScript("lua-src/Action.lua");
 }
 
 SoMTD::MapLevel::~MapLevel()
 {
+    delete m_actions;
     ijengine::event::unregister_listener(this);
     delete m_player;
 }
@@ -229,16 +231,6 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
     return false;
 }
 
-struct myotherstruct {
-    double x;
-    double y;
-};
-
-struct mystruct {
-    std::string file_path;
-    myotherstruct screen_position;
-};
-
 void
 SoMTD::MapLevel::load_panels()
 {
@@ -267,32 +259,64 @@ SoMTD::MapLevel::load_panels()
 }
 
 void
+SoMTD::MapLevel::load_buttons()
+{
+    LuaScript button_list("lua-src/Button.lua");
+
+    std::string button_file_path;
+    pair<int, int> button_screen_position; // x = first, y = second
+    int button_id;
+    int button_priority = 0;
+    std::string button_mouseover_path;
+
+    std::vector< std::string > button_names {
+        "zeus_button", "hades_button", "poseidon_button"
+    };
+
+    for (std::string it : button_names) {
+        button_file_path = button_list.get<std::string>((it + ".file_path").c_str());
+        button_screen_position.first = button_list.get<int>((it + ".screen_position.x").c_str());
+        button_screen_position.second = button_list.get<int>((it + ".screen_position.y").c_str());
+        button_id = button_list.get<int>((it + ".id").c_str());
+        button_priority = button_list.get<int>((it + ".priority").c_str());
+        button_mouseover_path = button_list.get<std::string>((it + ".mouseover_file_path").c_str());
+        printf("button id: %d\n", button_id);
+        SoMTD::Button *b = new SoMTD::Button(button_file_path, button_id, button_screen_position.first, button_screen_position.second, button_mouseover_path, m_player, button_priority);
+        add_child(b);
+    }
+}
+
+
+void
 SoMTD::MapLevel::load_hud()
 {
     load_panels();
-    std::shared_ptr< ijengine::Texture > hud_texture = ijengine::resources::get_texture("buy_panel.png");
+    load_buttons();
+
+    std::shared_ptr< ijengine::Texture > hud_texture;
 
     SoMTD::TextureBar *hp_bar = new SoMTD::TextureBar("hp_percentage.png", 0, 58, 22, m_player, 12, 12);
     hp_bar->set_priority(500020);
     add_child(hp_bar);
 
-    hud_texture = ijengine::resources::get_texture("hero_button.png");
-    SoMTD::Button *button1 = new SoMTD::Button("hero_button.png", 4, 20, 600, "hero_button_mouseover.png", m_player);
-    button1->set_priority(50000);
-    add_child(button1);
-
-    hud_texture = ijengine::resources::get_texture("hero_button.png");
-    SoMTD::Button *button2 = new SoMTD::Button("hero_button.png", 6, 20+hud_texture->w(), 600, "hero_button_mouseover.png", m_player);
-    button2->set_priority(50000);
-    add_child(button2);
-
-    SoMTD::Button *button3 = new SoMTD::Button("hero_button.png", 5, 20+hud_texture->w()*2, 600, "hero_button_mouseover.png", m_player);
-    button3->set_priority(50000);
-    add_child(button3);
 }
 
 std::string
 SoMTD::MapLevel::audio() const
 {
     return m_audio_path;
+}
+
+void
+SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
+{
+    if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
+        std::shared_ptr<ijengine::Texture> mytext = nullptr;
+        std::string tower_name = "tower_";
+        tower_name.append( std::to_string(m_player->desired_tower) );
+        tower_name.append(".png");
+        mytext = ijengine::resources::get_texture(tower_name);
+        c->draw(mytext.get(), m_player->m_x-mytext->w()/2, m_player->m_y-mytext->h()/2);
+    }
+
 }

@@ -26,7 +26,7 @@ SoMTD::LevelArea::~LevelArea()
 }
 
 bool
-SoMTD::LevelArea::on_event(const ijengine::GameEvent& event)
+SoMTD::LevelArea::on_event(const ijengine::GameEvent&)
 {
     return false;
 }
@@ -48,12 +48,8 @@ SoMTD::LevelArea::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 }
 
 void
-SoMTD::LevelArea::update_self(unsigned now, unsigned)
+SoMTD::LevelArea::update_self(unsigned, unsigned)
 {
-    // if (m_start == -1)
-    //     m_start = now;
-    // if (now - m_start > 5000)
-    //     m_done = true;
 }
 
 std::pair<int, int>

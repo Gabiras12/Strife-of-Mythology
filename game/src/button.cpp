@@ -8,7 +8,7 @@
 
 #include "button.h"
 
-SoMTD::Button::Button(std::string texture_name, unsigned id, int x, int y, std::string mtexture, Player *m) :
+SoMTD::Button::Button(std::string texture_name, unsigned id, int x, int y, std::string mtexture, Player *m, int myp) :
     m_texture(ijengine::resources::get_texture(texture_name)),
     m_id(id),
     m_x(x),
@@ -16,6 +16,7 @@ SoMTD::Button::Button(std::string texture_name, unsigned id, int x, int y, std::
     m_mouseover_texture(ijengine::resources::get_texture(mtexture)),
     m_player(m)
 {
+    set_priority(myp);
     m_mouseover = false;
     ijengine::event::register_listener(this);
 }
@@ -37,6 +38,9 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
     if (event.id() == SoMTD::MOUSEOVER) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
+        m_player->m_x = x_pos;
+        m_player->m_y = y_pos;
+
         if (x_pos >= m_x && x_pos<m_x+m_texture->w() && y_pos>m_y && y_pos<m_y+m_texture->h()) {
             m_mouseover = true;
         } else {
@@ -45,6 +49,8 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
     } else if (event.id() == SoMTD::CLICK) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
+        m_player->m_x = x_pos;
+        m_player->m_y = y_pos;
 
         if (x_pos >= m_x && x_pos<m_x+m_texture->w() && y_pos>m_y && y_pos<m_y+m_texture->h()) {
             if (m_id == 5 || m_id == 4 || m_id == 6) {
