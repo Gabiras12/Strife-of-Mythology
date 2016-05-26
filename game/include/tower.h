@@ -10,7 +10,7 @@
 namespace SoMTD {
     class Tower : public ijengine::GameObject, public ijengine::GameEventsListener {
     public:
-        Tower(std::string texture_name, unsigned id, int x, int y);
+        Tower(std::string texture_name, unsigned id, int x, int y, std::string m_imageselected_path = "");
         ~Tower();
 
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);
@@ -21,7 +21,9 @@ namespace SoMTD {
         double m_range = 200.0;
     private:
         std::shared_ptr<ijengine::Texture> m_texture;
+        std::string m_image_path;
         unsigned m_id;
+        bool m_selected = false;
         int m_x;
         int m_y;
         int m_w;
@@ -32,6 +34,7 @@ namespace SoMTD {
         int canvas_x = 1;
         int canvas_y = 1;
         bool m_mouseover = false;
+        std::string m_imageselected_path;
     };
 }
 

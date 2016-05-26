@@ -16,6 +16,7 @@ namespace SoMTD {
         ~TextureBar();
 
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);
+        void draw_self_after(ijengine::Canvas *, unsigned, unsigned) { }
         bool on_event(const ijengine::GameEvent& event);
         void update_self(unsigned, unsigned);
 
@@ -33,6 +34,8 @@ namespace SoMTD {
         double m_percentage;
         int m_start_offset;
         int m_end_offset;
+        ijengine::Rectangle m_start_rect;
+        ijengine::Rectangle m_end_rect;
     };
 }
 

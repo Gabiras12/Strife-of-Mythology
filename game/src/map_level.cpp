@@ -201,7 +201,7 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                             std::string tower_name("tower_");
                             tower_name.append(std::to_string(m_player->desired_tower));
                             tower_name.append(".png");
-                            m_tower = new SoMTD::Tower(tower_name, 9, myx, myy);
+                            m_tower = new SoMTD::Tower(tower_name, 9, myx, myy, "selected_"+tower_name);
                             m_tower->set_priority(50000+(5*myy+5*myx));
                             add_child(m_tower);
                             m_player->m_gold -= 100;
@@ -314,7 +314,7 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
         std::shared_ptr<ijengine::Texture> mytext = nullptr;
         std::string tower_name = "tower_";
         tower_name.append( std::to_string(m_player->desired_tower) );
-        tower_name.append(".png");
+        tower_name.append("_holding.png");
         mytext = ijengine::resources::get_texture(tower_name);
         c->draw(mytext.get(), m_player->m_x-mytext->w()/2, m_player->m_y-mytext->h()/2);
     }

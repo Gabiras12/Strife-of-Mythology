@@ -9,12 +9,14 @@
 
 #include "tower.h"
 
-SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y) :
+SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::string image_selected) :
+    m_image_path(texture_name),
     m_id(id),
     m_x(x),
     m_y(y),
     m_start(-1),
-    m_priority(0)
+    m_priority(0),
+    m_imageselected_path(image_selected)
 {
     m_range = 200.0;
     m_texture = ijengine::resources::get_texture(texture_name);
@@ -32,10 +34,22 @@ SoMTD::Tower::on_event(const ijengine::GameEvent& event)
     if (event.id() == SoMTD::MOUSEOVER) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
-        if (x_pos >= canvas_x && x_pos<canvas_x+m_texture->w() && y_pos>canvas_y && y_pos<canvas_y+m_texture->h()) {
+        if (x_pos >= (canvas_x+m_texture->w()/4) && (x_pos<canvas_x+m_texture->w()-m_texture->w()/4) && (y_pos>canvas_y+m_texture->h()/4) && y_pos<(canvas_y+m_texture->h()-m_texture->h()/4)) {
             m_mouseover = true;
         } else {
             m_mouseover = false;
+        }
+    }
+
+    if (event.id() == SoMTD::CLICK) {
+        double x_pos = event.get_property<double>("x");
+        double y_pos = event.get_property<double>("y");
+        if (x_pos >= (canvas_x+m_texture->w()/4) && (x_pos<canvas_x+m_texture->w()-m_texture->w()/4) && (y_pos>canvas_y+m_texture->h()/4) && y_pos<(canvas_y+m_texture->h()-m_texture->h()/4)) {
+            m_selected = true;
+            m_texture = ijengine::resources::get_texture(m_imageselected_path);
+        } else {
+            m_selected = false;
+            m_texture = ijengine::resources::get_texture(m_image_path);
         }
     }
 
