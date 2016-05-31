@@ -14,7 +14,8 @@ namespace SoMTD {
         CLICK = 5,
         BUILD_TOWER = 6,
         SELECT_TOWER = 11,
-        UPGRADE_TOWER = 12
+        UPGRADE_TOWER = 12,
+        SPAWN_UNIT = 14
     };
     class Game {
     public:

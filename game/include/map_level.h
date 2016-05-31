@@ -9,9 +9,11 @@
 #include <string>
 #include <memory>
 #include <fstream>
+#include <list>
 
 #include "player.h"
 #include "luascript.h"
+#include "spawner.h"
 
 namespace SoMTD {
     class MapLevel : public ijengine::Level, public ijengine::GameEventsListener {
@@ -44,7 +46,6 @@ namespace SoMTD {
         int m_start;
         std::shared_ptr< ijengine::Texture > m_texture;
         LuaScript *m_actions;
-
         std::pair<int, int> screen_coordinates(int map_x, int map_y, int tw, int th);
     };
 }

@@ -72,6 +72,10 @@ SoMTD::Translator::translate(ijengine::GameEvent& to, const ijengine::KeyboardEv
             id = SoMTD::UPGRADE_TOWER;
             break;
 
+        case ijengine::KeyboardEvent::S:
+            id = SoMTD::SPAWN_UNIT;
+            break;
+
         default:
             done = false;
     }

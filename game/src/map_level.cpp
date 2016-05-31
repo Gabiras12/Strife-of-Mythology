@@ -10,7 +10,6 @@
 #include <cstring>
 #include <map>
 
-
 #include "luascript.h"
 #include "map_level.h"
 #include "level_area.h"
@@ -19,7 +18,8 @@
 #include "panel.h"
 #include "texture_bar.h"
 #include "button.h"
-#include "enemy.h"
+#include "spawner.h"
+#include "movable_unit.h"
 
 SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level, const string& audio_file_path) :
     m_next(next_level),
@@ -38,7 +38,6 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     load_tiles();
     load_hud();
     m_actions = new LuaScript("lua-src/Action.lua");
-    Enemy *e = new Enemy(1, 1);
 }
 
 SoMTD::MapLevel::~MapLevel()
@@ -178,6 +177,11 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
 {
     int myx = m_player->m_x;
     int myy = m_player->m_y;
+
+    if (event.id() == SoMTD::SPAWN_UNIT) {
+        MovableUnit* mv = new MovableUnit(std::make_pair(0, 0), std::make_pair(5, 5), "tower_1.png");
+        add_child(mv);
+    }
 
     if (m_player->state == SoMTD::Player::PlayerState::SELECTED_TOWER) {
         printf("torre selecionada.\n");
