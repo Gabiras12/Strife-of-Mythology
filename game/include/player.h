@@ -1,6 +1,8 @@
 #ifndef SOMTD_PLAYER_H
 #define SOMTD_PLAYER_H
 
+#include <ijengine/game_object.h>
+
 namespace SoMTD {
     class Player {
     public:
@@ -8,7 +10,8 @@ namespace SoMTD {
             IDLE = 0,
             HOLDING_BUILD = 1,
             INVALID_BUILD = 3,
-            NOT_ENOUGH_GOLD = 4
+            NOT_ENOUGH_GOLD = 4,
+            SELECTED_TOWER = 5
         };
 
         Player();
@@ -20,6 +23,7 @@ namespace SoMTD {
         int state;
         int m_hp = 50;
         int desired_tower = 0;
+        ijengine::GameObject *selected_object = nullptr;
     };
 }
 

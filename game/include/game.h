@@ -12,7 +12,9 @@ namespace SoMTD {
     enum {
         MOUSEOVER = 4,
         CLICK = 5,
-        BUILD_TOWER = 6
+        BUILD_TOWER = 6,
+        SELECT_TOWER = 11,
+        UPGRADE_TOWER = 12
     };
     class Game {
     public:

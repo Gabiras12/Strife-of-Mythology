@@ -15,6 +15,7 @@ namespace SoMTD {
         const unsigned MOTION = ijengine::GameEvent::assign_id();
         const unsigned CLICK = ijengine::GameEvent::assign_id();
         const unsigned BUILD_TOWER = ijengine::GameEvent::assign_id();
+        const unsigned UPGRADE_TOWER = ijengine::GameEvent::assign_id();
         bool translate(ijengine::GameEvent& to, const ijengine::MouseEvent& from);
         bool translate(ijengine::GameEvent& to, const ijengine::SystemEvent& from);
         virtual bool translate(ijengine::GameEvent& to, const ijengine::KeyboardEvent& from);

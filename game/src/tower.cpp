@@ -9,14 +9,15 @@
 
 #include "tower.h"
 
-SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::string image_selected) :
+SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::string image_selected, Player *p) :
     m_image_path(texture_name),
     m_id(id),
     m_x(x),
     m_y(y),
     m_start(-1),
     m_priority(0),
-    m_imageselected_path(image_selected)
+    m_imageselected_path(image_selected),
+    m_player(p)
 {
     m_range = 200.0;
     m_texture = ijengine::resources::get_texture(texture_name);
@@ -31,6 +32,10 @@ SoMTD::Tower::~Tower()
 bool
 SoMTD::Tower::on_event(const ijengine::GameEvent& event)
 {
+    if (event.id() == SoMTD::UPGRADE_TOWER) {
+        if (m_selected)
+            m_x += 1;
+    }
     if (event.id() == SoMTD::MOUSEOVER) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
@@ -47,6 +52,8 @@ SoMTD::Tower::on_event(const ijengine::GameEvent& event)
         if (x_pos >= (canvas_x+m_texture->w()/4) && (x_pos<canvas_x+m_texture->w()-m_texture->w()/4) && (y_pos>canvas_y+m_texture->h()/4) && y_pos<(canvas_y+m_texture->h()-m_texture->h()/4)) {
             m_selected = true;
             m_texture = ijengine::resources::get_texture(m_imageselected_path);
+            m_player->state = SoMTD::Player::PlayerState::SELECTED_TOWER;
+            m_player->selected_object = this;
         } else {
             m_selected = false;
             m_texture = ijengine::resources::get_texture(m_image_path);
@@ -65,11 +72,9 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
     std::pair<int, int> p = screen_coordinates(m_x, m_y, myw, myh);
     int x_pos = p.first;
     int y_pos = p.second;
-    // printf("x_pos: %d, y_pos: %d\n", x_pos, y_pos);
 
     // x0 = half of window width, the coeficient for the isometry
     int x0 = 1024/2;
-    // canvas->draw(m_texture.get(), x_pos+x0-((m_y+m_x)*11), y_pos-(11*(m_x-m_y)));
 
     canvas_x = x_pos+x0 - myw/2;
     canvas_y = -myh/2 +y_pos-11*(m_y+m_x);
@@ -80,13 +85,8 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
             double myy = ( m_range * sin(theta) + canvas_y + m_texture->h()/2);
             ijengine::Point myp(myx, myy);
             canvas->draw(myp);
-
         }
-        // ijengine::Rectangle myrect {canvas_x, canvas_y, m_texture->w(), m_texture->h() };
-        // canvas->draw(myrect);
     }
-    // canvas->draw
-    // canvas->draw(m_texture.get(), x_pos + x0 - myw/2, y_pos - myh/2);
 }
 
 void

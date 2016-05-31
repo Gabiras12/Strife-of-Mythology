@@ -6,11 +6,12 @@
 #include <ijengine/texture.h>
 
 #include <memory>
+#include "player.h"
 
 namespace SoMTD {
     class Tower : public ijengine::GameObject, public ijengine::GameEventsListener {
     public:
-        Tower(std::string texture_name, unsigned id, int x, int y, std::string m_imageselected_path = "");
+        Tower(std::string texture_name, unsigned id, int x, int y, std::string m_imageselected_path, Player *p);
         ~Tower();
 
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);
@@ -35,6 +36,7 @@ namespace SoMTD {
         int canvas_y = 1;
         bool m_mouseover = false;
         std::string m_imageselected_path;
+        Player *m_player;
     };
 }
 

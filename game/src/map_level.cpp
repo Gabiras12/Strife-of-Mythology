@@ -177,6 +177,18 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
     int myx = m_player->m_x;
     int myy = m_player->m_y;
 
+    if (m_player->state == SoMTD::Player::PlayerState::SELECTED_TOWER) {
+        printf("torre selecionada.\n");
+        if (event.id() == SoMTD::CLICK) {
+            double x_pos = event.get_property<double>("x");
+            double y_pos = event.get_property<double>("y");
+            if (x_pos < 800) {
+                m_player->state = SoMTD::Player::PlayerState::IDLE;
+                m_player->selected_object = nullptr;
+            }
+        }
+    }
+
     if (event.id() == SoMTD::CLICK) {
         if (m_player->state == 0x01 || m_player->state == 0x05 || m_player->state == 0x06 || m_player->state == 0x07) {
             double x_pos = event.get_property<double>("x");
@@ -201,7 +213,7 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                             std::string tower_name("tower_");
                             tower_name.append(std::to_string(m_player->desired_tower));
                             tower_name.append(".png");
-                            m_tower = new SoMTD::Tower(tower_name, 9, myx, myy, "selected_"+tower_name);
+                            m_tower = new SoMTD::Tower(tower_name, 9, myx, myy, "selected_"+tower_name, m_player);
                             m_tower->set_priority(50000+(5*myy+5*myx));
                             add_child(m_tower);
                             m_player->m_gold -= 100;
@@ -317,6 +329,7 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
         tower_name.append("_holding.png");
         mytext = ijengine::resources::get_texture(tower_name);
         c->draw(mytext.get(), m_player->m_x-mytext->w()/2, m_player->m_y-mytext->h()/2);
+    } else if (m_player->state == SoMTD::Player::PlayerState::SELECTED_TOWER) {
+        // SoMTD::Tower *t;
     }
-
 }

@@ -6,6 +6,8 @@
 #include <ijengine/keyboard_event.h>
 #include <ijengine/system_event.h>
 
+#include "game.h"
+
 bool
 SoMTD::Translator::translate(ijengine::GameEvent& to, const ijengine::MouseEvent& from)
 {
@@ -66,6 +68,9 @@ SoMTD::Translator::translate(ijengine::GameEvent& to, const ijengine::KeyboardEv
             id = 777;
             break;
 
+        case ijengine::KeyboardEvent::U:
+            id = SoMTD::UPGRADE_TOWER;
+            break;
 
         default:
             done = false;
