@@ -19,6 +19,7 @@
 #include "panel.h"
 #include "texture_bar.h"
 #include "button.h"
+#include "enemy.h"
 
 SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level, const string& audio_file_path) :
     m_next(next_level),
@@ -37,6 +38,7 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     load_tiles();
     load_hud();
     m_actions = new LuaScript("lua-src/Action.lua");
+    Enemy *e = new Enemy(1, 1);
 }
 
 SoMTD::MapLevel::~MapLevel()
