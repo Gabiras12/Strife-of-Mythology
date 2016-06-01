@@ -35,8 +35,8 @@ namespace SoMTD {
         std::pair<int, int> desired_place;
         bool m_active;
         bool m_moving = false;
-        int m_x = 0;
-        int m_y = 0;
+        int m_x;
+        int m_y;
         std::queue< std::pair<int, int> > instructions_queue;
     };
 }

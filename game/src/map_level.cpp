@@ -11,6 +11,7 @@
 #include <map>
 #include <queue>
 #include <cstring>
+#include <algorithm>
 
 #include "luascript.h"
 #include "map_level.h"
@@ -194,8 +195,9 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
         MovableUnit* mv = new MovableUnit(std::make_pair(origin.first, origin.second), std::make_pair(destiny.first, destiny.second), "tower_1.png");
         m_unit_path = breadth_first_search();
         printf("BEST PATH:\n");
+        std::reverse(m_unit_path.begin(), m_unit_path.end());
         for (auto it : m_unit_path) {
-            printf("[%d][%d] => \n", it.first, it.second);
+            printf("[%d][%d] => \n", it.second, it.first);
             mv->add_instruction(0x00, it.first, it.second);
         }
         add_child(mv);
@@ -391,16 +393,17 @@ SoMTD::MapLevel::breadth_first_search()
                 aux_x = idx.first;
                 aux_y = idx.second;
             }
-            return path;
 
+            return path;
         }
 
         std::vector< std::pair<int, int> > myv { std::make_pair(x+1, y), std::make_pair(x-1, y), std::make_pair(x, y+1), std::make_pair(x, y-1) };
         for (auto it : myv) {
-            if (it.first >= 0 && it.first < 11 && it.second >= 0 && it.second < 11) {
+            if (it.first >= 0 && it.first < 10 && it.second >= 0 && it.second < 10) {
                 if (grid[it.second][it.first] != 6) {
                     if (not visited[it.second][it.first]) {
                         myq.push(std::make_pair(it.first, it.second));
+                        visited[it.second][it.first] = 1;
                         father[it.second][it.first] = std::pair<int, int>(x, y);
                     }
                 }

@@ -13,9 +13,14 @@ SoMTD::MovableUnit::MovableUnit(std::pair<int, int> s_pos, std::pair<int, int> e
     m_texture(ijengine::resources::get_texture(t_path)),
     m_active(false)
 {
+    std::pair<int, int> p = SoMTD::tools::grid_to_isometric_canvas(s_pos.first, s_pos.second, 100, 81);
+    std::pair<int, int> p2 = SoMTD::tools::isometric_adjust(p.first, p.second, 1024/2, 11, 100, 81, start_position.first, start_position.second);
+    desired_place = start_position;
+    // move(start_position.first, start_position.second);
+
+    m_x = p2.first;
+    m_y = p2.second;
     ijengine::event::register_listener(this);
-    desired_place.first = 0;
-    desired_place.second = 0;
 }
 
 SoMTD::MovableUnit::~MovableUnit()
@@ -27,7 +32,6 @@ void
 SoMTD::MovableUnit::update_self(unsigned start, unsigned end)
 {
     if (m_moving) {
-        printf("m_moving...\n");
         if (m_x == desired_place.first && m_y == desired_place.second) {
             if (instructions_queue.empty()) {
                 printf("empty queue..\n");
@@ -69,11 +73,12 @@ SoMTD::MovableUnit::on_event(const ijengine::GameEvent& event)
 void
 SoMTD::MovableUnit::draw_self(ijengine::Canvas *c, unsigned, unsigned)
 {
-    if (m_active) {
+    // if (m_active) {
         std::pair<int, int> actual_grid_position = SoMTD::tools::isometric_to_grid(m_x, m_y, 100, 81, 1024/2, 11);
         std::pair<int, int> p = SoMTD::tools::isometric_adjust(m_x, m_y, 1024/2, 11, 100, 81, actual_grid_position.first, actual_grid_position.second);
         c->draw(m_texture.get(), p.first, p.second);
-    }
+        printf("p.first: %d, p.second: %d\n", p.first, p.second);
+    // }
 }
 
 void
