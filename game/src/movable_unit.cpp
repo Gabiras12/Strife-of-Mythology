@@ -13,13 +13,11 @@ SoMTD::MovableUnit::MovableUnit(std::pair<int, int> s_pos, std::pair<int, int> e
     m_texture(ijengine::resources::get_texture(t_path)),
     m_active(false)
 {
-    std::pair<int, int> p = SoMTD::tools::grid_to_isometric_canvas(s_pos.first, s_pos.second, 100, 81);
-    std::pair<int, int> p2 = SoMTD::tools::isometric_adjust(p.first, p.second, 1024/2, 11, 100, 81, start_position.first, start_position.second);
+    std::pair<int, int> p = SoMTD::tools::grid_to_isometric(s_pos.first, s_pos.second, 100, 81, 1024/2, 11);
     desired_place = start_position;
-    // move(start_position.first, start_position.second);
 
-    m_x = p2.first;
-    m_y = p2.second;
+    m_x = p.first;
+    m_y = p.second;
     ijengine::event::register_listener(this);
 }
 
@@ -73,12 +71,11 @@ SoMTD::MovableUnit::on_event(const ijengine::GameEvent& event)
 void
 SoMTD::MovableUnit::draw_self(ijengine::Canvas *c, unsigned, unsigned)
 {
-    // if (m_active) {
-        std::pair<int, int> actual_grid_position = SoMTD::tools::isometric_to_grid(m_x, m_y, 100, 81, 1024/2, 11);
-        std::pair<int, int> p = SoMTD::tools::isometric_adjust(m_x, m_y, 1024/2, 11, 100, 81, actual_grid_position.first, actual_grid_position.second);
+    if (m_active) {
+        std::pair<int, int> p = SoMTD::tools::isometric_to_grid(m_x, m_y, 100, 81, 1024/2, 11);
         c->draw(m_texture.get(), p.first, p.second);
         printf("p.first: %d, p.second: %d\n", p.first, p.second);
-    // }
+    }
 }
 
 void
@@ -113,7 +110,7 @@ SoMTD::MovableUnit::move(int x, int y)
     std::pair<int, int> destiny = std::make_pair(x, y);
     const int tile_width = 100;
     const int tile_height = 81;
-    std::pair<int, int> dest_canvas = SoMTD::tools::grid_to_isometric_canvas(destiny.first, destiny.second, tile_width, tile_height);
+    std::pair<int, int> dest_canvas = SoMTD::tools::grid_to_isometric(destiny.first, destiny.second, tile_width, tile_height, 1024/2, 11);
     desired_place = dest_canvas;
 }
 

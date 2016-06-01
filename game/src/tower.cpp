@@ -69,16 +69,11 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
     const int myw = 100;
     const int myh = 81;
 
-    std::pair<int, int> p = SoMTD::tools::grid_to_isometric_canvas(m_x, m_y, myw, myh);
+    std::pair<int, int> p = SoMTD::tools::grid_to_isometric(m_x, m_y, myw, myh, 1024/2, 11);
     int x_pos = p.first;
     int y_pos = p.second;
 
-    // x0 = half of window width, the coeficient for the isometry
-    int x0 = 1024/2;
-
-    canvas_x = x_pos+x0 - myw/2;
-    canvas_y = -myh/2 +y_pos-11*(m_y+m_x);
-    canvas->draw(m_texture.get(), x_pos+x0 - myw/2, - myh/2 +y_pos-11*(m_y+m_x));
+    canvas->draw(m_texture.get(), p.first + 22, p.second - myh/2);
     if (m_mouseover) {
         for (double theta=0.0; theta < 360; ++theta) {
             double myx = ( (m_range * cos(theta)) + canvas_x + m_texture->w()/2 );

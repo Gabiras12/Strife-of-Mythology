@@ -29,33 +29,23 @@ namespace SoMTD {
     }
 
     std::pair<int, int>
-    tools::grid_to_isometric_canvas(int x_grid, int y_grid, int tile_width, int tile_height)
+    tools::grid_to_isometric(int x_grid, int y_grid, int tile_width, int tile_height, int x0, int offset)
     {
-        int xs = (x_grid - y_grid) * (tile_width/2);
-        int ys = (x_grid + y_grid) * (tile_height/2);
+        double y0 = tile_height/2.0;
+        double xs = (x_grid - y_grid) * (tile_width/2) + x0;
+        double ys = (x_grid + y_grid) * (-offset +tile_height/2.0) + y0;
 
-        return std::pair<int, int>(xs, ys);
+        return std::pair<int, int>((int)xs, (int)ys);
     }
 
     std::pair<int, int>
-    tools::isometric_adjust(int isometric_x, int isometric_y, int x0, int tile_offset, int tile_width, int tile_height, int grid_x, int grid_y)
+    tools::isometric_to_grid(int xs, int ys, int w, int h, int x0, int offset)
     {
-        std::pair<int, int> p;
-//        p.first = isometric_x + x0 - tile_width/2;
-//        p.second = isometric_y - (tile_offset*(grid_x + grid_y));
-        return p;
-    }
-
-    std::pair<int, int>
-    tools::isometric_to_grid(int isometric_x, int isometric_y, int tile_width, int tile_height, int x0, int offset)
-    {
-        int h_tw = tile_width/2;
-        int h_th = tile_height/2;
-
-        std::pair<int, int> p;
-        p.first = (((isometric_x+h_th-x0)/h_tw)+((isometric_y)/(h_th-offset)))/2;
-        p.second = (((isometric_y)/(h_th-offset)) - ((isometric_x+h_tw-x0)/h_tw))/2;
-        return p;
+        x0 += w/2;
+        double y0 = h/2;
+        double xg = (double)((double)(xs - x0)/w) + (double)((double)(ys-y0)/((double)h - 2.0*offset));
+        double yg = (double)(-(double)(xs-x0)/w) + (double)((ys-y0)/(h - 2.0*offset));
+        return std::pair<int, int>(xg, yg);
     }
 
 }

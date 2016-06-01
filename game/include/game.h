@@ -32,8 +32,7 @@ namespace SoMTD {
     };
 
     namespace tools {
-        std::pair<int, int> grid_to_isometric_canvas(int x_grid, int y_grid, int tile_width, int tile_height);
-        std::pair<int, int> isometric_adjust(int isometric_x, int isometric_y, int x0, int tile_offset, int tile_width, int tile_height, int grid_x, int grid_y);
+        std::pair<int, int> grid_to_isometric(int x_grid, int y_grid, int tile_width, int tile_height, int x0, int offset);
         std::pair<int, int> isometric_to_grid(int isometric_x, int isometric_y, int tile_width, int tile_height, int x0, int offset);
     }
 }

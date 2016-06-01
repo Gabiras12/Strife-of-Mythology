@@ -37,14 +37,9 @@ SoMTD::LevelArea::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
     int myw = m_texture->w();
     int myh = m_texture->h();
 
-    std::pair<int, int> p = SoMTD::tools::grid_to_isometric_canvas(m_x, m_y, myw, myh);
-    int x_pos = p.first;
-    int y_pos = p.second;
+    std::pair<int, int> p = SoMTD::tools::grid_to_isometric(m_x, m_y, myw, myh, 1024/2, 11);
 
-    // x0 = half of window width, the coeficient for the isometry
-    int x0 = 1024/2;
-    const int block_offset_region = 11;
-    canvas->draw(m_texture.get(), x_pos+x0 - m_texture->w()/2, y_pos-(block_offset_region*m_y)-(block_offset_region*m_x));
+    canvas->draw(m_texture.get(), p.first, p.second);
 }
 
 void

@@ -43,10 +43,6 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     load_tiles();
     load_hud();
     m_unit_path = breadth_first_search();
-    printf("BEST PATH:\n");
-    for (auto it : m_unit_path) {
-        printf("[%d][%d] => \n", it.first, it.second);
-    }
     m_actions = new LuaScript("lua-src/Action.lua");
 }
 
@@ -191,14 +187,6 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
     int myx = m_player->m_x;
     int myy = m_player->m_y;
 
-    if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD and 
-        event.id() == SoMTD::MOUSEOVER) {
-        m_player->m_x = atof(event.get_property<string>("x").c_str());
-        m_player->m_y = atof(event.get_property<string>("y").c_str());
-
-        return false;
-    }
- 
     if (event.id() == SoMTD::SPAWN_UNIT) {
         MovableUnit* mv = new MovableUnit(std::make_pair(origin.first, origin.second), std::make_pair(destiny.first, destiny.second), "tower_1.png");
         m_unit_path = breadth_first_search();
@@ -211,46 +199,24 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
         add_child(mv);
     }
 
-    if (m_player->state == SoMTD::Player::PlayerState::SELECTED_TOWER) {
-        if (event.id() == SoMTD::CLICK) {
-            double x_pos = event.get_property<double>("x");
-            double y_pos = event.get_property<double>("y");
-            if (x_pos < 800) {
-                m_player->state = SoMTD::Player::PlayerState::IDLE;
-                m_player->selected_object = nullptr;
-            }
-        }
-    }
-
     if (event.id() == SoMTD::CLICK) {
+        double x_pos = event.get_property<double>("x");
+        double y_pos = event.get_property<double>("y");
+
+
+        auto tile_position = SoMTD::tools::isometric_to_grid((int)x_pos, (int)y_pos, 100, 81, 1024/2, 11);
+
         if (m_player->state == 0x01 || m_player->state == 0x05 || m_player->state == 0x06 || m_player->state == 0x07) {
-            double x_pos = event.get_property<double>("x");
-            double y_pos = event.get_property<double>("y");
-
-            int const tile_width = 100;
-            int const h_tw = tile_width/2;
-            int const tile_height = 81;
-            int const h_th = tile_height/2;
-            int const x0 = 1024/2;
-            int const offset = 11;
-
-auto pos = ijengine::event::mouse_position();
-x_pos = pos.first;
-y_pos = pos.second;
-
-            myx =  (((x_pos+h_th-x0)/h_tw)+((y_pos)/(h_th-offset)))/2;
-            myy = (((y_pos)/(h_th-offset)) - ((x_pos+h_tw-x0)/h_tw))/2;
-
-            if (myx >= 0 && myy >= 0 && grid[myy][myx] < 8 && myx < 10 && myy < 10) {
+            if (tile_position.first >= 0 && tile_position.second >= 0 && grid[tile_position.second][tile_position.first] < 8 && tile_position.first < 10 && tile_position.second < 10) {
                 if (m_player->m_gold >= 100) {
-                    if (grid[myy][myx] == 6) {
-                        grid[myy][myx] = 88;
+                    if (grid[tile_position.second][tile_position.first] == 6) {
+                        grid[tile_position.second][tile_position.first] = 88;
                         SoMTD::Tower *m_tower = nullptr;
                         if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
                             std::string tower_name("tower_");
                             tower_name.append(std::to_string(m_player->desired_tower));
                             tower_name.append(".png");
-                            m_tower = new SoMTD::Tower(tower_name, 9, myx, myy, "selected_"+tower_name, m_player);
+                            m_tower = new SoMTD::Tower(tower_name, 9, tile_position.first, tile_position.second, "selected_"+tower_name, m_player);
                             m_tower->set_priority(50000+(5*myy+5*myx));
                             add_child(m_tower);
                             m_player->m_gold -= 100;
@@ -329,7 +295,6 @@ SoMTD::MapLevel::load_buttons()
         button_id = button_list.get<int>((it + ".id").c_str());
         button_priority = button_list.get<int>((it + ".priority").c_str());
         button_mouseover_path = button_list.get<std::string>((it + ".mouseover_file_path").c_str());
-        printf("button id: %d\n", button_id);
         SoMTD::Button *b = new SoMTD::Button(button_file_path, button_id, button_screen_position.first, button_screen_position.second, button_mouseover_path, m_player, button_priority);
         add_child(b);
     }
@@ -380,8 +345,6 @@ SoMTD::MapLevel::breadth_first_search()
 {
     std::queue<std::pair<int, int> >myq;
     myq.push(std::make_pair(origin.first, origin.second));
-    printf("origin: [%d][%d]\n", origin.first, origin.second);
-    printf("destiny: [%d][%d]\n", destiny.first, destiny.second);
     int visited[30][30];
     std::pair<int, int> father[30][30];
     for (int i=0; i < 30; ++i) {
@@ -395,12 +358,10 @@ SoMTD::MapLevel::breadth_first_search()
     while (not myq.empty()) {
         int x = myq.front().first;
         int y = myq.front().second;
-        printf("IDX => [%d][%d]\n", x, y);
 
         visited[y][x] = 1;
 
         if (x == destiny.first && y == destiny.second) {
-            printf("entrou no if\n");
             int aux_x = x;
             int aux_y = y;
             while (father[aux_y][aux_x] != std::pair<int, int>(aux_x, aux_y)) {
