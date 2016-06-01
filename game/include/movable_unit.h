@@ -6,6 +6,7 @@
 #include <ijengine/texture.h>
 #include <string>
 #include <memory>
+#include <queue>
 
 namespace SoMTD {
 
@@ -16,6 +17,8 @@ namespace SoMTD {
         bool enemy() const;
         void spawn();
         bool active() const;
+        void move(int x, int y);
+        void add_instruction(int instruction_type, int paramA, int paramB);
 
     protected:
         void draw_self(ijengine::Canvas*, unsigned, unsigned);
@@ -29,9 +32,12 @@ namespace SoMTD {
         std::pair<int, int> start_position;
         std::pair<int, int> grid_position;
         std::shared_ptr<ijengine::Texture> m_texture;
+        std::pair<int, int> desired_place;
         bool m_active;
+        bool m_moving = false;
         int m_x = 0;
         int m_y = 0;
+        std::queue< std::pair<int, int> > instructions_queue;
     };
 }
 

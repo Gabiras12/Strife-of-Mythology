@@ -18,8 +18,8 @@ namespace SoMTD {
         void draw_self_after(ijengine::Canvas *, unsigned, unsigned) {}
         bool on_event(const ijengine::GameEvent& event);
         void update_self(unsigned, unsigned);
-        std::pair<int, int> screen_coordinates(int map_x, int map_y, int tw, int th);
         double m_range = 200.0;
+
     private:
         std::shared_ptr<ijengine::Texture> m_texture;
         std::string m_image_path;

@@ -9,6 +9,8 @@
 #include <fstream>
 #include <cstring>
 #include <map>
+#include <queue>
+#include <cstring>
 
 #include "luascript.h"
 #include "map_level.h"
@@ -33,10 +35,17 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     // reset grid positions
     memset(grid, 0, sizeof grid);
     ijengine::event::register_listener(this);
+    origin = std::make_pair(0, 0);
+    destiny = std::make_pair(0, 0);
 
     load_map_from_file();
     load_tiles();
     load_hud();
+    m_unit_path = breadth_first_search();
+    printf("BEST PATH:\n");
+    for (auto it : m_unit_path) {
+        printf("[%d][%d] => \n", it.first, it.second);
+    }
     m_actions = new LuaScript("lua-src/Action.lua");
 }
 
@@ -83,6 +92,18 @@ SoMTD::MapLevel::load_tiles()
 
                 case 8:
                     add_child(new SoMTD::LevelArea("waterfallEndS.png", 8, j, i, 0));
+                break;
+
+                case 50:
+                    origin.first = j;
+                    origin.second = i;
+                    add_child(new SoMTD::LevelArea("caminho2.png", 2, j, i, 0));
+                break;
+
+                case 60:
+                    destiny.first = j;
+                    destiny.second = i;
+                    add_child(new SoMTD::LevelArea("caminho2.png", 2, j, i, 0));
                 break;
 
                 default:
@@ -163,15 +184,6 @@ SoMTD::MapLevel::draw_help_text(ijengine::Canvas *canvas)
     canvas->draw(help_text.get(), window_width - help_text->w(), y_position);
 }
 
-std::pair<int, int>
-SoMTD::MapLevel::screen_coordinates(int map_x, int map_y, int tw, int th)
-{
-    int xs = (map_x - map_y) * (tw / 2);
-    int ys = (map_x + map_y) * (th / 2);
-
-    return std::pair<int, int>(xs, ys);
-}
-
 bool
 SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
 {
@@ -179,12 +191,17 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
     int myy = m_player->m_y;
 
     if (event.id() == SoMTD::SPAWN_UNIT) {
-        MovableUnit* mv = new MovableUnit(std::make_pair(0, 0), std::make_pair(5, 5), "tower_1.png");
+        MovableUnit* mv = new MovableUnit(std::make_pair(origin.first, origin.second), std::make_pair(destiny.first, destiny.second), "tower_1.png");
+        m_unit_path = breadth_first_search();
+        printf("BEST PATH:\n");
+        for (auto it : m_unit_path) {
+            printf("[%d][%d] => \n", it.first, it.second);
+            mv->add_instruction(0x00, it.first, it.second);
+        }
         add_child(mv);
     }
 
     if (m_player->state == SoMTD::Player::PlayerState::SELECTED_TOWER) {
-        printf("torre selecionada.\n");
         if (event.id() == SoMTD::CLICK) {
             double x_pos = event.get_property<double>("x");
             double y_pos = event.get_property<double>("y");
@@ -338,4 +355,59 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
     } else if (m_player->state == SoMTD::Player::PlayerState::SELECTED_TOWER) {
         // SoMTD::Tower *t;
     }
+}
+
+std::vector< std::pair<int, int> >
+SoMTD::MapLevel::breadth_first_search()
+{
+    std::queue<std::pair<int, int> >myq;
+    myq.push(std::make_pair(origin.first, origin.second));
+    printf("origin: [%d][%d]\n", origin.first, origin.second);
+    printf("destiny: [%d][%d]\n", destiny.first, destiny.second);
+    int visited[30][30];
+    std::pair<int, int> father[30][30];
+    for (int i=0; i < 30; ++i) {
+        for (int j=0; j < 30; ++j) {
+            father[i][j] = std::pair<int, int>(j, i);
+        }
+    }
+    visited[origin.second][origin.first] = 1;
+    memset(visited, 0, sizeof visited);
+    std::vector< std::pair<int, int> > path;
+    while (not myq.empty()) {
+        int x = myq.front().first;
+        int y = myq.front().second;
+        printf("IDX => [%d][%d]\n", x, y);
+
+        visited[y][x] = 1;
+
+        if (x == destiny.first && y == destiny.second) {
+            printf("entrou no if\n");
+            int aux_x = x;
+            int aux_y = y;
+            while (father[aux_y][aux_x] != std::pair<int, int>(aux_x, aux_y)) {
+                path.push_back( std::pair<int, int>(aux_x, aux_y));
+                std::pair<int, int> idx = father[aux_y][aux_x];
+                aux_x = idx.first;
+                aux_y = idx.second;
+            }
+            return path;
+
+        }
+
+        std::vector< std::pair<int, int> > myv { std::make_pair(x+1, y), std::make_pair(x-1, y), std::make_pair(x, y+1), std::make_pair(x, y-1) };
+        for (auto it : myv) {
+            if (it.first >= 0 && it.first < 11 && it.second >= 0 && it.second < 11) {
+                if (grid[it.second][it.first] != 6) {
+                    if (not visited[it.second][it.first]) {
+                        myq.push(std::make_pair(it.first, it.second));
+                        father[it.second][it.first] = std::pair<int, int>(x, y);
+                    }
+                }
+            }
+        }
+
+        myq.pop();
+    }
+    return path;
 }

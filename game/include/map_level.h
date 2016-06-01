@@ -9,7 +9,7 @@
 #include <string>
 #include <memory>
 #include <fstream>
-#include <list>
+#include <vector>
 
 #include "player.h"
 #include "luascript.h"
@@ -46,7 +46,11 @@ namespace SoMTD {
         int m_start;
         std::shared_ptr< ijengine::Texture > m_texture;
         LuaScript *m_actions;
-        std::pair<int, int> screen_coordinates(int map_x, int map_y, int tw, int th);
+        std::vector< std::pair<int, int> > breadth_first_search();
+        std::pair<int, int> origin;
+        std::pair<int, int> destiny;
+        std::vector< std::pair<int, int> > m_unit_path;
+
     };
 }
 

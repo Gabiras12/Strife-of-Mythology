@@ -37,7 +37,7 @@ SoMTD::LevelArea::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
     int myw = m_texture->w();
     int myh = m_texture->h();
 
-    std::pair<int, int> p = screen_coordinates(m_x, m_y, myw/2, myh/2);
+    std::pair<int, int> p = SoMTD::tools::grid_to_isometric_canvas(m_x, m_y, myw, myh);
     int x_pos = p.first;
     int y_pos = p.second;
 
@@ -50,13 +50,5 @@ SoMTD::LevelArea::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 void
 SoMTD::LevelArea::update_self(unsigned, unsigned)
 {
-}
-
-std::pair<int, int>
-SoMTD::LevelArea::screen_coordinates(int map_x, int map_y, int tw, int th)
-{
-    int xs = (map_x - map_y) * tw;
-    int ys = (map_x + map_y) * th;;
-    return std::pair<int, int>(xs, ys);
 }
 

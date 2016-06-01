@@ -69,7 +69,7 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
     const int myw = 100;
     const int myh = 81;
 
-    std::pair<int, int> p = screen_coordinates(m_x, m_y, myw, myh);
+    std::pair<int, int> p = SoMTD::tools::grid_to_isometric_canvas(m_x, m_y, myw, myh);
     int x_pos = p.first;
     int y_pos = p.second;
 
@@ -93,13 +93,3 @@ void
 SoMTD::Tower::update_self(unsigned, unsigned)
 {
 }
-
-std::pair<int, int>
-SoMTD::Tower::screen_coordinates(int map_x, int map_y, int tw, int th)
-{
-    int xs = (map_x - map_y) * (tw / 2);
-    int ys = (map_x + map_y) * (th / 2);
-
-    return std::pair<int, int>(xs, ys);
-}
-

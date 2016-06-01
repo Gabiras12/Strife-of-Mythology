@@ -17,6 +17,7 @@ namespace SoMTD {
         UPGRADE_TOWER = 12,
         SPAWN_UNIT = 14
     };
+
     class Game {
     public:
         Game(const string& title, int w, int h);
@@ -29,6 +30,12 @@ namespace SoMTD {
         Translator m_translator;
         LevelFactory m_level_factory;
     };
+
+    namespace tools {
+        std::pair<int, int> grid_to_isometric_canvas(int x_grid, int y_grid, int tile_width, int tile_height);
+        std::pair<int, int> isometric_adjust(int isometric_x, int isometric_y, int x0, int tile_offset, int tile_width, int tile_height, int grid_x, int grid_y);
+        std::pair<int, int> isometric_to_grid(int isometric_x, int isometric_y, int tile_width, int tile_height, int x0, int offset);
+    }
 }
 
 #endif
