@@ -1,70 +1,29 @@
 \select@language {portuguese}
-\contentsline {section}{\numberline {1}Objetivo do jogo}{5}{section.1}
-\contentsline {section}{\numberline {2}G\IeC {\^e}nero}{5}{section.2}
-\contentsline {section}{\numberline {3}Vis\IeC {\~a}o geral}{5}{section.3}
-\contentsline {section}{\numberline {4}Gameplay}{6}{section.4}
-\contentsline {subsection}{\numberline {4.1}Progress\IeC {\~a}o do Jogo}{6}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Objetivo e Estrutura}{6}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Explora\IeC {\c c}\IeC {\~a}o Vertical}{6}{subsection.4.3}
-\contentsline {subsubsection}{\numberline {4.3.1}Processo da Explora\IeC {\c c}\IeC {\~a}o Vertical}{6}{subsubsection.4.3.1}
-\contentsline {subsubsection}{\numberline {4.3.2}Explora\IeC {\c c}\IeC {\~a}o e encontros na Explora\IeC {\c c}\IeC {\~a}o Vertical}{7}{subsubsection.4.3.2}
-\contentsline {subsection}{\numberline {4.4}Explora\IeC {\c c}\IeC {\~a}o Horizontal}{7}{subsection.4.4}
-\contentsline {subsection}{\numberline {4.5}Timer}{7}{subsection.4.5}
-\contentsline {section}{\numberline {5}Mec\IeC {\^a}nicas do Jogo}{7}{section.5}
-\contentsline {subsection}{\numberline {5.1}Explora\IeC {\c c}\IeC {\~a}o Vertical}{7}{subsection.5.1}
-\contentsline {subsubsection}{\numberline {5.1.1}Movimenta\IeC {\c c}\IeC {\~a}o}{8}{subsubsection.5.1.1}
-\contentsline {paragraph}{\numberline {5.1.1.1}Eventos}{8}{paragraph.5.1.1.1}
-\contentsline {subsubsection}{\numberline {5.1.2}Encontros}{9}{subsubsection.5.1.2}
-\contentsline {subsection}{\numberline {5.2}Explora\IeC {\c c}\IeC {\~a}o Horizontal}{10}{subsection.5.2}
-\contentsline {subsubsection}{\numberline {5.2.1}Espa\IeC {\c c}o}{10}{subsubsection.5.2.1}
-\contentsline {subsubsection}{\numberline {5.2.2}Locais}{10}{subsubsection.5.2.2}
-\contentsline {subsubsection}{\numberline {5.2.3}Resolu\IeC {\c c}\IeC {\~a}o}{10}{subsubsection.5.2.3}
-\contentsline {section}{\numberline {6}Col\IeC {\^o}nia}{12}{section.6}
-\contentsline {subsection}{\numberline {6.1}Recursos}{12}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}Estrutura}{12}{subsection.6.2}
-\contentsline {subsubsection}{\numberline {6.2.1}Barracks}{12}{subsubsection.6.2.1}
-\contentsline {subsubsection}{\numberline {6.2.2}Facilities}{12}{subsubsection.6.2.2}
-\contentsline {subsubsection}{\numberline {6.2.3}Hospital}{13}{subsubsection.6.2.3}
-\contentsline {subsubsection}{\numberline {6.2.4}Workshop}{13}{subsubsection.6.2.4}
-\contentsline {subsubsection}{\numberline {6.2.5}Central}{13}{subsubsection.6.2.5}
-\contentsline {section}{\numberline {7}NPCs}{14}{section.7}
-\contentsline {subsection}{\numberline {7.1}NPCs da Col\IeC {\^o}nia}{14}{subsection.7.1}
-\contentsline {subsubsection}{\numberline {7.1.1}Barracks}{14}{subsubsection.7.1.1}
-\contentsline {subsubsection}{\numberline {7.1.2}Facilities}{14}{subsubsection.7.1.2}
-\contentsline {subsubsection}{\numberline {7.1.3}Hospital}{15}{subsubsection.7.1.3}
-\contentsline {subsubsection}{\numberline {7.1.4}Workshop}{15}{subsubsection.7.1.4}
-\contentsline {subsubsection}{\numberline {7.1.5}Central}{16}{subsubsection.7.1.5}
-\contentsline {section}{\numberline {8}Sa\IeC {\'u}de}{16}{section.8}
-\contentsline {subsection}{\numberline {8.1}Restaura\IeC {\c c}\IeC {\~a}o de vida}{17}{subsection.8.1}
-\contentsline {section}{\numberline {9}Telas}{18}{section.9}
-\contentsline {subsection}{\numberline {9.1}Tela de Abertura}{18}{subsection.9.1}
-\contentsline {subsection}{\numberline {9.2}Tela de Play Game}{19}{subsection.9.2}
-\contentsline {subsection}{\numberline {9.3}Tela de Options}{19}{subsection.9.3}
-\contentsline {subsection}{\numberline {9.4}Tela de Credits}{19}{subsection.9.4}
-\contentsline {section}{\numberline {10}C\IeC {\^a}mera e HUD}{20}{section.10}
-\contentsline {subsection}{\numberline {10.1}C\IeC {\^a}mera na Explora\IeC {\c c}\IeC {\~a}o Vertical}{20}{subsection.10.1}
-\contentsline {subsection}{\numberline {10.2}C\IeC {\^a}mera na Explora\IeC {\c c}\IeC {\~a}o Horizontal}{21}{subsection.10.2}
-\contentsline {subsection}{\numberline {10.3}HUD}{21}{subsection.10.3}
-\contentsline {section}{\numberline {11}Personagens Principais}{22}{section.11}
-\contentsline {subsection}{\numberline {11.1}Status Simples}{22}{subsection.11.1}
-\contentsline {subsection}{\numberline {11.2}Status Composto}{22}{subsection.11.2}
-\contentsline {subsection}{\numberline {11.3}Militares}{22}{subsection.11.3}
-\contentsline {subsubsection}{\numberline {11.3.1}Atlas}{22}{subsubsection.11.3.1}
-\contentsline {subsubsection}{\numberline {11.3.2}Ram}{23}{subsubsection.11.3.2}
-\contentsline {subsubsection}{\numberline {11.3.3}Gorgon}{24}{subsubsection.11.3.3}
-\contentsline {subsection}{\numberline {11.4}Psi\IeC {\^o}nicos}{25}{subsection.11.4}
-\contentsline {subsubsection}{\numberline {11.4.1}Archos}{25}{subsubsection.11.4.1}
-\contentsline {subsubsection}{\numberline {11.4.2}Wraith}{26}{subsubsection.11.4.2}
-\contentsline {subsubsection}{\numberline {11.4.3}Vanth}{27}{subsubsection.11.4.3}
-\contentsline {subsection}{\numberline {11.5}Tecnol\IeC {\'o}gicos}{28}{subsection.11.5}
-\contentsline {subsubsection}{\numberline {11.5.1}Minerva}{28}{subsubsection.11.5.1}
-\contentsline {subsubsection}{\numberline {11.5.2}Trojan}{29}{subsubsection.11.5.2}
-\contentsline {subsubsection}{\numberline {11.5.3}Artemis}{30}{subsubsection.11.5.3}
-\contentsline {subsection}{\numberline {11.6}Inimigos}{31}{subsection.11.6}
-\contentsline {subsubsection}{\numberline {11.6.1}B.M.A. I}{31}{subsubsection.11.6.1}
-\contentsline {subsubsection}{\numberline {11.6.2}Sentry}{32}{subsubsection.11.6.2}
-\contentsline {section}{\numberline {12}Colecion\IeC {\'a}veis}{32}{section.12}
-\contentsline {subsection}{\numberline {12.1}Armas}{32}{subsection.12.1}
-\contentsline {section}{\numberline {13}Esquema de controle e interface com o usu\IeC {\'a}rio}{33}{section.13}
-\contentsline {section}{\numberline {14}Front End}{34}{section.14}
-\contentsline {section}{\numberline {15}Requisitos Tecnol\IeC {\'o}gicos}{35}{section.15}
+\contentsline {section}{\numberline {1}Objetivo do jogo}{3}{section.1}
+\contentsline {section}{\numberline {2}Gloss\IeC {\'a}rio}{3}{section.2}
+\contentsline {section}{\numberline {3}Conceito do jogo}{3}{section.3}
+\contentsline {section}{\numberline {4}Gameplay}{4}{section.4}
+\contentsline {subsection}{\numberline {4.1}Progress\IeC {\~a}o do Jogo}{4}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Timer}{4}{subsection.4.2}
+\contentsline {section}{\numberline {5}Mec\IeC {\^a}nicas do Jogo}{5}{section.5}
+\contentsline {subsubsection}{\numberline {5.0.1}Movimenta\IeC {\c c}\IeC {\~a}o}{5}{subsubsection.5.0.1}
+\contentsline {subsubsection}{\numberline {5.0.2}Resolu\IeC {\c c}\IeC {\~a}o}{5}{subsubsection.5.0.2}
+\contentsline {subsection}{\numberline {5.1}Recursos}{6}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Estrutura}{6}{subsection.5.2}
+\contentsline {section}{\numberline {6}C\IeC {\^a}mera e HUD}{7}{section.6}
+\contentsline {subsection}{\numberline {6.1}C\IeC {\^a}mera}{7}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}HUD}{7}{subsection.6.2}
+\contentsline {section}{\numberline {7}Personagens Principais}{9}{section.7}
+\contentsline {subsection}{\numberline {7.1}Deuses}{9}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Torres}{9}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Waves}{10}{subsection.7.3}
+\contentsline {section}{\numberline {8}Sa\IeC {\'u}de}{13}{section.8}
+\contentsline {section}{\numberline {9}Economia}{14}{section.9}
+\contentsline {section}{\numberline {10}Esquema de controle e interface com o usu\IeC {\'a}rio}{16}{section.10}
+\contentsline {section}{\numberline {11}Front End}{17}{section.11}
+\contentsline {subsection}{\numberline {11.1}Tela de Abertura}{17}{subsection.11.1}
+\contentsline {subsection}{\numberline {11.2}Tela de Fases}{17}{subsection.11.2}
+\contentsline {subsection}{\numberline {11.3}Tela de Gameplay}{19}{subsection.11.3}
+\contentsline {subsection}{\numberline {11.4}Tela de Cr\IeC {\'e}ditos}{20}{subsection.11.4}
+\contentsline {subsection}{\numberline {11.5}Logo}{21}{subsection.11.5}
+\contentsline {section}{\numberline {12}Requisitos tecnol\IeC {\'o}gicos}{22}{section.12}
