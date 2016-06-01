@@ -19,6 +19,7 @@ namespace SoMTD {
         const unsigned SPAWN_UNIT = ijengine::GameEvent::assign_id();
         bool translate(ijengine::GameEvent& to, const ijengine::MouseEvent& from);
         bool translate(ijengine::GameEvent& to, const ijengine::SystemEvent& from);
+        bool translate(ijengine::GameEvent& to, const ijengine::JoystickEvent& from);
         virtual bool translate(ijengine::GameEvent& to, const ijengine::KeyboardEvent& from);
     };
 }

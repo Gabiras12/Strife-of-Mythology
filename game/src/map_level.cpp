@@ -21,7 +21,7 @@
 #include "panel.h"
 #include "texture_bar.h"
 #include "button.h"
-#include "spawner.h"
+//#include "spawner.h"
 #include "movable_unit.h"
 
 SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level, const string& audio_file_path) :
@@ -191,13 +191,21 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
     int myx = m_player->m_x;
     int myy = m_player->m_y;
 
+    if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD and 
+        event.id() == SoMTD::MOUSEOVER) {
+        m_player->m_x = atof(event.get_property<string>("x").c_str());
+        m_player->m_y = atof(event.get_property<string>("y").c_str());
+
+        return false;
+    }
+ 
     if (event.id() == SoMTD::SPAWN_UNIT) {
         MovableUnit* mv = new MovableUnit(std::make_pair(origin.first, origin.second), std::make_pair(destiny.first, destiny.second), "tower_1.png");
         m_unit_path = breadth_first_search();
-        printf("BEST PATH:\n");
+        //printf("BEST PATH:\n");
         std::reverse(m_unit_path.begin(), m_unit_path.end());
         for (auto it : m_unit_path) {
-            printf("[%d][%d] => \n", it.second, it.first);
+            //printf("[%d][%d] => \n", it.second, it.first);
             mv->add_instruction(0x00, it.first, it.second);
         }
         add_child(mv);
@@ -225,6 +233,10 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
             int const h_th = tile_height/2;
             int const x0 = 1024/2;
             int const offset = 11;
+
+auto pos = ijengine::event::mouse_position();
+x_pos = pos.first;
+y_pos = pos.second;
 
             myx =  (((x_pos+h_th-x0)/h_tw)+((y_pos)/(h_th-offset)))/2;
             myy = (((y_pos)/(h_th-offset)) - ((x_pos+h_tw-x0)/h_tw))/2;
@@ -348,12 +360,16 @@ void
 SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
 {
     if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
-        std::shared_ptr<ijengine::Texture> mytext = nullptr;
         std::string tower_name = "tower_";
         tower_name.append( std::to_string(m_player->desired_tower) );
         tower_name.append("_holding.png");
-        mytext = ijengine::resources::get_texture(tower_name);
-        c->draw(mytext.get(), m_player->m_x-mytext->w()/2, m_player->m_y-mytext->h()/2);
+        auto mytext = ijengine::resources::get_texture(tower_name);
+        auto pos = ijengine::event::mouse_position();
+        int xpos = pos.first;
+        int ypos = pos.second;
+
+        //c->draw(mytext.get(), m_player->m_x-mytext->w()/2, m_player->m_y-mytext->h()/2);
+        c->draw(mytext.get(), xpos - mytext->w()/2, ypos - mytext->h()/2);
     } else if (m_player->state == SoMTD::Player::PlayerState::SELECTED_TOWER) {
         // SoMTD::Tower *t;
     }

@@ -41,8 +41,8 @@ namespace SoMTD {
     tools::isometric_adjust(int isometric_x, int isometric_y, int x0, int tile_offset, int tile_width, int tile_height, int grid_x, int grid_y)
     {
         std::pair<int, int> p;
-        p.first = isometric_x + x0 - tile_width/2;
-        p.second = isometric_y - (tile_offset*(grid_x + grid_y));
+//        p.first = isometric_x + x0 - tile_width/2;
+//        p.second = isometric_y - (tile_offset*(grid_x + grid_y));
         return p;
     }
 

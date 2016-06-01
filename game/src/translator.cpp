@@ -12,8 +12,8 @@ bool
 SoMTD::Translator::translate(ijengine::GameEvent& to, const ijengine::MouseEvent& from)
 {
     to.set_timestamp(from.timestamp());
-    to.set_property<double>("x", from.x());
-    to.set_property<double>("y", from.y());
+    to.set_property<int>("x", from.x());
+    to.set_property<int>("y", from.y());
 
     if (from.state() == ijengine::MouseEvent::MOTION)
         to.set_id(SoMTD::Translator::MOTION);
@@ -85,3 +85,8 @@ SoMTD::Translator::translate(ijengine::GameEvent& to, const ijengine::KeyboardEv
     return done;
 }
 
+bool
+SoMTD::Translator::translate(ijengine::GameEvent&, const ijengine::JoystickEvent&)
+{
+    return false;
+}

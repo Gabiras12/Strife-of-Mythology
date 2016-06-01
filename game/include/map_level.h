@@ -13,7 +13,7 @@
 
 #include "player.h"
 #include "luascript.h"
-#include "spawner.h"
+//#include "spawner.h"
 
 namespace SoMTD {
     class MapLevel : public ijengine::Level, public ijengine::GameEventsListener {
@@ -50,7 +50,6 @@ namespace SoMTD {
         std::pair<int, int> origin;
         std::pair<int, int> destiny;
         std::vector< std::pair<int, int> > m_unit_path;
-
     };
 }
 
