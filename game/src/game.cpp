@@ -43,8 +43,8 @@ namespace SoMTD {
     {
         x0 += w/2;
         double y0 = h/2;
-        double xg = (double)((double)(xs - x0)/w) + (double)((double)(ys-y0)/((double)h - 2.0*offset));
-        double yg = (double)(-(double)(xs-x0)/w) + (double)((ys-y0)/(h - 2.0*offset));
+        double xg = ((double)(xs - x0)/w) + ((double)ys-y0)/(h - 2.0*offset);
+        double yg = (-(double)(xs-x0)/w) + (ys-y0)/(h - 2.0*offset);
         return std::pair<int, int>(xg, yg);
     }
 

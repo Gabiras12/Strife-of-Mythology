@@ -70,8 +70,6 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
     const int myh = 81;
 
     std::pair<int, int> p = SoMTD::tools::grid_to_isometric(m_x, m_y, myw, myh, 1024/2, 11);
-    int x_pos = p.first;
-    int y_pos = p.second;
 
     canvas->draw(m_texture.get(), p.first + 22, p.second - myh/2);
     if (m_mouseover) {

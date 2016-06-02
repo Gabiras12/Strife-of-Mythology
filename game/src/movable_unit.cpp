@@ -27,7 +27,7 @@ SoMTD::MovableUnit::~MovableUnit()
 }
 
 void
-SoMTD::MovableUnit::update_self(unsigned start, unsigned end)
+SoMTD::MovableUnit::update_self(unsigned start, unsigned)
 {
     if (m_moving) {
         if (m_x == desired_place.first && m_y == desired_place.second) {
@@ -63,7 +63,7 @@ SoMTD::MovableUnit::update_self(unsigned start, unsigned end)
 }
 
 bool
-SoMTD::MovableUnit::on_event(const ijengine::GameEvent& event)
+SoMTD::MovableUnit::on_event(const ijengine::GameEvent&)
 {
     return false;
 }
@@ -79,7 +79,7 @@ SoMTD::MovableUnit::draw_self(ijengine::Canvas *c, unsigned, unsigned)
 }
 
 void
-SoMTD::MovableUnit::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
+SoMTD::MovableUnit::draw_self_after(ijengine::Canvas *, unsigned, unsigned)
 {
 
 }

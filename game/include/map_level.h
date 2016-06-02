@@ -13,7 +13,7 @@
 
 #include "player.h"
 #include "luascript.h"
-//#include "spawner.h"
+#include "labyrinth.h"
 
 namespace SoMTD {
     class MapLevel : public ijengine::Level, public ijengine::GameEventsListener {
@@ -23,7 +23,6 @@ namespace SoMTD {
         bool done() const;
         string next() const;
         string audio() const;
-        int grid[80][80];
         void load_map_from_file();
         void load_tiles();
         bool on_event(const ijengine::GameEvent& event);
@@ -46,10 +45,10 @@ namespace SoMTD {
         int m_start;
         std::shared_ptr< ijengine::Texture > m_texture;
         LuaScript *m_actions;
-        std::vector< std::pair<int, int> > breadth_first_search();
         std::pair<int, int> origin;
         std::pair<int, int> destiny;
         std::vector< std::pair<int, int> > m_unit_path;
+        Labyrinth *m_labyrinth;
     };
 }
 

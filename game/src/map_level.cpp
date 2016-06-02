@@ -21,7 +21,6 @@
 #include "panel.h"
 #include "texture_bar.h"
 #include "button.h"
-//#include "spawner.h"
 #include "movable_unit.h"
 
 SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level, const string& audio_file_path) :
@@ -31,10 +30,9 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     m_done(false),
     m_player(new Player),
     m_start(-1),
-    m_texture(nullptr)
+    m_texture(nullptr),
+    m_labyrinth(new Labyrinth(10, 10))
 {
-    // reset grid positions
-    memset(grid, 0, sizeof grid);
     ijengine::event::register_listener(this);
     origin = std::make_pair(0, 0);
     destiny = std::make_pair(0, 0);
@@ -42,12 +40,12 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     load_map_from_file();
     load_tiles();
     load_hud();
-    m_unit_path = breadth_first_search();
     m_actions = new LuaScript("lua-src/Action.lua");
 }
 
 SoMTD::MapLevel::~MapLevel()
 {
+    delete m_labyrinth;
     delete m_actions;
     ijengine::event::unregister_listener(this);
     delete m_player;
@@ -56,56 +54,73 @@ SoMTD::MapLevel::~MapLevel()
 void
 SoMTD::MapLevel::load_tiles()
 {
-    for (int i=0; i < 10; ++i) {
-        for (int j=0; j < 10; ++j) {
-            switch (grid[i][j]) {
+    std::string _path;
+    unsigned _id;
+    int line_count = m_labyrinth->m_grid.size();
+    for (int line = 0; line < line_count; ++line) {
+        int column_count = m_labyrinth->m_grid[line].size();
+        for (auto column = 0; column < column_count; ++column) {
+            switch (m_labyrinth->m_grid[line][column]) {
                 case 1:
-                    add_child(new SoMTD::LevelArea("caminho1.png", 1, j, i, 0));
+                    _path = "caminho1.png";
+                    _id = 1;
                 break;
 
                 case 2:
-                    add_child(new SoMTD::LevelArea("caminho2.png", 2, j, i, 0));
+                    _path = "caminho2.png";
+                    _id = 2;
                 break;
 
                 case 3:
-                    add_child(new SoMTD::LevelArea("curva3.png", 3, j, i, 0));
+                    _path = "curva3.png";
+                    _id = 3;
                 break;
 
                 case 4:
-                    add_child(new SoMTD::LevelArea("curva4.png", 4, j, i, 0));
+                    _path = "curva4.png";
+                    _id = 4;
                 break;
 
                 case 5:
-                    add_child(new SoMTD::LevelArea("curva1.png", 5, j, i, 0));
+                    _path = "curva1.png";
+                    _id = 5;
                 break;
 
                 case 6:
-                    add_child(new SoMTD::LevelArea("tile_grama.png", 6, j, i, 0));
+                    _path = "tile_grama.png";
+                    _id = 6;
                 break;
 
                 case 7:
-                    add_child(new SoMTD::LevelArea("curva2.png", 7, j, i, 0));
+                    _path = "curva2.png";
+                    _id = 7;
                 break;
 
                 case 8:
-                    add_child(new SoMTD::LevelArea("waterfallEndS.png", 8, j, i, 0));
+                    _path = "waterfallEndS.png";
+                    _id = 8;
                 break;
 
                 case 50:
-                    origin.first = j;
-                    origin.second = i;
-                    add_child(new SoMTD::LevelArea("caminho2.png", 2, j, i, 0));
+                    origin.first = column;
+                    origin.second = line;
+                    _path = "caminho2.png";
+                    _id = 2;
                 break;
 
                 case 60:
-                    destiny.first = j;
-                    destiny.second = i;
-                    add_child(new SoMTD::LevelArea("caminho2.png", 2, j, i, 0));
+                    destiny.first = column;
+                    destiny.second = line;
+                    _path = "caminho2.png";
+                    _id = 2;
                 break;
 
                 default:
+                    continue;
                 break;
             }
+
+            add_child(new SoMTD::LevelArea(_path, _id, column, line, 0));
         }
     }
 }
@@ -118,17 +133,7 @@ SoMTD::MapLevel::load_map_from_file()
         path = path.append(m_current);
         path = path.append(".txt");
 
-        std::ifstream map_data(path);
-        if (map_data.is_open()) {
-            // 10 = number of rows
-            // 10 = number of cols
-            for (int i=0; i < 10; ++i) {
-                for (int j=0; j < 10; ++j) {
-                    map_data >> grid[i][j];
-                }
-            }
-            map_data.close();
-        }
+        m_labyrinth->fetch_file(path);
     }
 }
 
@@ -184,40 +189,28 @@ SoMTD::MapLevel::draw_help_text(ijengine::Canvas *canvas)
 bool
 SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
 {
-    int myx = m_player->m_x;
-    int myy = m_player->m_y;
 
     if (event.id() == SoMTD::SPAWN_UNIT) {
-        MovableUnit* mv = new MovableUnit(std::make_pair(origin.first, origin.second), std::make_pair(destiny.first, destiny.second), "tower_1.png");
-        m_unit_path = breadth_first_search();
-        //printf("BEST PATH:\n");
-        std::reverse(m_unit_path.begin(), m_unit_path.end());
-        for (auto it : m_unit_path) {
-            //printf("[%d][%d] => \n", it.second, it.first);
-            mv->add_instruction(0x00, it.first, it.second);
-        }
-        add_child(mv);
     }
 
     if (event.id() == SoMTD::CLICK) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
 
-
         auto tile_position = SoMTD::tools::isometric_to_grid((int)x_pos, (int)y_pos, 100, 81, 1024/2, 11);
 
         if (m_player->state == 0x01 || m_player->state == 0x05 || m_player->state == 0x06 || m_player->state == 0x07) {
-            if (tile_position.first >= 0 && tile_position.second >= 0 && grid[tile_position.second][tile_position.first] < 8 && tile_position.first < 10 && tile_position.second < 10) {
+            if (tile_position.first >= 0 && tile_position.second >= 0 && tile_position.first < 10 && tile_position.second < 10 && m_labyrinth->m_grid[tile_position.second][tile_position.first]) {
                 if (m_player->m_gold >= 100) {
-                    if (grid[tile_position.second][tile_position.first] == 6) {
-                        grid[tile_position.second][tile_position.first] = 88;
+                    if (m_labyrinth->m_grid[tile_position.second][tile_position.first] == 6) {
+                        m_labyrinth->m_grid[tile_position.second][tile_position.first] = 88;
                         SoMTD::Tower *m_tower = nullptr;
                         if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
                             std::string tower_name("tower_");
                             tower_name.append(std::to_string(m_player->desired_tower));
                             tower_name.append(".png");
                             m_tower = new SoMTD::Tower(tower_name, 9, tile_position.first, tile_position.second, "selected_"+tower_name, m_player);
-                            m_tower->set_priority(50000+(5*myy+5*myx));
+                            m_tower->set_priority(50000+(5*tile_position.second+5*tile_position.first));
                             add_child(m_tower);
                             m_player->m_gold -= 100;
                             m_player->state = SoMTD::Player::PlayerState::IDLE;
@@ -333,61 +326,8 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
         int xpos = pos.first;
         int ypos = pos.second;
 
-        //c->draw(mytext.get(), m_player->m_x-mytext->w()/2, m_player->m_y-mytext->h()/2);
         c->draw(mytext.get(), xpos - mytext->w()/2, ypos - mytext->h()/2);
-    } else if (m_player->state == SoMTD::Player::PlayerState::SELECTED_TOWER) {
-        // SoMTD::Tower *t;
     }
 }
 
-std::vector< std::pair<int, int> >
-SoMTD::MapLevel::breadth_first_search()
-{
-    std::queue<std::pair<int, int> >myq;
-    myq.push(std::make_pair(origin.first, origin.second));
-    int visited[30][30];
-    std::pair<int, int> father[30][30];
-    for (int i=0; i < 30; ++i) {
-        for (int j=0; j < 30; ++j) {
-            father[i][j] = std::pair<int, int>(j, i);
-        }
-    }
-    visited[origin.second][origin.first] = 1;
-    memset(visited, 0, sizeof visited);
-    std::vector< std::pair<int, int> > path;
-    while (not myq.empty()) {
-        int x = myq.front().first;
-        int y = myq.front().second;
 
-        visited[y][x] = 1;
-
-        if (x == destiny.first && y == destiny.second) {
-            int aux_x = x;
-            int aux_y = y;
-            while (father[aux_y][aux_x] != std::pair<int, int>(aux_x, aux_y)) {
-                path.push_back( std::pair<int, int>(aux_x, aux_y));
-                std::pair<int, int> idx = father[aux_y][aux_x];
-                aux_x = idx.first;
-                aux_y = idx.second;
-            }
-
-            return path;
-        }
-
-        std::vector< std::pair<int, int> > myv { std::make_pair(x+1, y), std::make_pair(x-1, y), std::make_pair(x, y+1), std::make_pair(x, y-1) };
-        for (auto it : myv) {
-            if (it.first >= 0 && it.first < 10 && it.second >= 0 && it.second < 10) {
-                if (grid[it.second][it.first] != 6) {
-                    if (not visited[it.second][it.first]) {
-                        myq.push(std::make_pair(it.first, it.second));
-                        visited[it.second][it.first] = 1;
-                        father[it.second][it.first] = std::pair<int, int>(x, y);
-                    }
-                }
-            }
-        }
-
-        myq.pop();
-    }
-    return path;
-}
