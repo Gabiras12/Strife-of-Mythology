@@ -32,14 +32,10 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     m_virtual_machine(new VirtualMachine<map_level_instruction>())
 {
     ijengine::event::register_listener(this);
-    origin = std::make_pair(0, 0);
-    destiny = std::make_pair(0, 0);
-
-    load_map_from_file();
-    load_tiles();
-    load_hud();
-
     load_instructions();
+    m_virtual_machine->add_instruction(0x01);
+    m_virtual_machine->add_instruction(0x02);
+    m_virtual_machine->add_instruction(0x03);
 }
 
 SoMTD::MapLevel::~MapLevel()
@@ -213,9 +209,10 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                             std::string tower_name("tower_");
                             tower_name.append(std::to_string(m_player->desired_tower));
                             tower_name.append(".png");
-                            m_tower = new SoMTD::Tower(tower_name, 9, tile_position.first, tile_position.second, "selected_"+tower_name, m_player);
+                            int aux_prior = 50000+(5*tile_position.second+5*tile_position.first);
+                            m_tower = new SoMTD::Tower(tower_name, 9, tile_position.first, tile_position.second, "selected_"+tower_name, m_player, aux_prior);
+                            desired_tower = m_tower;
                             m_tower->set_priority(50000+(5*tile_position.second+5*tile_position.first));
-                            add_child(m_tower);
                             m_player->m_gold -= 100;
                             m_player->state = SoMTD::Player::PlayerState::IDLE;
                             m_player->m_hp -= 1;
@@ -338,12 +335,16 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
 void
 SoMTD::MapLevel::build_tower()
 {
-    printf("buidl tower\n");
-    // add_child(new SoMTD::Tower(tower_name, 9, tile_position.first, tile_position.second, "selected_"+tower_name, m_player));
+    if (desired_tower)
+        add_child(desired_tower);
+    desired_tower = nullptr;
 }
 
 void
 SoMTD::MapLevel::load_instructions()
 {
     m_virtual_machine->register_instruction(std::make_pair(0x00, &SoMTD::MapLevel::build_tower));
+    m_virtual_machine->register_instruction(std::make_pair(0x01, &SoMTD::MapLevel::load_map_from_file));
+    m_virtual_machine->register_instruction(std::make_pair(0x02, &SoMTD::MapLevel::load_tiles));
+    m_virtual_machine->register_instruction(std::make_pair(0x03, &SoMTD::MapLevel::load_hud));
 }

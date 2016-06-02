@@ -15,6 +15,7 @@
 #include "luascript.h"
 #include "labyrinth.h"
 #include "virtual_machine.h"
+#include "tower.h"
 
 namespace SoMTD {
     class MapLevel : public ijengine::Level, public ijengine::GameEventsListener {
@@ -41,6 +42,7 @@ namespace SoMTD {
 
     private:
         std::string m_next;
+        SoMTD::Tower *desired_tower;
         std::string m_current;
         std::string m_audio_path;
         bool m_done;

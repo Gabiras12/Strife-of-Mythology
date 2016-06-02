@@ -9,15 +9,15 @@
 
 #include "tower.h"
 
-SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::string image_selected, Player *p) :
+SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::string image_selected, Player *p, int prior) :
     m_image_path(texture_name),
     m_id(id),
     m_x(x),
     m_y(y),
     m_start(-1),
-    m_priority(0),
     m_imageselected_path(image_selected),
-    m_player(p)
+    m_player(p),
+    m_priority(prior)
 {
     m_range = 200.0;
     m_texture = ijengine::resources::get_texture(texture_name);

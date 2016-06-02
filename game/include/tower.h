@@ -11,7 +11,7 @@
 namespace SoMTD {
     class Tower : public ijengine::GameObject, public ijengine::GameEventsListener {
     public:
-        Tower(std::string texture_name, unsigned id, int x, int y, std::string m_imageselected_path, Player *p);
+        Tower(std::string texture_name, unsigned id, int x, int y, std::string m_imageselected_path, Player *p, int priority);
         ~Tower();
 
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);

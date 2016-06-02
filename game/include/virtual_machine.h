@@ -22,7 +22,6 @@ namespace SoMTD {
         }
 
         T digest_instruction() {
-            printf("digesting...\n");
             m_busy = true;
             if (not instructions_queue.empty()) {
                 auto idx = instructions_queue.front();
