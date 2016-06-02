@@ -36,10 +36,12 @@ SoMTD::Tower::on_event(const ijengine::GameEvent& event)
         if (m_selected)
             m_x += 1;
     }
+
     if (event.id() == SoMTD::MOUSEOVER) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
-        if (x_pos >= (canvas_x+m_texture->w()/4) && (x_pos<canvas_x+m_texture->w()-m_texture->w()/4) && (y_pos>canvas_y+m_texture->h()/4) && y_pos<(canvas_y+m_texture->h()-m_texture->h()/4)) {
+        std::pair<int, int> tile = SoMTD::tools::isometric_to_grid(x_pos, y_pos, 100, 81, 1024/2, 11);
+        if (m_x == tile.first && m_y == tile.second) {
             m_mouseover = true;
         } else {
             m_mouseover = false;
@@ -49,7 +51,8 @@ SoMTD::Tower::on_event(const ijengine::GameEvent& event)
     if (event.id() == SoMTD::CLICK) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
-        if (x_pos >= (canvas_x+m_texture->w()/4) && (x_pos<canvas_x+m_texture->w()-m_texture->w()/4) && (y_pos>canvas_y+m_texture->h()/4) && y_pos<(canvas_y+m_texture->h()-m_texture->h()/4)) {
+        std::pair<int, int> tile = SoMTD::tools::isometric_to_grid(x_pos, y_pos, 100, 81, 1024/2, 11);
+        if (m_x == tile.first && m_y == tile.second) {
             m_selected = true;
             m_texture = ijengine::resources::get_texture(m_imageselected_path);
             m_player->state = SoMTD::Player::PlayerState::SELECTED_TOWER;
@@ -74,8 +77,8 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
     canvas->draw(m_texture.get(), p.first + 22, p.second - myh/2);
     if (m_mouseover) {
         for (double theta=0.0; theta < 360; ++theta) {
-            double myx = ( (m_range * cos(theta)) + canvas_x + m_texture->w()/2 );
-            double myy = ( m_range * sin(theta) + canvas_y + m_texture->h()/2);
+            double myx = ( (m_range * cos(theta)) + p.first + m_texture->w()/2 );
+            double myy = ( m_range * sin(theta) + p.second + m_texture->h()/2);
             ijengine::Point myp(myx, myy);
             canvas->draw(myp);
         }

@@ -14,10 +14,12 @@
 #include "player.h"
 #include "luascript.h"
 #include "labyrinth.h"
+#include "virtual_machine.h"
 
 namespace SoMTD {
     class MapLevel : public ijengine::Level, public ijengine::GameEventsListener {
     public:
+        using map_level_instruction = void (SoMTD::MapLevel::*) ();
         MapLevel(const string& actual_map = "", const string& next_map = "", const string& audio_path = "");
         ~MapLevel();
         bool done() const;
@@ -29,6 +31,7 @@ namespace SoMTD {
         void load_hud();
         void load_panels();
         void load_buttons();
+        void load_instructions();
 
     protected:
         void draw_help_text(ijengine::Canvas *c);
@@ -49,6 +52,8 @@ namespace SoMTD {
         std::pair<int, int> destiny;
         std::vector< std::pair<int, int> > m_unit_path;
         Labyrinth *m_labyrinth;
+        VirtualMachine<map_level_instruction> *m_virtual_machine;
+        void build_tower();
     };
 }
 

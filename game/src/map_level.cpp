@@ -1,5 +1,3 @@
-#include <vector>
-
 #include "game.h"
 
 #include <ijengine/engine.h>
@@ -8,10 +6,9 @@
 
 #include <fstream>
 #include <cstring>
-#include <map>
-#include <queue>
 #include <cstring>
 #include <algorithm>
+#include <vector>
 
 #include "luascript.h"
 #include "map_level.h"
@@ -31,7 +28,8 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     m_player(new Player),
     m_start(-1),
     m_texture(nullptr),
-    m_labyrinth(new Labyrinth(10, 10))
+    m_labyrinth(new Labyrinth(10, 10)),
+    m_virtual_machine(new VirtualMachine<map_level_instruction>())
 {
     ijengine::event::register_listener(this);
     origin = std::make_pair(0, 0);
@@ -40,13 +38,13 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     load_map_from_file();
     load_tiles();
     load_hud();
-    m_actions = new LuaScript("lua-src/Action.lua");
+
+    load_instructions();
 }
 
 SoMTD::MapLevel::~MapLevel()
 {
     delete m_labyrinth;
-    delete m_actions;
     ijengine::event::unregister_listener(this);
     delete m_player;
 }
@@ -152,6 +150,11 @@ SoMTD::MapLevel::next() const
 void
 SoMTD::MapLevel::update_self(unsigned now, unsigned)
 {
+    while (not m_virtual_machine->instructions_queue.empty()) {
+        map_level_instruction mli = m_virtual_machine->digest_instruction();
+        (this->*mli)();
+    }
+
     if (m_start == -1)
         m_start = now;
     if (not (now - m_start > 1000))
@@ -206,6 +209,7 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                         m_labyrinth->m_grid[tile_position.second][tile_position.first] = 88;
                         SoMTD::Tower *m_tower = nullptr;
                         if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
+                            m_virtual_machine->add_instruction(0x00);
                             std::string tower_name("tower_");
                             tower_name.append(std::to_string(m_player->desired_tower));
                             tower_name.append(".png");
@@ -222,7 +226,10 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                     m_player->state = SoMTD::Player::PlayerState::NOT_ENOUGH_GOLD;
                 }
             }
+            m_player->state = SoMTD::Player::PlayerState::IDLE;
             return true;
+        } else {
+            m_player->state = SoMTD::Player::PlayerState::IDLE;
         }
     }
 
@@ -293,7 +300,6 @@ SoMTD::MapLevel::load_buttons()
     }
 }
 
-
 void
 SoMTD::MapLevel::load_hud()
 {
@@ -305,7 +311,6 @@ SoMTD::MapLevel::load_hud()
     SoMTD::TextureBar *hp_bar = new SoMTD::TextureBar("hp_percentage.png", 0, 58, 22, m_player, 12, 12);
     hp_bar->set_priority(500020);
     add_child(hp_bar);
-
 }
 
 std::string
@@ -330,4 +335,15 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
     }
 }
 
+void
+SoMTD::MapLevel::build_tower()
+{
+    printf("buidl tower\n");
+    // add_child(new SoMTD::Tower(tower_name, 9, tile_position.first, tile_position.second, "selected_"+tower_name, m_player));
+}
 
+void
+SoMTD::MapLevel::load_instructions()
+{
+    m_virtual_machine->register_instruction(std::make_pair(0x00, &SoMTD::MapLevel::build_tower));
+}
