@@ -39,8 +39,8 @@ namespace SoMTD {
         int m_start;
         bool m_done;
         int m_priority;
-        int canvas_x = 1;
-        int canvas_y = 1;
+        int canvas_x;
+        int canvas_y;
         bool m_mouseover = false;
         std::string m_imageselected_path;
         Player *m_player;

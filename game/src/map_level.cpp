@@ -201,7 +201,7 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
 
         if (m_player->state == 0x01 || m_player->state == 0x05 || m_player->state == 0x06 || m_player->state == 0x07) {
             if (tile_position.first >= 0 && tile_position.second >= 0 && tile_position.first < 10 && tile_position.second < 10 && m_labyrinth->m_grid[tile_position.second][tile_position.first]) {
-                if (m_player->m_gold >= 100) {
+                if (m_player->gold() >= 100) {
                     if (m_labyrinth->m_grid[tile_position.second][tile_position.first] == 6) {
                         m_labyrinth->m_grid[tile_position.second][tile_position.first] = 88;
                         SoMTD::Tower *m_tower = nullptr;
@@ -222,6 +222,7 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                     m_player->state = SoMTD::Player::PlayerState::NOT_ENOUGH_GOLD;
                 }
             }
+             m_player->state= SoMTD::Player::PlayerState::IDLE;
             return true;
         }
     }
