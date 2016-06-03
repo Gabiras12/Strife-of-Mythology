@@ -18,9 +18,16 @@ namespace SoMTD {
         void draw_self_after(ijengine::Canvas *, unsigned, unsigned) {}
         bool on_event(const ijengine::GameEvent& event);
         void update_self(unsigned, unsigned);
-        double m_range = 200.0;
+        int level() const;
+        int attack() const;
+        double range() const;
+    protected:
+        void level_up();
 
     private:
+        double m_range = 200.0;
+        int m_level;
+        int m_attack;
         std::shared_ptr<ijengine::Texture> m_texture;
         std::string m_image_path;
         unsigned m_id;

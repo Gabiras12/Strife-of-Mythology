@@ -40,7 +40,7 @@ SoMTD::Panel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
     if (texture_name_path == "coins_panel.png") {
         auto font = ijengine::resources::get_font("Forelle.ttf", 40);
         canvas->set_font(font);
-        canvas->draw(std::to_string(m_player->m_gold), m_x+70, m_y+10);
+        canvas->draw(std::to_string(m_player->gold()), m_x+70, m_y+10);
     }
 }
 

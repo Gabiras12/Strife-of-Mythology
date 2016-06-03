@@ -212,13 +212,13 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                             m_tower = new SoMTD::Tower(tower_name, 9, tile_position.first, tile_position.second, "selected_"+tower_name, m_player);
                             m_tower->set_priority(50000+(5*tile_position.second+5*tile_position.first));
                             add_child(m_tower);
-                            m_player->m_gold -= 100;
+                            m_player->discount_gold(100);
                             m_player->state = SoMTD::Player::PlayerState::IDLE;
                             m_player->m_hp -= 1;
                         }
                     }
                 } else {
-                    printf("You need moar gold! (%d)\n", m_player->m_gold);
+                    printf("You need moar gold! (%d)\n", m_player->gold());
                     m_player->state = SoMTD::Player::PlayerState::NOT_ENOUGH_GOLD;
                 }
             }

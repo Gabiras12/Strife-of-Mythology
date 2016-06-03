@@ -33,8 +33,10 @@ bool
 SoMTD::Tower::on_event(const ijengine::GameEvent& event)
 {
     if (event.id() == SoMTD::UPGRADE_TOWER) {
-        if (m_selected)
-            m_x += 1;
+        if (m_selected && m_player->gold() > 250){
+            m_player->discount_gold(250);
+            level_up();
+        }
     }
     if (event.id() == SoMTD::MOUSEOVER) {
         double x_pos = event.get_property<double>("x");
@@ -85,4 +87,30 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 void
 SoMTD::Tower::update_self(unsigned, unsigned)
 {
+}
+
+void
+SoMTD::Tower::level_up()
+{
+    m_level+=1;
+    m_attack*=1.15;
+    m_range+=30.0;
+}
+
+int
+SoMTD::Tower::level() const
+{
+    return m_level;
+}
+
+int 
+SoMTD::Tower::attack() const
+{
+    return m_attack;
+}
+
+double
+SoMTD::Tower::range() const
+{
+    return m_range;
 }

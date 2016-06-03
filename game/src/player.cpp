@@ -12,3 +12,21 @@ SoMTD::Player::~Player()
 {
 
 }
+
+int
+SoMTD::Player::gold() const
+{
+	return m_gold;
+}
+
+void 
+SoMTD::Player::update_gold(int new_gold_count)
+{
+	m_gold = new_gold_count;
+}
+
+void
+SoMTD::Player::discount_gold(int value)
+{
+	m_gold -= value;
+}
