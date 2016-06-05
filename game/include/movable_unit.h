@@ -7,18 +7,19 @@
 #include <string>
 #include <memory>
 #include <queue>
+#include <list>
+#include <vector>
 
 namespace SoMTD {
 
     class MovableUnit : public ijengine::GameObject, public ijengine::GameEventsListener {
     public:
-        MovableUnit(std::pair<int, int> s_pos, std::pair<int, int> e_pos, std::string texture_path);
+        MovableUnit(std::pair<int, int> s_pos, std::pair<int, int> e_pos, std::string texture_path, std::vector< std::pair<int, int> > );
         ~MovableUnit();
         bool enemy() const;
         void spawn();
         bool active() const;
         void move(int x, int y);
-        void add_instruction(int instruction_type, int paramA, int paramB);
 
     protected:
         void draw_self(ijengine::Canvas*, unsigned, unsigned);
@@ -37,7 +38,8 @@ namespace SoMTD {
         bool m_moving = false;
         int m_x;
         int m_y;
-        std::queue< std::pair<int, int> > instructions_queue;
+        std::vector< std::pair<int, int> > m_labyrinth_path;
+        int m_current_instruction;
     };
 }
 

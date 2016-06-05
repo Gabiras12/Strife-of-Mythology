@@ -30,16 +30,17 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     m_done(false),
     m_player(new Player),
     m_start(-1),
-    m_texture(nullptr),
-    m_labyrinth(new Labyrinth(10, 10))
+    m_texture(nullptr)
 {
+    m_labyrinth = new Labyrinth(10, 10, std::pair<int, int>(0, 0), std::make_pair(0, 0));
     ijengine::event::register_listener(this);
-    origin = std::make_pair(0, 0);
-    destiny = std::make_pair(0, 0);
-
     load_map_from_file();
     load_tiles();
     load_hud();
+    m_labyrinth->update_origin(origin);
+    m_labyrinth->update_destiny(destiny);
+    m_labyrinth->solve();
+
     m_actions = new LuaScript("lua-src/Action.lua");
 }
 
@@ -47,8 +48,8 @@ SoMTD::MapLevel::~MapLevel()
 {
     delete m_labyrinth;
     delete m_actions;
-    ijengine::event::unregister_listener(this);
     delete m_player;
+    ijengine::event::unregister_listener(this);
 }
 
 void
@@ -191,6 +192,8 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
 {
 
     if (event.id() == SoMTD::SPAWN_UNIT) {
+        SoMTD::MovableUnit *unit = new SoMTD::MovableUnit(origin, destiny, "click_to_build.png", m_labyrinth->solution);
+        add_child(unit);
     }
 
     if (event.id() == SoMTD::CLICK) {
@@ -200,7 +203,7 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
         auto tile_position = SoMTD::tools::isometric_to_grid((int)x_pos, (int)y_pos, 100, 81, 1024/2, 11);
 
         if (m_player->state == 0x01 || m_player->state == 0x05 || m_player->state == 0x06 || m_player->state == 0x07) {
-            if (tile_position.first >= 0 && tile_position.second >= 0 && tile_position.first < 10 && tile_position.second < 10 && m_labyrinth->m_grid[tile_position.second][tile_position.first]) {
+            if (tile_position.first >= 0 && tile_position.second >= 0 && tile_position.first < 10 && tile_position.second < 10) {
                 if (m_player->gold() >= 100) {
                     if (m_labyrinth->m_grid[tile_position.second][tile_position.first] == 6) {
                         m_labyrinth->m_grid[tile_position.second][tile_position.first] = 88;
@@ -213,7 +216,6 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                             m_tower->set_priority(50000+(5*tile_position.second+5*tile_position.first));
                             add_child(m_tower);
                             m_player->discount_gold(100);
-                            m_player->state = SoMTD::Player::PlayerState::IDLE;
                             m_player->m_hp -= 1;
                         }
                     }
@@ -222,7 +224,7 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                     m_player->state = SoMTD::Player::PlayerState::NOT_ENOUGH_GOLD;
                 }
             }
-             m_player->state= SoMTD::Player::PlayerState::IDLE;
+            m_player->state= SoMTD::Player::PlayerState::IDLE;
             return true;
         }
     }

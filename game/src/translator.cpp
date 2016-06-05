@@ -45,7 +45,16 @@ SoMTD::Translator::translate(ijengine::GameEvent& to, const ijengine::KeyboardEv
     bool done = true;
     int id = 0;
 
-    switch (from.key()) {
+    if (from.state() == ijengine::KeyboardEvent::State::RELEASED) {
+        switch (from.key()) {
+
+            default:
+                done = false;
+        }
+    }
+
+    if (from.state() == ijengine::KeyboardEvent::State::PRESSED) {
+        switch (from.key()) {
         case ijengine::KeyboardEvent::ESCAPE:
             id = ijengine::game_event::QUIT;
             break;
@@ -69,7 +78,8 @@ SoMTD::Translator::translate(ijengine::GameEvent& to, const ijengine::KeyboardEv
             break;
 
         case ijengine::KeyboardEvent::U:
-            id = SoMTD::UPGRADE_TOWER;
+            if (from.state() == ijengine::KeyboardEvent::State::PRESSED)
+                id = SoMTD::UPGRADE_TOWER;
             break;
 
         case ijengine::KeyboardEvent::S:
@@ -78,6 +88,7 @@ SoMTD::Translator::translate(ijengine::GameEvent& to, const ijengine::KeyboardEv
 
         default:
             done = false;
+        }
     }
 
     to.set_id(id);

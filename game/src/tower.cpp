@@ -22,8 +22,9 @@ SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::st
     auto pos = SoMTD::tools::grid_to_isometric(m_x, m_y, 100, 81, 1024/2, 11);
     canvas_x = pos.first;
     canvas_y = pos.second;
+    canvas_y -= 81/2;
     printf("x_canvas:%d y_canvas%d\n",canvas_x, canvas_y );
-    m_range = 200.0;
+    m_range = 50.0;
     m_texture = ijengine::resources::get_texture(texture_name);
     ijengine::event::register_listener(this);
 }
@@ -43,10 +44,9 @@ SoMTD::Tower::on_event(const ijengine::GameEvent& event)
         }
     }
     if (event.id() == SoMTD::MOUSEOVER) {
-        printf("m_x:%d,  m_y:%d\n",m_x, m_y );
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
-        if (x_pos >= (canvas_x+m_texture->w()/4) && (x_pos<canvas_x+m_texture->w()-m_texture->w()/4) && (y_pos>canvas_y+m_texture->h()/4) && y_pos<(canvas_y+m_texture->h()-m_texture->h()/4)) {
+        if (x_pos >= (canvas_x+m_texture->w()/4) && (x_pos<canvas_x+m_texture->w()-m_texture->w()/4) && (y_pos>canvas_y+m_texture->h()/16) && y_pos<(canvas_y+m_texture->h()-m_texture->h()/4)) {
             m_mouseover = true;
         } else {
             m_mouseover = false;
@@ -56,7 +56,7 @@ SoMTD::Tower::on_event(const ijengine::GameEvent& event)
     if (event.id() == SoMTD::CLICK) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
-        if (x_pos >= (canvas_x+m_texture->w()/4) && (x_pos<canvas_x+m_texture->w()-m_texture->w()/4) && (y_pos>canvas_y+m_texture->h()/4) && y_pos<(canvas_y+m_texture->h()-m_texture->h()/4)) {
+        if (x_pos >= (canvas_x+m_texture->w()/4) && (x_pos<canvas_x+m_texture->w()-m_texture->w()/4) && (y_pos>canvas_y+m_texture->h()/16) && y_pos<(canvas_y+m_texture->h()-m_texture->h()/4)) {
             m_selected = true;
             m_texture = ijengine::resources::get_texture(m_imageselected_path);
             m_player->state = SoMTD::Player::PlayerState::SELECTED_TOWER;
