@@ -29,6 +29,7 @@ namespace SoMTD {
         void load_hud();
         void load_panels();
         void load_buttons();
+        void load_spawners();
 
     protected:
         void draw_help_text(ijengine::Canvas *c);

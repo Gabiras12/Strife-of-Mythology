@@ -13,6 +13,7 @@
 #include <cstring>
 #include <algorithm>
 
+#include "spawner.h"
 #include "luascript.h"
 #include "map_level.h"
 #include "level_area.h"
@@ -40,6 +41,8 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     m_labyrinth->update_origin(origin);
     m_labyrinth->update_destiny(destiny);
     m_labyrinth->solve();
+    std::reverse(m_labyrinth->solution.begin(), m_labyrinth->solution.end());
+    load_spawners();
 
     m_actions = new LuaScript("lua-src/Action.lua");
 }
@@ -190,12 +193,6 @@ SoMTD::MapLevel::draw_help_text(ijengine::Canvas *canvas)
 bool
 SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
 {
-
-    if (event.id() == SoMTD::SPAWN_UNIT) {
-        SoMTD::MovableUnit *unit = new SoMTD::MovableUnit(origin, destiny, "click_to_build.png", m_labyrinth->solution);
-        add_child(unit);
-    }
-
     if (event.id() == SoMTD::CLICK) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
@@ -333,4 +330,11 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
     }
 }
 
+void
+SoMTD::MapLevel::load_spawners()
+{
+    SoMTD::MovableUnit *cyclop = new SoMTD::MovableUnit(origin, destiny, "cyclop.png", m_labyrinth->solution, m_player);
+    SoMTD::Spawner<MovableUnit> *spawner = new SoMTD::Spawner<MovableUnit>(cyclop);
+    add_child(spawner);
+}
 

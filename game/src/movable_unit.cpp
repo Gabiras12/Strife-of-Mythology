@@ -8,21 +8,22 @@
 #include <ijengine/engine.h>
 #include <ijengine/texture.h>
 
-SoMTD::MovableUnit::MovableUnit(std::pair<int, int> s_pos, std::pair<int, int> e_pos, std::string t_path, std::vector< std::pair<int, int> > best_path) :
+SoMTD::MovableUnit::MovableUnit(std::pair<int, int> s_pos, std::pair<int, int> e_pos, std::string t_path, std::vector< std::pair<int, int> > best_path, Player* myp) :
     m_enemy(false),
     end_position(e_pos),
     start_position(s_pos),
     m_texture(ijengine::resources::get_texture(t_path)),
     m_active(false),
-    m_current_instruction(0)
+    m_current_instruction(0),
+    m_player(myp),
+    m_labyrinth_path(best_path)
 {
-    m_labyrinth_path = best_path;
-    std::reverse(m_labyrinth_path.begin(), m_labyrinth_path.end());
     std::pair<int, int> p = SoMTD::tools::grid_to_isometric(s_pos.first, s_pos.second, 100, 81, 1024/2, 11);
     desired_place = start_position;
     m_x = p.first;
     m_y = p.second;
     ijengine::event::register_listener(this);
+    texture_name = t_path;
 }
 
 SoMTD::MovableUnit::~MovableUnit()
@@ -38,8 +39,9 @@ SoMTD::MovableUnit::update_self(unsigned start, unsigned)
             if (m_x == desired_place.first && m_y == desired_place.second) {
                 m_moving = false;
                 m_current_instruction++;
-                if (m_current_instruction > m_labyrinth_path.size())
+                if (m_current_instruction > m_labyrinth_path.size()) {
                     m_active = false;
+                }
             } else {
                 if (m_x > desired_place.first)
                     m_x -= 1;
@@ -52,15 +54,22 @@ SoMTD::MovableUnit::update_self(unsigned start, unsigned)
                     m_y += 1;
             }
         } else {
-            std::pair<int, int> pos = m_labyrinth_path[m_current_instruction];
-            move(pos.first, pos.second);
-        }
-    } else {
-        if ((start % 1000) == 0) {
-            printf("spawn!\n");
-            spawn();
+            if (m_current_instruction == m_labyrinth_path.size()) {
+                die();
+            } else {
+                std::pair<int, int> pos = m_labyrinth_path[m_current_instruction];
+                move(pos.first, pos.second);
+            }
         }
     }
+}
+
+void
+SoMTD::MovableUnit::die()
+{
+    printf("unit dead!!\n");
+    m_active = false;
+    m_player->m_hp -= 1;
 }
 
 bool
@@ -117,3 +126,8 @@ SoMTD::MovableUnit::move(int x, int y)
     desired_place = dest_canvas;
 }
 
+SoMTD::MovableUnit*
+SoMTD::MovableUnit::clone()
+{
+    return new MovableUnit(start_position, end_position, texture_name, m_labyrinth_path, m_player);
+}
