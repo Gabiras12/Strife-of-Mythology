@@ -7,6 +7,7 @@
 
 #include <memory>
 #include "player.h"
+#include "animation.h"
 
 namespace SoMTD {
     class Tower : public ijengine::GameObject, public ijengine::GameEventsListener {
@@ -21,6 +22,7 @@ namespace SoMTD {
         int level() const;
         int attack() const;
         double range() const;
+        unsigned mytimer;
     protected:
         void level_up();
 
@@ -44,6 +46,7 @@ namespace SoMTD {
         bool m_mouseover = false;
         std::string m_imageselected_path;
         Player *m_player;
+        Animation *m_animation;
     };
 }
 

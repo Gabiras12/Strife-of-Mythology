@@ -1,0 +1,29 @@
+#include "animation.h"
+#include "game.h"
+
+SoMTD::Animation::Animation(int new_grid_x, int new_grid_y, std::string new_file_path, StateStyle new_state_style, int new_frame_per_state, int new_total_states, int new_total_frames)
+{
+    m_tile = std::make_pair(new_grid_x, new_grid_y);
+    m_screen_position = SoMTD::tools::grid_to_isometric(m_tile.first, m_tile.second, 100, 81, 1024/2, 11);
+    m_file_path = new_file_path;
+    m_texture = ijengine::resources::get_texture(new_file_path);
+    m_frame_per_state = new_frame_per_state;
+    m_state_style = new_state_style;
+    m_frame_per_state = new_frame_per_state;
+    m_total_states = new_total_states;
+    m_total_frames = new_total_frames;
+    m_actual_state = 0;
+    m_actual_frame = 0;
+
+    if (new_state_style == Animation::StateStyle::STATE_PER_COLUMN) {
+        m_width = m_texture->w()/m_total_states;
+        m_height = m_texture->h()/m_total_frames;
+    } else {
+        m_width = m_texture->w()/new_total_frames;
+        m_height = m_texture->h()/m_total_states;
+    }
+}
+
+SoMTD::Animation::~Animation()
+{
+}
