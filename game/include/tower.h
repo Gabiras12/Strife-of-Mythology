@@ -11,12 +11,13 @@
 
 namespace SoMTD {
     class Tower : public ijengine::GameObject, public ijengine::GameEventsListener {
+
     public:
         Tower(std::string texture_name, unsigned id, int x, int y, std::string m_imageselected_path, Player *p);
         ~Tower();
 
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);
-        void draw_self_after(ijengine::Canvas *, unsigned, unsigned) {}
+        void draw_self_after(ijengine::Canvas *c, unsigned now, unsigned last);
         bool on_event(const ijengine::GameEvent& event);
         void update_self(unsigned, unsigned);
         int level() const;
@@ -34,15 +35,8 @@ namespace SoMTD {
         std::string m_image_path;
         unsigned m_id;
         bool m_selected = false;
-        int m_x;
-        int m_y;
-        int m_w;
-        int m_h;
         int m_start;
-        bool m_done;
         int m_priority;
-        int canvas_x;
-        int canvas_y;
         bool m_mouseover = false;
         std::string m_imageselected_path;
         Player *m_player;

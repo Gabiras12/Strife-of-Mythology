@@ -22,7 +22,15 @@ namespace SoMTD {
 
         ~Animation();
         virtual void draw(ijengine::Canvas *c, unsigned, unsigned);
+        virtual void draw_self_after(ijengine::Canvas *c, unsigned, unsigned);
         void next_frame();
+        void update_texture(std::string new_path);
+
+        std::pair<int, int> screen_position() const;
+        std::pair<int, int> tile() const;
+        std::shared_ptr<ijengine::Texture> texture() const;
+        int width() const;
+        int height() const;
 
     public:
         std::pair<int, int> m_screen_position;

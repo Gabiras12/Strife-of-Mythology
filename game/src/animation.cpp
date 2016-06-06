@@ -49,3 +49,46 @@ SoMTD::Animation::draw(ijengine::Canvas *c, unsigned, unsigned)
 
     c->draw(m_texture.get(), rect, m_screen_position.first, m_screen_position.second);
 }
+
+void
+SoMTD::Animation::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
+{
+
+}
+
+std::pair<int, int>
+SoMTD::Animation::screen_position() const
+{
+    return m_screen_position;
+}
+
+std::pair<int, int>
+SoMTD::Animation::tile() const
+{
+    return m_tile;
+}
+
+void
+SoMTD::Animation::update_texture(std::string new_path)
+{
+    m_file_path = new_path;
+    m_texture = ijengine::resources::get_texture(m_file_path);
+}
+
+std::shared_ptr<ijengine::Texture>
+SoMTD::Animation::texture() const
+{
+    return m_texture;
+}
+
+int
+SoMTD::Animation::width() const
+{
+    return m_width;
+}
+
+int
+SoMTD::Animation::height() const
+{
+    return m_height;
+}
