@@ -21,7 +21,7 @@ SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::st
     auto pos = SoMTD::tools::grid_to_isometric(m_x, m_y, 100, 81, 1024/2, 11);
     canvas_x = pos.first;
     canvas_y = pos.second;
-    canvas_y -= 81/2;
+    // canvas_y -= 81/2;
     m_range = 50.0;
     m_texture = ijengine::resources::get_texture(texture_name);
     m_animation = new Animation(m_x, m_y, texture_name, Animation::StateStyle::STATE_PER_LINE, 0x04, 0x01, 0x04);
@@ -43,10 +43,13 @@ SoMTD::Tower::on_event(const ijengine::GameEvent& event)
             level_up();
         }
     }
+
     if (event.id() == SoMTD::MOUSEOVER) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
-        if (x_pos >= (canvas_x+m_texture->w()/4) && (x_pos<canvas_x+m_texture->w()-m_texture->w()/4) && (y_pos>canvas_y+m_texture->h()/16) && y_pos<(canvas_y+m_texture->h()-m_texture->h()/4)) {
+        printf("x_pos: %f, canvas_x: %d\n", x_pos, canvas_x);
+        printf("y_pos: %f, canvas_y: %d\n", y_pos, canvas_y);
+        if (x_pos >= canvas_x && x_pos<canvas_x+m_texture->w() && (y_pos>canvas_y) && y_pos<(canvas_y+m_texture->h())) {
             m_mouseover = true;
         } else {
             m_mouseover = false;
@@ -56,7 +59,7 @@ SoMTD::Tower::on_event(const ijengine::GameEvent& event)
     if (event.id() == SoMTD::CLICK) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
-        if (x_pos >= (canvas_x+m_texture->w()/4) && (x_pos<canvas_x+m_texture->w()-m_texture->w()/4) && (y_pos>canvas_y+m_texture->h()/16) && y_pos<(canvas_y+m_texture->h()-m_texture->h()/4)) {
+        if (x_pos >= canvas_x && x_pos<canvas_x+m_texture->w() && (y_pos>canvas_y) && y_pos<(canvas_y+m_texture->h())) {
             m_selected = true;
             m_texture = ijengine::resources::get_texture(m_imageselected_path);
             m_player->state = SoMTD::Player::PlayerState::SELECTED_TOWER;
@@ -79,7 +82,6 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned a1, unsigned a2)
     std::pair<int, int> p = SoMTD::tools::grid_to_isometric(m_x, m_y, myw, myh, 1024/2, 11);
 
     m_animation->draw(canvas, a1, a2);
-    // canvas->draw(m_texture.get(), p.first + 22, p.second - myh/2);
     if (m_mouseover) {
         for (double theta=0.0; theta < 360; ++theta) {
             double myx = ( (m_range * cos(theta)) + canvas_x + m_texture->w()/2 );
@@ -88,12 +90,12 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned a1, unsigned a2)
             canvas->draw(myp);
         }
     }
+
 }
 
 void
 SoMTD::Tower::update_self(unsigned a1, unsigned a2)
 {
-    // printf("mytimer: %d, a1: %d\n", mytimer, a1);
     if (mytimer == 0) {
         mytimer = a1;
     } else {
