@@ -1,5 +1,6 @@
 #include "map_level.h"
 #include "level_factory.h"
+#include "geometric_level.h"
 
 #include <string>
 
@@ -11,7 +12,7 @@ SoMTD::LevelFactory::make_level(const string& level_id)
     else if (level_id == "map002")
         return new SoMTD::MapLevel("map003", "map002");
     else if (level_id == "map003")
-        return nullptr;
+        return new SoMTD::GeometricLevel("ihdashdu");
 
     return nullptr;
 }
