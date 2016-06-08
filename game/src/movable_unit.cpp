@@ -62,6 +62,13 @@ SoMTD::MovableUnit::update_self(unsigned start, unsigned)
             }
         }
     }
+
+    //if (start%50 == 0){
+      //  m_actual_hp -= 5;
+        //if (m_actual_hp <= 0) {
+            //die();
+        //}
+    //}
 }
 
 void
@@ -87,9 +94,16 @@ SoMTD::MovableUnit::draw_self(ijengine::Canvas *c, unsigned, unsigned)
 }
 
 void
-SoMTD::MovableUnit::draw_self_after(ijengine::Canvas *, unsigned, unsigned)
-{
+SoMTD::MovableUnit::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
+{   
+    ijengine::Rectangle rect{m_x + m_texture->w()/2 , m_y - 5, 60 * hp_percentage()/100, 5};
+    c->draw(rect);
+}
 
+int
+SoMTD::MovableUnit::hp_percentage() const
+{
+    return 100 * m_actual_hp/m_initial_hp;
 }
 
 bool
@@ -125,6 +139,7 @@ SoMTD::MovableUnit::move(int x, int y)
     std::pair<int, int> dest_canvas = SoMTD::tools::grid_to_isometric(destiny.first, destiny.second, tile_width, tile_height, 1024/2, 11);
     desired_place = dest_canvas;
 }
+
 
 SoMTD::MovableUnit*
 SoMTD::MovableUnit::clone()

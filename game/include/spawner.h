@@ -43,6 +43,12 @@ namespace SoMTD {
             }
         }
 
+        void draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2) {
+            for (auto it : units) {
+                it->draw_self_after(c, a1, a2);
+            }
+        }
+
         bool on_event(const ijengine::GameEvent& event) {
             if (event.id() == SoMTD::SPAWN_UNIT) {
                 spawn_unit();
