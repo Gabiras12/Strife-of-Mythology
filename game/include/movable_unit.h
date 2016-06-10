@@ -27,13 +27,13 @@ namespace SoMTD {
         void update_self(unsigned, unsigned);
         std::vector< std::pair<int, int> > m_labyrinth_path;
         int hp_percentage() const;
+        std::string texture_name;
 
     protected:
         bool on_event(const ijengine::GameEvent& event);
 
     private:
         void die();
-        std::string texture_name;
         bool m_enemy;
         std::pair<int, int> end_position;
         std::pair<int, int> start_position;
@@ -44,10 +44,10 @@ namespace SoMTD {
         bool m_moving = false;
         int m_x;
         int m_y;
-        int m_current_instruction;
+        unsigned int m_current_instruction;
+        Player *m_player;
         int m_initial_hp = 100;
         int m_actual_hp = 100;
-        Player *m_player;
     };
 }
 

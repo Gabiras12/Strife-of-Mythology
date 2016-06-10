@@ -21,8 +21,8 @@ namespace SoMTD {
         Animation(int new_grid_x, int new_grid_y, std::string new_file_path, StateStyle new_state_style, int new_frame_per_state, int new_total_states, int new_total_frames);
 
         ~Animation();
-        virtual void draw(ijengine::Canvas *c, unsigned, unsigned);
-        virtual void draw_self_after(ijengine::Canvas *c, unsigned, unsigned);
+        void draw(ijengine::Canvas *c, unsigned, unsigned);
+        void draw_self_after(ijengine::Canvas *c, unsigned, unsigned);
         void next_frame();
         void update_texture(std::string new_path);
 

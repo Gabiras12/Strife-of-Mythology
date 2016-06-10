@@ -23,7 +23,7 @@ namespace SoMTD {
         int m_hp = 50;
         int desired_tower = 0;
         ijengine::GameObject *selected_object = nullptr;
-    
+
         void discount_gold(int);
     private:
         int m_gold;

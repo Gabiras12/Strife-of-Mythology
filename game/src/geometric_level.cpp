@@ -5,7 +5,7 @@
 #include <ijengine/canvas.h>
 #include <ijengine/rectangle.h>
 
-SoMTD::GeometricLevel::GeometricLevel(std::string newpath) :
+SoMTD::GeometricLevel::GeometricLevel(std::string) :
     m_done(false),
     m_next("")
 {
@@ -16,7 +16,7 @@ SoMTD::GeometricLevel::~GeometricLevel()
 }
 
 void
-SoMTD::GeometricLevel::draw_self(ijengine::Canvas *c, unsigned a1, unsigned a2)
+SoMTD::GeometricLevel::draw_self(ijengine::Canvas *c, unsigned a1, unsigned)
 {
     int aux = 0;
     if ((a1 % 50) == 0) {
@@ -35,7 +35,7 @@ SoMTD::GeometricLevel::draw_self(ijengine::Canvas *c, unsigned a1, unsigned a2)
 }
 
 void
-SoMTD::GeometricLevel::update_self(unsigned now, unsigned last)
+SoMTD::GeometricLevel::update_self(unsigned, unsigned)
 {
 }
 
@@ -58,7 +58,7 @@ SoMTD::GeometricLevel::audio() const
 }
 
 bool
-SoMTD::GeometricLevel::on_event(const ijengine::GameEvent &a)
+SoMTD::GeometricLevel::on_event(const ijengine::GameEvent &)
 {
     return false;
 }

@@ -15,9 +15,9 @@ SoMTD::MovableUnit::MovableUnit(std::pair<int, int> s_pos, std::pair<int, int> e
     m_texture(ijengine::resources::get_texture(t_path)),
     m_active(false),
     m_current_instruction(0),
-    m_player(myp),
-    m_labyrinth_path(best_path)
+    m_player(myp)
 {
+    m_labyrinth_path = best_path;
     std::pair<int, int> p = SoMTD::tools::grid_to_isometric(s_pos.first, s_pos.second, 100, 81, 1024/2, 11);
     desired_place = start_position;
     m_x = p.first;
@@ -32,7 +32,7 @@ SoMTD::MovableUnit::~MovableUnit()
 }
 
 void
-SoMTD::MovableUnit::update_self(unsigned start, unsigned)
+SoMTD::MovableUnit::update_self(unsigned , unsigned )
 {
     if (m_active) {
         if (m_moving) {
@@ -62,13 +62,6 @@ SoMTD::MovableUnit::update_self(unsigned start, unsigned)
             }
         }
     }
-
-    //if (start%50 == 0){
-      //  m_actual_hp -= 5;
-        //if (m_actual_hp <= 0) {
-            //die();
-        //}
-    //}
 }
 
 void
@@ -95,8 +88,9 @@ SoMTD::MovableUnit::draw_self(ijengine::Canvas *c, unsigned, unsigned)
 
 void
 SoMTD::MovableUnit::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
-{   
-    ijengine::Rectangle rect{m_x + m_texture->w()/2 , m_y - 5, 60 * hp_percentage()/100, 5};
+{
+    int half_texture = m_texture->w()/2;
+    ijengine::Rectangle rect(m_x+half_texture, m_y-5, 60*hp_percentage()/200, 5);
     c->draw(rect);
 }
 

@@ -335,6 +335,15 @@ SoMTD::MapLevel::load_spawners()
 {
     SoMTD::MovableUnit *cyclop = new SoMTD::MovableUnit(origin, destiny, "cyclop.png", m_labyrinth->solution, m_player);
     SoMTD::Spawner<MovableUnit> *spawner = new SoMTD::Spawner<MovableUnit>(cyclop);
+    SoMTD::MovableUnit *zeus = new SoMTD::MovableUnit(origin, destiny, "zeus_panel.png", m_labyrinth->solution, m_player);
+    SoMTD::Spawner<MovableUnit> *spawner2 = new SoMTD::Spawner<MovableUnit>(zeus);
+    SoMTD::MovableUnit *hades = new SoMTD::MovableUnit(origin, destiny, "hades_panel.png", m_labyrinth->solution, m_player);
+    SoMTD::Spawner<MovableUnit> *spawner3 = new SoMTD::Spawner<MovableUnit>(hades);
+    SoMTD::MovableUnit *poseidon = new SoMTD::MovableUnit(origin, destiny, "poseidon_panel.png", m_labyrinth->solution, m_player);
+    SoMTD::Spawner<MovableUnit> *spawner4 = new SoMTD::Spawner<MovableUnit>(poseidon);
     add_child(spawner);
+    add_child(spawner2);
+    add_child(spawner3);
+    add_child(spawner4);
 }
 

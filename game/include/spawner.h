@@ -21,7 +21,7 @@ namespace SoMTD {
             }
         };
 
-        T *spawn_unit() {
+        void spawn_unit() {
             T* new_unit = m_prototype->clone();
             units.push_back(new_unit);
             new_unit->spawn();
@@ -50,9 +50,20 @@ namespace SoMTD {
         }
 
         bool on_event(const ijengine::GameEvent& event) {
+            int v1 = rand() % 100;
+            printf("v1: %d\n", v1);
             if (event.id() == SoMTD::SPAWN_UNIT) {
-                spawn_unit();
+                if (m_prototype->texture_name == "zeus_panel.png" && (v1 % 2) == 0)
+                    spawn_unit();
+                else if (m_prototype->texture_name == "hades_panel.png" && (v1 % 3) == 0)
+                    spawn_unit();
+                else if (m_prototype->texture_name == "poseidon_panel.png" && (v1 % 5) == 0)
+                    spawn_unit();
+                else if (m_prototype->texture_name == "cyclop.png") {
+                    spawn_unit();
+                }
             }
+            return false;
         }
 
     private:

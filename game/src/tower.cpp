@@ -16,7 +16,6 @@ SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::st
     m_imageselected_path(image_selected),
     m_player(p)
 {
-    auto pos = SoMTD::tools::grid_to_isometric(m_x, m_y, 100, 81, 1024/2, 11);
     m_range = 50.0;
     m_texture = ijengine::resources::get_texture(texture_name);
     m_animation = new Animation(x, y, texture_name, Animation::StateStyle::STATE_PER_LINE, 0x04, 0x01, 0x04);
@@ -40,7 +39,6 @@ SoMTD::Tower::on_event(const ijengine::GameEvent& event)
     }
 
     std::pair<int, int> screen_pos = m_animation->screen_position();
-    std::pair<int, int> tile_pos = m_animation->tile();
 
     if (event.id() == SoMTD::MOUSEOVER) {
         double x_pos = event.get_property<double>("x");
@@ -72,11 +70,6 @@ SoMTD::Tower::on_event(const ijengine::GameEvent& event)
 void
 SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned a1, unsigned a2)
 {
-    const int myw = 100;
-    const int myh = 81;
-
-    std::pair<int, int> p = SoMTD::tools::grid_to_isometric(m_x, m_y, myw, myh, 1024/2, 11);
-
     m_animation->draw(canvas, a1, a2);
     if (m_mouseover) {
         std::pair<int, int> pos = m_animation->screen_position();
@@ -92,7 +85,7 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned a1, unsigned a2)
 }
 
 void
-SoMTD::Tower::update_self(unsigned a1, unsigned a2)
+SoMTD::Tower::update_self(unsigned a1, unsigned)
 {
     if (mytimer == 0) {
         mytimer = a1;
@@ -131,7 +124,7 @@ SoMTD::Tower::range() const
 }
 
 void
-SoMTD::Tower::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
+SoMTD::Tower::draw_self_after(ijengine::Canvas*, unsigned, unsigned)
 {
 }
 

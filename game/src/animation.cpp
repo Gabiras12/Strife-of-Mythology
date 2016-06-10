@@ -47,11 +47,11 @@ SoMTD::Animation::draw(ijengine::Canvas *c, unsigned, unsigned)
     else
         rect.set_position(m_width*m_actual_frame, m_height*m_actual_state);
 
-    c->draw(m_texture.get(), rect, m_screen_position.first, m_screen_position.second);
+    c->draw(m_texture.get(), rect, m_screen_position.first, m_screen_position.second-40);
 }
 
 void
-SoMTD::Animation::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
+SoMTD::Animation::draw_self_after(ijengine::Canvas*, unsigned, unsigned)
 {
 
 }
