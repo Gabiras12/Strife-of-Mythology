@@ -253,6 +253,7 @@ SoMTD::MapLevel::load_panels()
     std::vector< std::string > panel_names {
         "hp_panel", "left_upgrade_panel", "right_upgrade_panel",
         "coins_panel", "poseidon_panel", "zeus_panel", "hades_panel"
+        // "buy_tower_panel"
     };
 
     for (std::string it : panel_names) {

@@ -51,7 +51,6 @@ namespace SoMTD {
 
         bool on_event(const ijengine::GameEvent& event) {
             int v1 = rand() % 100;
-            printf("v1: %d\n", v1);
             if (event.id() == SoMTD::SPAWN_UNIT) {
                 if (m_prototype->texture_name == "zeus_panel.png" && (v1 % 2) == 0)
                     spawn_unit();

@@ -12,6 +12,7 @@ namespace SoMTD {
         void fetch_file(std::string _path);
         std::vector<std::vector<int> > m_grid;
         std::vector< std::pair<int, int> > solve();
+
         void update_origin(std::pair<int, int> new_origin) {
             m_origin = new_origin;
         }
@@ -19,6 +20,7 @@ namespace SoMTD {
         void update_destiny(std::pair<int, int> new_destiny) {
             m_destiny = new_destiny;
         }
+
         std::vector< std::pair<int, int> > solution;
 
     private:

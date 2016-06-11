@@ -81,4 +81,14 @@ hades_panel = {
   width = 32,
   height = 46
 }
-
+-- buy_tower_panel = {
+--   file_path = "buy_tower_panel.png",
+--   screen_position = {
+--     x = 100,
+--     y = 566
+--   },
+--   priority = 500220,
+--   id = 0,
+--   width = 766,
+--   height = 136
+-- }

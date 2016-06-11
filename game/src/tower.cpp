@@ -2,6 +2,7 @@
 #include <ijengine/canvas.h>
 #include <ijengine/engine.h>
 #include <ijengine/texture.h>
+#include <ijengine/rectangle.h>
 #include <cmath>
 
 #include "game.h"
@@ -124,7 +125,13 @@ SoMTD::Tower::range() const
 }
 
 void
-SoMTD::Tower::draw_self_after(ijengine::Canvas*, unsigned, unsigned)
+SoMTD::Tower::draw_self_after(ijengine::Canvas* c, unsigned, unsigned)
 {
+    if (m_selected) {
+        std::pair<int, int> pos = m_animation->screen_position();
+        auto font = ijengine::resources::get_font("Forelle.ttf", 40);
+        c->set_font(font);
+        c->draw("Press U", pos.first, pos.second-80);
+    }
 }
 
