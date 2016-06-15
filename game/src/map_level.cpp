@@ -12,6 +12,7 @@
 #include <queue>
 #include <cstring>
 #include <algorithm>
+#include <sstream>
 
 #include "spawner.h"
 #include "luascript.h"
@@ -43,6 +44,7 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     m_labyrinth->solve();
     std::reverse(m_labyrinth->solution.begin(), m_labyrinth->solution.end());
     load_spawners();
+    fetch_waves_from_file();
 
     m_actions = new LuaScript("lua-src/Action.lua");
 }
@@ -154,8 +156,24 @@ SoMTD::MapLevel::next() const
 }
 
 void
-SoMTD::MapLevel::update_self(unsigned now, unsigned)
+SoMTD::MapLevel::update_self(unsigned now, unsigned last)
 {
+    if (m_waves[m_current_wave]->done()) {
+        if (m_current_wave == m_waves.size()-1) {
+            m_done = true;
+            m_current_wave = 1;
+        } else {
+            m_current_wave++;
+        }
+    } else {
+        m_waves[m_current_wave]->update_self(now, last);
+    }
+
+    if (!m_waves[m_current_wave]->done() && !m_waves[m_current_wave]->started()) {
+        m_waves[m_current_wave]->start();
+        start_wave();
+    }
+
     if (m_start == -1)
         m_start = now;
     if (not (now - m_start > 1000))
@@ -193,6 +211,7 @@ SoMTD::MapLevel::draw_help_text(ijengine::Canvas *canvas)
 bool
 SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
 {
+
     if (event.id() == SoMTD::CLICK) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
@@ -329,6 +348,14 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
 
         c->draw(mytext.get(), xpos - mytext->w()/2, ypos - mytext->h()/2);
     }
+    auto font = ijengine::resources::get_font("Forelle.ttf", 40);
+    c->set_font(font);
+    std::ostringstream convert;
+
+    convert << m_current_wave;
+    std::string mytext = "Wave ";
+    mytext.append(convert.str());
+    c->draw(mytext, 1024/2, 0);
 }
 
 void
@@ -336,15 +363,53 @@ SoMTD::MapLevel::load_spawners()
 {
     SoMTD::MovableUnit *cyclop = new SoMTD::MovableUnit(origin, destiny, "cyclop.png", m_labyrinth->solution, m_player);
     SoMTD::Spawner<MovableUnit> *spawner = new SoMTD::Spawner<MovableUnit>(cyclop);
+    spawners.push_back(spawner);
+
     SoMTD::MovableUnit *zeus = new SoMTD::MovableUnit(origin, destiny, "zeus_panel.png", m_labyrinth->solution, m_player);
     SoMTD::Spawner<MovableUnit> *spawner2 = new SoMTD::Spawner<MovableUnit>(zeus);
+    spawners.push_back(spawner2);
+
     SoMTD::MovableUnit *hades = new SoMTD::MovableUnit(origin, destiny, "hades_panel.png", m_labyrinth->solution, m_player);
     SoMTD::Spawner<MovableUnit> *spawner3 = new SoMTD::Spawner<MovableUnit>(hades);
+    spawners.push_back(spawner3);
+
     SoMTD::MovableUnit *poseidon = new SoMTD::MovableUnit(origin, destiny, "poseidon_panel.png", m_labyrinth->solution, m_player);
     SoMTD::Spawner<MovableUnit> *spawner4 = new SoMTD::Spawner<MovableUnit>(poseidon);
+    spawners.push_back(spawner4);
+
     add_child(spawner);
     add_child(spawner2);
     add_child(spawner3);
     add_child(spawner4);
 }
 
+void
+SoMTD::MapLevel::fetch_waves_from_file()
+{
+    int aux;
+    int wave_length;
+    int total_waves;
+    std::string waves_path = "res/" + m_current + "_waves.txt";
+    std::ifstream map_data(waves_path);
+    if (map_data.is_open()) {
+        map_data >> total_waves;
+        for (int j=0; j < total_waves; ++j) {
+            Wave *w = new SoMTD::Wave(j);
+            map_data >> wave_length;
+            for (int i=0; i < wave_length; ++i) {
+                map_data >> aux;
+                w->add_unit(aux);
+            }
+            m_waves.push_back(w);
+        }
+        map_data.close();
+    }
+}
+
+void
+SoMTD::MapLevel::start_wave()
+{
+    for (auto it : m_waves[m_current_wave]->units()) {
+        spawners[it]->spawn_unit();
+    }
+}
