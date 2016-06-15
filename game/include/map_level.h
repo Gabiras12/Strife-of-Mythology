@@ -12,8 +12,11 @@
 #include <vector>
 
 #include "player.h"
+#include "movable_unit.h"
 #include "luascript.h"
 #include "labyrinth.h"
+#include "spawner.h"
+#include "wave.h"
 
 namespace SoMTD {
     class MapLevel : public ijengine::Level, public ijengine::GameEventsListener {
@@ -50,6 +53,11 @@ namespace SoMTD {
         std::pair<int, int> destiny;
         std::vector< std::pair<int, int> > m_unit_path;
         Labyrinth *m_labyrinth;
+        std::vector< SoMTD::Spawner<MovableUnit> *> spawners;
+        void fetch_waves_from_file();
+        std::vector< SoMTD::Wave *> m_waves;
+        int m_current_wave = 0;
+        void start_wave();
     };
 }
 

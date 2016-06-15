@@ -50,18 +50,7 @@ namespace SoMTD {
         }
 
         bool on_event(const ijengine::GameEvent& event) {
-            int v1 = rand() % 100;
-            if (event.id() == SoMTD::SPAWN_UNIT) {
-                if (m_prototype->texture_name == "zeus_panel.png" && (v1 % 2) == 0)
-                    spawn_unit();
-                else if (m_prototype->texture_name == "hades_panel.png" && (v1 % 3) == 0)
-                    spawn_unit();
-                else if (m_prototype->texture_name == "poseidon_panel.png" && (v1 % 5) == 0)
-                    spawn_unit();
-                else if (m_prototype->texture_name == "cyclop.png") {
-                    spawn_unit();
-                }
-            }
+            // spawn_unit();
             return false;
         }
 

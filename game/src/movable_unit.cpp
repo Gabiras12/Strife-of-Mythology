@@ -32,7 +32,7 @@ SoMTD::MovableUnit::~MovableUnit()
 }
 
 void
-SoMTD::MovableUnit::update_self(unsigned , unsigned )
+SoMTD::MovableUnit::update_self(unsigned a1, unsigned a2)
 {
     if (m_active) {
         if (m_moving) {
