@@ -8,16 +8,28 @@
 #include <ijengine/engine.h>
 #include <ijengine/texture.h>
 
-SoMTD::MovableUnit::MovableUnit(std::pair<int, int> s_pos, std::pair<int, int> e_pos, std::string t_path, std::vector< std::pair<int, int> > best_path, Player* myp) :
+SoMTD::MovableUnit::MovableUnit(
+        std::pair<int, int> s_pos,
+        std::pair<int, int> e_pos,
+        std::string t_path,
+        std::vector< std::pair<int, int> > best_path,
+        Player* myp,
+        Animation::StateStyle entity_state_style,
+        int frame_per_state,
+        int total_states) :
     m_enemy(false),
     end_position(e_pos),
     start_position(s_pos),
     m_texture(ijengine::resources::get_texture(t_path)),
     m_active(false),
     m_current_instruction(0),
-    m_player(myp)
+    m_player(myp),
+    m_state_style(entity_state_style),
+    m_frame_per_state(frame_per_state),
+    m_total_states(total_states)
 {
     m_labyrinth_path = best_path;
+    m_animation = new Animation(s_pos.first, s_pos.second, t_path, entity_state_style, m_frame_per_state, total_states);
     std::pair<int, int> p = SoMTD::tools::grid_to_isometric(s_pos.first, s_pos.second, 100, 81, 1024/2, 11);
     desired_place = start_position;
     m_x = p.first;
@@ -35,6 +47,10 @@ void
 SoMTD::MovableUnit::update_self(unsigned a1, unsigned a2)
 {
     if (m_active) {
+        m_animation->update_screen_position(std::make_pair(m_x, m_y));
+        if ((a1 % 50) == 0)
+            m_animation->next_frame();
+
         if (m_moving) {
             if (m_x == desired_place.first && m_y == desired_place.second) {
                 m_moving = false;
@@ -79,10 +95,11 @@ SoMTD::MovableUnit::on_event(const ijengine::GameEvent&)
 }
 
 void
-SoMTD::MovableUnit::draw_self(ijengine::Canvas *c, unsigned, unsigned)
+SoMTD::MovableUnit::draw_self(ijengine::Canvas *c, unsigned a1, unsigned a2)
 {
     if (m_active) {
-        c->draw(m_texture.get(), m_x, m_y);
+        m_animation->draw(c, a1, a2);
+    } else {
     }
 }
 
@@ -90,7 +107,7 @@ void
 SoMTD::MovableUnit::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
 {
     int half_texture = m_texture->w()/2;
-    ijengine::Rectangle rect(m_x+half_texture, m_y-5, 60*hp_percentage()/200, 5);
+    ijengine::Rectangle rect(m_x, m_y, 60*hp_percentage()/200, 5);
     c->draw(rect);
 }
 
@@ -138,5 +155,5 @@ SoMTD::MovableUnit::move(int x, int y)
 SoMTD::MovableUnit*
 SoMTD::MovableUnit::clone()
 {
-    return new MovableUnit(start_position, end_position, texture_name, m_labyrinth_path, m_player);
+    return new MovableUnit(start_position, end_position, texture_name, m_labyrinth_path, m_player, m_state_style, m_frame_per_state, m_total_states);
 }

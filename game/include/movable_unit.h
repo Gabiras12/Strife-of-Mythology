@@ -10,12 +10,13 @@
 #include <list>
 #include <vector>
 #include "player.h"
+#include "animation.h"
 
 namespace SoMTD {
 
     class MovableUnit : public ijengine::GameObject, public ijengine::GameEventsListener {
     public:
-        MovableUnit(std::pair<int, int> s_pos, std::pair<int, int> e_pos, std::string texture_path, std::vector< std::pair<int, int> >, Player* playerz);
+        MovableUnit(std::pair<int, int> s_pos, std::pair<int, int> e_pos, std::string texture_path, std::vector< std::pair<int, int> >, Player* playerz, Animation::StateStyle entity_state, int frame_per_state, int total_states);
         ~MovableUnit();
         bool enemy() const;
         void spawn();
@@ -48,6 +49,10 @@ namespace SoMTD {
         Player *m_player;
         int m_initial_hp = 100;
         int m_actual_hp = 100;
+        Animation *m_animation;
+        int m_total_states = 1;
+        int m_frame_per_state = 1;
+        Animation::StateStyle m_state_style;
     };
 }
 

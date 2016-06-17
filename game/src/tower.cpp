@@ -9,7 +9,8 @@
 #include "tower.h"
 #include "animation.h"
 
-SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::string image_selected, Player *p) :
+SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::string image_selected, Player *p,
+        Animation::StateStyle statestyle, int frame_per_state, int total_states) :
     m_image_path(texture_name),
     m_id(id),
     m_start(-1),
@@ -19,7 +20,7 @@ SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::st
 {
     m_range = 50.0;
     m_texture = ijengine::resources::get_texture(texture_name);
-    m_animation = new Animation(x, y, texture_name, Animation::StateStyle::STATE_PER_LINE, 0x04, 0x01, 0x04);
+    m_animation = new Animation(x, y, texture_name, statestyle, frame_per_state, total_states);
     ijengine::event::register_listener(this);
     mytimer = 0;
 }
