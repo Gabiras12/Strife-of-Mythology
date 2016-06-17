@@ -44,63 +44,48 @@ SoMTD::MovableUnit::~MovableUnit()
     ijengine::event::unregister_listener(this);
 }
 
-int
+double
 SoMTD::MovableUnit::x() const
 {
     return m_x;
 }
 
-int
+double
 SoMTD::MovableUnit::y() const
 {
     return m_y;
 }
 
 void
-SoMTD::MovableUnit::update_self(unsigned a1, unsigned a2)
+SoMTD::MovableUnit::update_self(unsigned now, unsigned last)
 {
     if (m_active) {
         m_animation->update_screen_position(std::make_pair(m_x, m_y));
-        if ((a1 % 50) == 0)
+        if ((now % 50) == 0)
             m_animation->next_frame();
 
         if (m_moving) {
-            double deltax = m_movement_speed.first * (a1-a2)/1000.0;
-            double deltay = m_movement_speed.second * (a1-a2)/1000.0;
-            printf("deltax: %f, deltay: %f\n", deltax, deltay);
-            // printf("desired y: %d, actual y: %d\n", desired_place.second, m_y);
-
-            if ((m_x+deltax*2 >= desired_place.first) && (m_x-deltax*2 <= desired_place.first) && (m_y-deltay*2 >= desired_place.second) && (m_y+deltay*2 <= desired_place.second)) {
-                // printf("cheguei no destino..\n");
+            if (x()+1 > desired_place.first && x()-1 < desired_place.first && y()+1>desired_place.second && y()-1<desired_place.second) {
+                printf("cheguei no destino..\n");
                 m_moving = false;
                 m_current_instruction++;
                 if (m_current_instruction > m_labyrinth_path.size()) {
                     m_active = false;
                 }
-                m_movement_speed.first = 0;
-                m_movement_speed.second = 0;
             }
 
-            if (m_x+deltax >= desired_place.first && m_x-deltax <= desired_place.first) {
-                m_movement_speed.first = 0;
-            }
-            printf("m_x: %d, m_y: %d, des_x: %d, des_y: %d\n", m_x, m_y, desired_place.first, desired_place.second);
-
-            if (m_y-deltay*2 >= desired_place.second && m_y+deltay*2 <= desired_place.second) {
-                // printf("not in y..\n");
-                m_movement_speed.second = 0;
-            } else {
-                // printf("in y.\n");
-            }
-
-            m_y = (double)m_y + deltay;
-            m_x = (double)m_x + deltax;
+            m_x = x() + m_movement_speed.first;
+            m_y = y() + m_movement_speed.second;
+            // printf("x() + mspeed.first:\n");
+            // printf("%f + %f\n", x(), m_movement_speed.first);
+            // printf("y() + mspeed.second:\n");
+            // printf("%f + %f\n", y(), m_movement_speed.second);
         } else {
             if (m_current_instruction == m_labyrinth_path.size()) {
                 die();
             } else {
                 std::pair<int, int> pos = m_labyrinth_path[m_current_instruction];
-                move(pos.first, pos.second);
+                move(pos.first, pos.second, now);
             }
         }
     }
@@ -166,29 +151,23 @@ SoMTD::MovableUnit::active() const
 }
 
 void
-SoMTD::MovableUnit::move(int x, int y)
+SoMTD::MovableUnit::move(int new_x, int new_y, unsigned now)
 {
-    printf("x: %d, y: %d\n", x, y);
     m_moving = true;
     const int tile_width = 100;
     const int tile_height = 81;
-    desired_place = SoMTD::tools::grid_to_isometric(x, y, tile_width, tile_height, 1024/2, 11);
-    printf("actual place: [%d][%d]\n", m_y, m_x);
-    printf("desired place: [%d][%d]\n", desired_place.second, desired_place.first);
-
-    if (desired_place.first < m_x) {
-        m_movement_speed.first = -400.0;
-    } else if (desired_place.first > m_x)
-        m_movement_speed.first = 400.0;
-    else
-        m_movement_speed.first = 0.0;
-
-    if (desired_place.second < m_y) {
-        m_movement_speed.second = -400.0;
-    } else if (desired_place.second > m_y)
-        m_movement_speed.second = 400.0;
-    else
-        m_movement_speed.second  = 0.0;
+    desired_place = SoMTD::tools::grid_to_isometric(new_x, new_y, tile_width, tile_height, 1024/2, 11);
+    m_movement_speed.first = desired_place.first - x();
+    m_movement_speed.first /= (1000);
+    m_movement_speed.second = (desired_place.second - y());
+    m_movement_speed.second /= (1000);
+    printf("desired_place.second: %d\n", desired_place.second);
+    printf("desired_place.first: %d\n", desired_place.first);
+    printf("now: %d\n", now);
+    printf("y(): %f\n", y());
+    printf("x(): %f\n", x());
+    printf("m speed.second: %f\n", m_movement_speed.second);
+    printf("m speed.first: %f\n", m_movement_speed.first);
 }
 
 SoMTD::MovableUnit*

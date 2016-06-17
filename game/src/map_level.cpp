@@ -364,7 +364,8 @@ SoMTD::MapLevel::load_spawners()
     LuaScript units_list("lua-src/Unit.lua");
 
     std::vector< std::string > unit_names {
-        "cyclop", "medusa", "bat", "centauro"
+        "cyclop", "medusa", "bat", "centauro",
+        "zeus"
     };
 
     std::string unit_path;

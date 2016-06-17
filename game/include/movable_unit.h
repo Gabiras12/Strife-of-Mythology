@@ -21,7 +21,7 @@ namespace SoMTD {
         bool enemy() const;
         void spawn();
         bool active() const;
-        void move(int x, int y);
+        void move(int x, int y, unsigned now);
         MovableUnit* clone();
         void draw_self(ijengine::Canvas*, unsigned, unsigned);
         void draw_self_after(ijengine::Canvas*, unsigned, unsigned);
@@ -29,8 +29,8 @@ namespace SoMTD {
         std::vector< std::pair<int, int> > m_labyrinth_path;
         int hp_percentage() const;
         std::string texture_name;
-        int x() const;
-        int y() const;
+        double x() const;
+        double y() const;
 
     protected:
         bool on_event(const ijengine::GameEvent& event);
@@ -45,8 +45,8 @@ namespace SoMTD {
         std::pair<int, int> desired_place;
         bool m_active;
         bool m_moving = false;
-        int m_x;
-        int m_y;
+        double m_x;
+        double m_y;
         unsigned int m_current_instruction;
         std::pair<double, double> m_movement_speed;
         Player *m_player;
