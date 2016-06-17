@@ -28,6 +28,7 @@ SoMTD::MovableUnit::MovableUnit(
     m_frame_per_state(frame_per_state),
     m_total_states(total_states)
 {
+    m_movement_speed = std::make_pair(0.0, 0.0);
     m_labyrinth_path = best_path;
     m_animation = new Animation(s_pos.first, s_pos.second, t_path, entity_state_style, m_frame_per_state, total_states);
     std::pair<int, int> p = SoMTD::tools::grid_to_isometric(s_pos.first, s_pos.second, 100, 81, 1024/2, 11);
@@ -43,6 +44,18 @@ SoMTD::MovableUnit::~MovableUnit()
     ijengine::event::unregister_listener(this);
 }
 
+int
+SoMTD::MovableUnit::x() const
+{
+    return m_x;
+}
+
+int
+SoMTD::MovableUnit::y() const
+{
+    return m_y;
+}
+
 void
 SoMTD::MovableUnit::update_self(unsigned a1, unsigned a2)
 {
@@ -52,23 +65,36 @@ SoMTD::MovableUnit::update_self(unsigned a1, unsigned a2)
             m_animation->next_frame();
 
         if (m_moving) {
-            if (m_x == desired_place.first && m_y == desired_place.second) {
+            double deltax = m_movement_speed.first * (a1-a2)/1000.0;
+            double deltay = m_movement_speed.second * (a1-a2)/1000.0;
+            printf("deltax: %f, deltay: %f\n", deltax, deltay);
+            // printf("desired y: %d, actual y: %d\n", desired_place.second, m_y);
+
+            if ((m_x+deltax*2 >= desired_place.first) && (m_x-deltax*2 <= desired_place.first) && (m_y-deltay*2 >= desired_place.second) && (m_y+deltay*2 <= desired_place.second)) {
+                // printf("cheguei no destino..\n");
                 m_moving = false;
                 m_current_instruction++;
                 if (m_current_instruction > m_labyrinth_path.size()) {
                     m_active = false;
                 }
-            } else {
-                if (m_x > desired_place.first)
-                    m_x -= 1;
-                else if (m_x < desired_place.first)
-                    m_x += 1;
-
-                if (m_y > desired_place.second)
-                    m_y -= 1;
-                else if (m_y < desired_place.second)
-                    m_y += 1;
+                m_movement_speed.first = 0;
+                m_movement_speed.second = 0;
             }
+
+            if (m_x+deltax >= desired_place.first && m_x-deltax <= desired_place.first) {
+                m_movement_speed.first = 0;
+            }
+            printf("m_x: %d, m_y: %d, des_x: %d, des_y: %d\n", m_x, m_y, desired_place.first, desired_place.second);
+
+            if (m_y-deltay*2 >= desired_place.second && m_y+deltay*2 <= desired_place.second) {
+                // printf("not in y..\n");
+                m_movement_speed.second = 0;
+            } else {
+                // printf("in y.\n");
+            }
+
+            m_y = (double)m_y + deltay;
+            m_x = (double)m_x + deltax;
         } else {
             if (m_current_instruction == m_labyrinth_path.size()) {
                 die();
@@ -99,7 +125,6 @@ SoMTD::MovableUnit::draw_self(ijengine::Canvas *c, unsigned a1, unsigned a2)
 {
     if (m_active) {
         m_animation->draw(c, a1, a2);
-    } else {
     }
 }
 
@@ -143,14 +168,28 @@ SoMTD::MovableUnit::active() const
 void
 SoMTD::MovableUnit::move(int x, int y)
 {
+    printf("x: %d, y: %d\n", x, y);
     m_moving = true;
-    std::pair<int, int> destiny = std::make_pair(x, y);
     const int tile_width = 100;
     const int tile_height = 81;
-    std::pair<int, int> dest_canvas = SoMTD::tools::grid_to_isometric(destiny.first, destiny.second, tile_width, tile_height, 1024/2, 11);
-    desired_place = dest_canvas;
-}
+    desired_place = SoMTD::tools::grid_to_isometric(x, y, tile_width, tile_height, 1024/2, 11);
+    printf("actual place: [%d][%d]\n", m_y, m_x);
+    printf("desired place: [%d][%d]\n", desired_place.second, desired_place.first);
 
+    if (desired_place.first < m_x) {
+        m_movement_speed.first = -400.0;
+    } else if (desired_place.first > m_x)
+        m_movement_speed.first = 400.0;
+    else
+        m_movement_speed.first = 0.0;
+
+    if (desired_place.second < m_y) {
+        m_movement_speed.second = -400.0;
+    } else if (desired_place.second > m_y)
+        m_movement_speed.second = 400.0;
+    else
+        m_movement_speed.second  = 0.0;
+}
 
 SoMTD::MovableUnit*
 SoMTD::MovableUnit::clone()

@@ -29,6 +29,8 @@ namespace SoMTD {
         std::vector< std::pair<int, int> > m_labyrinth_path;
         int hp_percentage() const;
         std::string texture_name;
+        int x() const;
+        int y() const;
 
     protected:
         bool on_event(const ijengine::GameEvent& event);
@@ -46,6 +48,7 @@ namespace SoMTD {
         int m_x;
         int m_y;
         unsigned int m_current_instruction;
+        std::pair<double, double> m_movement_speed;
         Player *m_player;
         int m_initial_hp = 100;
         int m_actual_hp = 100;
