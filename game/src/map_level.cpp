@@ -228,7 +228,7 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                             std::string tower_name("tower_");
                             tower_name.append(std::to_string(m_player->desired_tower));
                             tower_name.append(".png");
-                            m_tower = new SoMTD::Tower(tower_name, 9, tile_position.first, tile_position.second, "selected_"+tower_name, m_player);
+                            m_tower = new SoMTD::Tower(tower_name, 9, tile_position.first, tile_position.second, "selected_"+tower_name, m_player, Animation::StateStyle::STATE_PER_LINE, 4, 1);
                             m_tower->set_priority(50000+(5*tile_position.second+5*tile_position.first));
                             add_child(m_tower);
                             m_player->discount_gold(100);
@@ -361,26 +361,28 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
 void
 SoMTD::MapLevel::load_spawners()
 {
-    SoMTD::MovableUnit *cyclop = new SoMTD::MovableUnit(origin, destiny, "cyclop.png", m_labyrinth->solution, m_player);
-    SoMTD::Spawner<MovableUnit> *spawner = new SoMTD::Spawner<MovableUnit>(cyclop);
-    spawners.push_back(spawner);
+    LuaScript units_list("lua-src/Unit.lua");
 
-    SoMTD::MovableUnit *zeus = new SoMTD::MovableUnit(origin, destiny, "zeus_panel.png", m_labyrinth->solution, m_player);
-    SoMTD::Spawner<MovableUnit> *spawner2 = new SoMTD::Spawner<MovableUnit>(zeus);
-    spawners.push_back(spawner2);
+    std::vector< std::string > unit_names {
+        "cyclop", "medusa", "bat", "centauro"
+    };
 
-    SoMTD::MovableUnit *hades = new SoMTD::MovableUnit(origin, destiny, "hades_panel.png", m_labyrinth->solution, m_player);
-    SoMTD::Spawner<MovableUnit> *spawner3 = new SoMTD::Spawner<MovableUnit>(hades);
-    spawners.push_back(spawner3);
+    std::string unit_path;
+    int unit_statestyle;
+    int unit_total_states, unit_frame_per_state;
+    SoMTD::MovableUnit *myunit;
+    SoMTD::Spawner<MovableUnit> *spawner;
 
-    SoMTD::MovableUnit *poseidon = new SoMTD::MovableUnit(origin, destiny, "poseidon_panel.png", m_labyrinth->solution, m_player);
-    SoMTD::Spawner<MovableUnit> *spawner4 = new SoMTD::Spawner<MovableUnit>(poseidon);
-    spawners.push_back(spawner4);
-
-    add_child(spawner);
-    add_child(spawner2);
-    add_child(spawner3);
-    add_child(spawner4);
+    for (std::string it : unit_names) {
+        unit_path = units_list.get<std::string>((it + ".file_path").c_str());
+        unit_statestyle = units_list.get<int>((it + ".state_style").c_str());
+        unit_total_states = units_list.get<int>((it + ".total_states").c_str());
+        unit_frame_per_state = units_list.get<int>((it + ".frame_per_state").c_str());
+        myunit = new SoMTD::MovableUnit(origin, destiny, unit_path, m_labyrinth->solution, m_player, (Animation::StateStyle)unit_statestyle, unit_frame_per_state, unit_total_states);
+        spawner = new SoMTD::Spawner<MovableUnit>(myunit);
+        spawners.push_back(spawner);
+        add_child(spawner);
+    }
 }
 
 void
