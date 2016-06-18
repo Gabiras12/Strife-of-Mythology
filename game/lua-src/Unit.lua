@@ -25,3 +25,10 @@ bat = {
   total_states = 1,
   frame_per_state = 1
 }
+
+zeus = {
+  file_path = "units/zeus.png",
+  state_style = 1,
+  total_states = 1,
+  frame_per_state = 1
+}
