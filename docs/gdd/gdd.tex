@@ -342,14 +342,47 @@ Haverão diversas \textit{waves}, onde estarão divididas entre 4 categorias, se
 
 \section{Saúde}
 
-O jogador terá uma barra de vida com 50 HP, a qual decairá a medida que os inimigos atravessem o mapa, sendo que cada tipo de inimigo tem uma pontuação diferente, sendo elas.
+O jogador terá uma barra de vida com 50 HP, esta barra não conterá valores visíveis ao jogador, sendo uma longa barra vermelha no canto superior esquerdo, a qual terá o símbolo em formato de cruz vermelha, mundialmente conhecido como símbolo de saúde.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.3]{res/saude.png}
+\caption{Demonstração da Saúde no mapa do jogo}
+\label{Saúde}
+\end{figure}
+ 
+A barra de hp decairá a medida que os inimigos atravessem o mapa, sendo que cada tipo de inimigo tem uma pontuação diferente, tais valores são estes abaixo:
+
 \begin{itemize}
- \item Norma = 2 
- \item Tanker = 5
- \item Speed = 3
- \item Fly = 3
+ \item Norma = -2 
+ \item Tanker = -5
+ \item Speed = -3
+ \item Fly = -3
  \end{itemize} 
 
+Quando a saúde atingir um nível de 20\% a música será trocada para um ritmo mais tenso, para dar mais emoção ao jogo, também ocorrerá a troca da imagem de fundo para um tom mais avermelhado.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.3]{res/danger.png}
+\caption{Demonstração da Saúde no mapa do jogo em um baixa hp}
+\label{Saúde}
+\end{figure}
+
+\subsection{Restauração}
+A saúde não será restaurada durante a partida, acontecendo somente quando o jogador passar de fase, quando ocorrer o jogador terá sua barra de \textit{HP} restaurada em 30 HP, ou seja se o jogador terminou a primeira fase com somente 10 de \textbf{HP}, ele começara a segunda fase com \textbf{40 HP}, e assim sucessivamente nas demais fases do jogo.  
+
+O estado do jogo não será salvo, somente os mapas abertos serão salvos no jogo.
+
+\subsection{Game Over}
+O \textit{game Over} só ocorrera se a barra de \textbf{HP} for zerada, assim quando ocorrer uma grande mensagem cobrira a tela do jogo com a frase de \textbf{Game Over}, e as opções para uma nova partida ou para fechar o jogo.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.3]{res/game_over.png}
+\caption{Tela de Game Over}
+\label{Game Over}
+\end{figure}
 \newpage
 
 \section{Economia}
@@ -399,6 +432,21 @@ Resumindo tem-se a seguinte lista com os valores das torres:
 \caption{Representação Gold associado as torres.}
 \label{Tela Equip}
 \end{figure}
+
+\newpage
+
+\section{Pontuação}
+Como descrito na secção Economia, o jogo terá somente um sistema de pontuação, em \textit{golds}, não havendo demais itens de suporte ao jogador.
+
+Devido ao tempo de projeto a equipe decidiu concentrar esforços no desenvolvimento do \textit{gameplay} do jogo, portanto definiu-se que não seria criado um sistema de \textit{Ranking}, assim os golds pertencerão jogador durante a partida, sendo perdidos ao final do jogo, futuramente se for possível, após o final do desenvolvimento do \textit{gameplay} do jogo, no tempo de projeto da disciplina, pode-se criar um sistema local de \textit{Ranking}, porém como dito anteriormente este \textit{Ranking} não é prioridade, caso seja desenvolvido deve ser tratado como um extra ao projeto.  
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.3]{res/pontuacao.png}
+\caption{Demontração da pontuação no mapa do jogo}
+\label{pontuacao}
+\end{figure}
+ 
 
 \section{Esquema de controle e interface com o usuário}
 

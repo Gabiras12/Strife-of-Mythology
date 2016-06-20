@@ -4,14 +4,14 @@
 
 using namespace std;
 
-int main(int argc, char const *argv[])
+int main()
 {
     int rc;
 
     try
     {
-        SoMTD::Game game("SomTD", 640, 480);
-        rc = game.run("map001");
+        SoMTD::Game game("SomTD", 1024, 700);
+        rc = game.run("mainmenu");
     } catch (ijengine::Exception& ex)
     {
         cout << ex.what() << endl;

@@ -1,5 +1,6 @@
-#include "map_level.h"
 #include <vector>
+
+#include "game.h"
 
 #include <ijengine/engine.h>
 #include <ijengine/canvas.h>
@@ -7,40 +8,140 @@
 
 #include <fstream>
 #include <cstring>
+#include <map>
+#include <queue>
+#include <cstring>
+#include <algorithm>
+#include <sstream>
 
-SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level) :
-    m_done(false),
+#include "spawner.h"
+#include "luascript.h"
+#include "map_level.h"
+#include "level_area.h"
+#include "tower.h"
+#include "player.h"
+#include "panel.h"
+#include "texture_bar.h"
+#include "button.h"
+#include "movable_unit.h"
+
+SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level, const string& audio_file_path) :
     m_next(next_level),
+    m_current(current_level),
+    m_audio_path(audio_file_path),
+    m_done(false),
+    m_player(new Player),
     m_start(-1),
-    m_texture(nullptr),
-    m_current(current_level)
+    m_texture(nullptr)
 {
-    memset(grid, 0, sizeof grid);
+    m_labyrinth = new Labyrinth(10, 10, std::pair<int, int>(0, 0), std::make_pair(0, 0));
+    ijengine::event::register_listener(this);
+    load_map_from_file();
+    load_tiles();
+    load_hud();
+    m_labyrinth->update_origin(origin);
+    m_labyrinth->update_destiny(destiny);
+    m_labyrinth->solve();
+    std::reverse(m_labyrinth->solution.begin(), m_labyrinth->solution.end());
+    load_spawners();
+    fetch_waves_from_file();
 
-    load_config_from_file();
+    m_actions = new LuaScript("lua-src/Action.lua");
+}
+
+SoMTD::MapLevel::~MapLevel()
+{
+    delete m_labyrinth;
+    delete m_actions;
+    delete m_player;
+    ijengine::event::unregister_listener(this);
 }
 
 void
-SoMTD::MapLevel::load_config_from_file()
+SoMTD::MapLevel::load_tiles()
+{
+    std::string _path;
+    unsigned _id;
+    int line_count = m_labyrinth->m_grid.size();
+    for (int line = 0; line < line_count; ++line) {
+        int column_count = m_labyrinth->m_grid[line].size();
+        for (auto column = 0; column < column_count; ++column) {
+            switch (m_labyrinth->m_grid[line][column]) {
+                case 1:
+                    _path = "caminho1.png";
+                    _id = 1;
+                break;
+
+                case 2:
+                    _path = "caminho2.png";
+                    _id = 2;
+                break;
+
+                case 3:
+                    _path = "curva3.png";
+                    _id = 3;
+                break;
+
+                case 4:
+                    _path = "curva4.png";
+                    _id = 4;
+                break;
+
+                case 5:
+                    _path = "curva1.png";
+                    _id = 5;
+                break;
+
+                case 6:
+                    _path = "tile_grama.png";
+                    _id = 6;
+                break;
+
+                case 7:
+                    _path = "curva2.png";
+                    _id = 7;
+                break;
+
+                case 8:
+                    _path = "waterfallEndS.png";
+                    _id = 8;
+                break;
+
+                case 50:
+                    origin.first = column;
+                    origin.second = line;
+                    _path = "caminho2.png";
+                    _id = 2;
+                break;
+
+                case 60:
+                    destiny.first = column;
+                    destiny.second = line;
+                    _path = "caminho2.png";
+                    _id = 2;
+                break;
+
+                default:
+                    continue;
+                break;
+            }
+
+            add_child(new SoMTD::LevelArea(_path, _id, column, line, 0));
+        }
+    }
+}
+
+void
+SoMTD::MapLevel::load_map_from_file()
 {
     if (not m_current.empty()) {
         std::string path("res/");
         path = path.append(m_current);
         path = path.append(".txt");
 
-        std::ifstream map_data(path);
-        if (map_data.is_open()) {
-            // 30 is the expected number of tiles per rows and columns
-            for (int i=0; i < 30; ++i) {
-                for (int j=0; j < 30; ++j) {
-                    map_data >> grid[i][j];
-                }
-            }
-            map_data.close();
-        }
+        m_labyrinth->fetch_file(path);
     }
 }
-
 
 bool
 SoMTD::MapLevel::done() const
@@ -55,80 +156,263 @@ SoMTD::MapLevel::next() const
 }
 
 void
-SoMTD::MapLevel::update_self(unsigned now, unsigned)
+SoMTD::MapLevel::update_self(unsigned now, unsigned last)
 {
+    if (m_waves[m_current_wave]->done()) {
+        if (m_current_wave == m_waves.size()-1) {
+            m_done = true;
+            m_current_wave = 1;
+        } else {
+            m_current_wave++;
+        }
+    } else {
+        m_waves[m_current_wave]->update_self(now, last);
+    }
+
+    if (!m_waves[m_current_wave]->done() && !m_waves[m_current_wave]->started()) {
+        m_waves[m_current_wave]->start();
+        start_wave();
+    }
+
     if (m_start == -1)
         m_start = now;
-    if (now - m_start > 10000)
-        m_done = true;
+    if (not (now - m_start > 1000))
+        m_done = false;
 }
 
 void
 SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 {
     canvas->clear();
+    canvas->draw(ijengine::resources::get_texture("background.png").get(), 0, 0);
+    draw_help_text(canvas);
+}
 
-    int x0 = 500;
-    int y0 = -500;
-    int xs;
-    int ys;
+void
+SoMTD::MapLevel::draw_help_text(ijengine::Canvas *canvas)
+{
+    std::shared_ptr< ijengine::Texture > help_text;
+    if (m_player->state == SoMTD::Player::PlayerState::IDLE) {
+        help_text = ijengine::resources::get_texture("press_b.png");
+    } else if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
+        help_text = ijengine::resources::get_texture("click_to_build.png");
+    } else if (m_player->state == SoMTD::Player::PlayerState::INVALID_BUILD) {
+        help_text = ijengine::resources::get_texture("invalid_location.png");
+    } else if (m_player->state == SoMTD::Player::PlayerState::NOT_ENOUGH_GOLD) {
+        help_text = ijengine::resources::get_texture("not_enough_gold.png");
+    } else {
+        help_text = ijengine::resources::get_texture("click_to_build.png");
+    }
+    const int window_width = 1024;
+    const int y_position = 160;
+    canvas->draw(help_text.get(), window_width - help_text->w(), y_position);
+}
 
-    std::pair<int, int> p;
+bool
+SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
+{
 
-    for (int i=0; i < 30; ++i) {
-        for (int j=0; j < 30; ++j) {
-            switch (grid[i][j]) {
-                case 0:
-                    m_texture = ijengine::resources::get_texture("slopeS.png");
-                    p = screen_coordinates(i, j, m_texture->w(), m_texture->h());
-                    xs = p.first;
-                    ys = p.second;
-                    canvas->draw(m_texture.get(), xs + x0 - m_texture->w()/2, ys+y0 );
-                break;
+    if (event.id() == SoMTD::CLICK) {
+        double x_pos = event.get_property<double>("x");
+        double y_pos = event.get_property<double>("y");
 
-                case 1:
-                    m_texture = ijengine::resources::get_texture("slopeE.png");
-                    p = screen_coordinates(i, j, m_texture->w(), m_texture->h());
-                    xs = p.first;
-                    ys = p.second;
-                    canvas->draw(m_texture.get(), xs + x0 - m_texture->w()/2, ys+y0 );
-                break;
+        auto tile_position = SoMTD::tools::isometric_to_grid((int)x_pos, (int)y_pos, 100, 81, 1024/2, 11);
 
-                case 2:
-                    m_texture = ijengine::resources::get_texture("slopeW.png");
-                    p = screen_coordinates(i, j, m_texture->w(), m_texture->h());
-                    xs = p.first;
-                    ys = p.second;
-                    canvas->draw(m_texture.get(), xs + x0 - m_texture->w()/2, ys+y0 );
-                break;
-
-                case 3:
-                    m_texture = ijengine::resources::get_texture("waterfallEndE.png");
-                    p = screen_coordinates(i, j, m_texture->w(), m_texture->h());
-                    xs = p.first;
-                    ys = p.second;
-                    canvas->draw(m_texture.get(), xs + x0 - m_texture->w()/2, ys+y0 );
-                break;
-
-
-                default:
-                    m_texture = ijengine::resources::get_texture("waterfallEndE.png");
-                    p = screen_coordinates(i, j, m_texture->w(), m_texture->h());
-                    xs = p.first;
-                    ys = p.second;
-                    canvas->draw(m_texture.get(), xs + x0 - m_texture->w()/2, ys+y0 );
-                break;
+        if (m_player->state == 0x01 || m_player->state == 0x05 || m_player->state == 0x06 || m_player->state == 0x07) {
+            if (tile_position.first >= 0 && tile_position.second >= 0 && tile_position.first < 10 && tile_position.second < 10) {
+                if (m_player->gold() >= 100) {
+                    if (m_labyrinth->m_grid[tile_position.second][tile_position.first] == 6) {
+                        m_labyrinth->m_grid[tile_position.second][tile_position.first] = 88;
+                        SoMTD::Tower *m_tower = nullptr;
+                        if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
+                            std::string tower_name("tower_");
+                            tower_name.append(std::to_string(m_player->desired_tower));
+                            tower_name.append(".png");
+                            m_tower = new SoMTD::Tower(tower_name, 9, tile_position.first, tile_position.second, "selected_"+tower_name, m_player, Animation::StateStyle::STATE_PER_LINE, 4, 1);
+                            m_tower->set_priority(50000+(5*tile_position.second+5*tile_position.first));
+                            add_child(m_tower);
+                            m_player->discount_gold(100);
+                            m_player->m_hp -= 1;
+                        }
+                    }
+                } else {
+                    printf("You need moar gold! (%d)\n", m_player->gold());
+                    m_player->state = SoMTD::Player::PlayerState::NOT_ENOUGH_GOLD;
+                }
             }
+            m_player->state= SoMTD::Player::PlayerState::IDLE;
+            return true;
         }
+    }
+
+    if (event.id() == 777) {
+        m_done = true;
+        return true;
+    }
+
+    if (event.id() == SoMTD::BUILD_TOWER) {
+        m_player->state = SoMTD::Player::PlayerState::HOLDING_BUILD;
+        return true;
+    }
+
+    return false;
+}
+
+void
+SoMTD::MapLevel::load_panels()
+{
+    LuaScript panel_list("lua-src/Panel.lua");
+
+    std::string panel_file_path;
+    pair<int, int> panel_screen_position; // x = first, y = second
+    unsigned panel_id;
+    std::shared_ptr< ijengine::Texture > panel_texture;
+    int panel_priority = 0;
+
+    std::vector< std::string > panel_names {
+        "hp_panel", "left_upgrade_panel", "right_upgrade_panel",
+        "coins_panel", "poseidon_panel", "zeus_panel", "hades_panel"
+        // "buy_tower_panel"
+    };
+
+    for (std::string it : panel_names) {
+        panel_file_path = panel_list.get<std::string>((it + ".file_path").c_str());
+        panel_screen_position.first = panel_list.get<int>((it + ".screen_position.x").c_str());
+        panel_screen_position.second = panel_list.get<int>((it + ".screen_position.y").c_str());
+        panel_id = panel_list.get<unsigned>((it + ".id").c_str());
+        panel_priority = panel_list.get<int>((it + ".priority").c_str());
+        SoMTD::Panel *p = new SoMTD::Panel(panel_file_path, panel_id, panel_screen_position.first, panel_screen_position.second, m_player, panel_priority);
+        add_child(p);
     }
 }
 
-std::pair<int, int>
-SoMTD::MapLevel::screen_coordinates(int map_x, int map_y, int tw, int th)
+void
+SoMTD::MapLevel::load_buttons()
 {
-    int xs = (map_x - map_y) * (tw / 2);
-    int ys = (map_x + map_y) * (th / 2);
+    LuaScript button_list("lua-src/Button.lua");
 
-    return std::pair<int, int>(xs, ys);
+    std::string button_file_path;
+    pair<int, int> button_screen_position; // x = first, y = second
+    int button_id;
+    int button_priority = 0;
+    std::string button_mouseover_path;
+
+    std::vector< std::string > button_names {
+        "zeus_button", "hades_button", "poseidon_button"
+    };
+
+    for (std::string it : button_names) {
+        button_file_path = button_list.get<std::string>((it + ".file_path").c_str());
+        button_screen_position.first = button_list.get<int>((it + ".screen_position.x").c_str());
+        button_screen_position.second = button_list.get<int>((it + ".screen_position.y").c_str());
+        button_id = button_list.get<int>((it + ".id").c_str());
+        button_priority = button_list.get<int>((it + ".priority").c_str());
+        button_mouseover_path = button_list.get<std::string>((it + ".mouseover_file_path").c_str());
+        SoMTD::Button *b = new SoMTD::Button(button_file_path, button_id, button_screen_position.first, button_screen_position.second, button_mouseover_path, m_player, button_priority);
+        add_child(b);
+    }
 }
 
+
+void
+SoMTD::MapLevel::load_hud()
+{
+    load_panels();
+    load_buttons();
+
+    std::shared_ptr< ijengine::Texture > hud_texture;
+
+    SoMTD::TextureBar *hp_bar = new SoMTD::TextureBar("hp_percentage.png", 0, 58, 22, m_player, 12, 12);
+    hp_bar->set_priority(500020);
+    add_child(hp_bar);
+
+}
+
+std::string
+SoMTD::MapLevel::audio() const
+{
+    return m_audio_path;
+}
+
+void
+SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
+{
+    if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
+        std::string tower_name = "tower_";
+        tower_name.append( std::to_string(m_player->desired_tower) );
+        tower_name.append("_holding.png");
+        auto mytext = ijengine::resources::get_texture(tower_name);
+        auto pos = ijengine::event::mouse_position();
+        int xpos = pos.first;
+        int ypos = pos.second;
+
+        c->draw(mytext.get(), xpos - mytext->w()/2, ypos - mytext->h()/2);
+    }
+    auto font = ijengine::resources::get_font("Forelle.ttf", 40);
+    c->set_font(font);
+    std::ostringstream convert;
+
+    convert << m_current_wave;
+    std::string mytext = "Wave ";
+    mytext.append(convert.str());
+    c->draw(mytext, 1024/2, 0);
+}
+
+void
+SoMTD::MapLevel::load_spawners()
+{
+    LuaScript units_list("lua-src/Unit.lua");
+
+    std::vector< std::string > unit_names {
+        "cyclop", "medusa", "bat", "centauro",
+        "zeus"
+    };
+
+    std::string unit_path;
+    int unit_statestyle;
+    int unit_total_states, unit_frame_per_state;
+    SoMTD::MovableUnit *myunit;
+    SoMTD::Spawner<MovableUnit> *spawner;
+
+    for (std::string it : unit_names) {
+        unit_path = units_list.get<std::string>((it + ".file_path").c_str());
+        unit_statestyle = units_list.get<int>((it + ".state_style").c_str());
+        unit_total_states = units_list.get<int>((it + ".total_states").c_str());
+        unit_frame_per_state = units_list.get<int>((it + ".frame_per_state").c_str());
+        myunit = new SoMTD::MovableUnit(origin, destiny, unit_path, m_labyrinth->solution, m_player, (Animation::StateStyle)unit_statestyle, unit_frame_per_state, unit_total_states);
+        spawner = new SoMTD::Spawner<MovableUnit>(myunit);
+        spawners.push_back(spawner);
+        add_child(spawner);
+    }
+}
+
+void
+SoMTD::MapLevel::fetch_waves_from_file()
+{
+    int aux;
+    int wave_length;
+    int total_waves;
+    std::string waves_path = "res/" + m_current + "_waves.txt";
+    std::ifstream map_data(waves_path);
+    if (map_data.is_open()) {
+        map_data >> total_waves;
+        for (int j=0; j < total_waves; ++j) {
+            Wave *w = new SoMTD::Wave(j);
+            map_data >> wave_length;
+            for (int i=0; i < wave_length; ++i) {
+                map_data >> aux;
+                w->add_unit(aux);
+            }
+            m_waves.push_back(w);
+        }
+        map_data.close();
+    }
+}
+
+void
+SoMTD::MapLevel::start_wave()
+{
+    for (auto it : m_waves[m_current_wave]->units()) {
+        spawners[it]->spawn_unit();
+    }
+}
