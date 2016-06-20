@@ -32,6 +32,7 @@ namespace SoMTD {
         std::shared_ptr<ijengine::Texture> texture() const;
         int width() const;
         int height() const;
+        int frame_per_state() const;
 
     public:
         std::pair<int, int> m_screen_position;

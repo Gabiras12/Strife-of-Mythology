@@ -97,3 +97,9 @@ SoMTD::Animation::height() const
 {
     return m_height;
 }
+
+int
+SoMTD::Animation::frame_per_state() const
+{
+    return m_frame_per_state;
+}

@@ -223,14 +223,8 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                 if (m_player->gold() >= 100) {
                     if (m_labyrinth->m_grid[tile_position.second][tile_position.first] == 6) {
                         m_labyrinth->m_grid[tile_position.second][tile_position.first] = 88;
-                        SoMTD::Tower *m_tower = nullptr;
                         if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
-                            std::string tower_name("tower_");
-                            tower_name.append(std::to_string(m_player->desired_tower));
-                            tower_name.append(".png");
-                            m_tower = new SoMTD::Tower(tower_name, 9, tile_position.first, tile_position.second, "selected_"+tower_name, m_player, Animation::StateStyle::STATE_PER_LINE, 4, 1);
-                            m_tower->set_priority(50000+(5*tile_position.second+5*tile_position.first));
-                            add_child(m_tower);
+                            build_tower(m_player->desired_tower, tile_position.first, tile_position.second);
                             m_player->discount_gold(100);
                             m_player->m_hp -= 1;
                         }
@@ -415,4 +409,25 @@ SoMTD::MapLevel::start_wave()
     for (auto it : m_waves[m_current_wave]->units()) {
         spawners[it]->spawn_unit();
     }
+}
+
+void
+SoMTD::MapLevel::build_tower(unsigned tower_id, int x, int y)
+{
+    LuaScript towers_list("lua-src/Tower.lua");
+    std::string affix = "tower_";
+
+    ostringstream convert;
+    convert << tower_id;
+    affix.append(convert.str());
+
+    std::string tower_path = towers_list.get<std::string>((affix+".file_path").c_str());
+    std::string selected_tower_path = towers_list.get<std::string>((affix+".selected_file_path").c_str());
+    int tower_state_style = towers_list.get<int>((affix+".state_style").c_str());
+    int total_states = towers_list.get<int>((affix+".total_states").c_str());
+    int frame_per_state = towers_list.get<int>((affix+".frame_per_state").c_str());
+
+    SoMTD::Tower *m_tower = new SoMTD::Tower(tower_path, 9, x, y, selected_tower_path, m_player, (Animation::StateStyle)tower_state_style, frame_per_state, total_states);
+    m_tower->set_priority(50000+(5*x*y));
+    add_child(m_tower);
 }

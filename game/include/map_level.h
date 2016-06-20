@@ -41,6 +41,7 @@ namespace SoMTD {
         void draw_self_after(ijengine::Canvas *, unsigned, unsigned);
 
     private:
+        void build_tower(unsigned tower_id, int x, int y);
         std::string m_next;
         std::string m_current;
         std::string m_audio_path;

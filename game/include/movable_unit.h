@@ -36,6 +36,7 @@ namespace SoMTD {
         bool on_event(const ijengine::GameEvent& event);
 
     private:
+        unsigned m_next_frame = 0;
         void die();
         bool m_enemy;
         std::pair<int, int> end_position;
