@@ -469,7 +469,7 @@ SoMTD::MapLevel::handle_idle_state(unsigned now, unsigned last)
 {
     if (not m_state_started_at)
         m_state_started_at = now;
-    if (now > 1000+m_state_started_at) {
+    if (now > 10000+m_state_started_at) {
         transition_to(IDLE, PLAYING, now, last);
     }
 }

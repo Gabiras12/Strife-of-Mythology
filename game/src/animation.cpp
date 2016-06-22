@@ -52,7 +52,7 @@ SoMTD::Animation::draw(ijengine::Canvas *c, unsigned, unsigned)
     else
         rect.set_position(m_width*m_actual_frame, m_height*m_actual_state);
 
-    c->draw(m_texture.get(), rect, m_screen_position.first, m_screen_position.second);
+    c->draw(m_texture.get(), rect, m_screen_position.first+(100-m_width)/2, m_screen_position.second+81/2-m_height);
 }
 
 void

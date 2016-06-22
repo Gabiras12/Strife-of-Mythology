@@ -28,9 +28,9 @@ right_upgrade_panel = {
   height = 228,
   screen_position = {
     y = 700,
-    x = 1024
+    x = 1124
   },
-  priority = 5000,
+  priority = 50000,
   id = 0
 }
 right_upgrade_panel.screen_position.y = right_upgrade_panel.screen_position.y - right_upgrade_panel.height
@@ -42,7 +42,7 @@ coins_panel = {
   height = 69,
   screen_position = {
     y = 10,
-    x = 1024
+    x = 1124
   },
   priority = 500000,
   id = 0
