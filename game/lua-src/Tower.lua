@@ -12,7 +12,7 @@ tower_1 = {
   file_path = "tower_1.png",
   state_style = 1,
   total_states = 1,
-  frame_per_state = 1,
+  frame_per_state = 4,
   selected_file_path = "tower_1.png"
 }
 
