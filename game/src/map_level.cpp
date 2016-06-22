@@ -45,6 +45,7 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     std::reverse(m_labyrinth->solution.begin(), m_labyrinth->solution.end());
     load_spawners();
     fetch_waves_from_file();
+    m_current_wave = 0;
 
     m_actions = new LuaScript("lua-src/Action.lua");
 }
@@ -158,20 +159,20 @@ SoMTD::MapLevel::next() const
 void
 SoMTD::MapLevel::update_self(unsigned now, unsigned last)
 {
-    if (m_waves[m_current_wave]->done()) {
-        if (m_current_wave == m_waves.size()-1) {
+    if (!current_wave()->done() && !current_wave()->started()) {
+        printf("starting.. current_wave: %d\n", m_current_wave);
+        start_wave(now);
+    } else if (current_wave()->done()) {
+        printf("is done..\n");
+        if (m_current_wave >= m_waves.size()-1) {
             m_done = true;
-            m_current_wave = 1;
+            m_current_wave = 0;
         } else {
+            printf("++ wave..\n");
             m_current_wave++;
         }
-    } else {
-        m_waves[m_current_wave]->update_self(now, last);
-    }
-
-    if (!m_waves[m_current_wave]->done() && !m_waves[m_current_wave]->started()) {
-        m_waves[m_current_wave]->start();
-        start_wave();
+    } else if (current_wave()->started()) {
+        update_current_wave(now, last);
     }
 
     if (m_start == -1)
@@ -223,14 +224,8 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                 if (m_player->gold() >= 100) {
                     if (m_labyrinth->m_grid[tile_position.second][tile_position.first] == 6) {
                         m_labyrinth->m_grid[tile_position.second][tile_position.first] = 88;
-                        SoMTD::Tower *m_tower = nullptr;
                         if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
-                            std::string tower_name("tower_");
-                            tower_name.append(std::to_string(m_player->desired_tower));
-                            tower_name.append(".png");
-                            m_tower = new SoMTD::Tower(tower_name, 9, tile_position.first, tile_position.second, "selected_"+tower_name, m_player, Animation::StateStyle::STATE_PER_LINE, 4, 1);
-                            m_tower->set_priority(50000+(5*tile_position.second+5*tile_position.first));
-                            add_child(m_tower);
+                            build_tower(m_player->desired_tower, tile_position.first, tile_position.second);
                             m_player->discount_gold(100);
                             m_player->m_hp -= 1;
                         }
@@ -312,7 +307,6 @@ SoMTD::MapLevel::load_buttons()
         add_child(b);
     }
 }
-
 
 void
 SoMTD::MapLevel::load_hud()
@@ -410,9 +404,45 @@ SoMTD::MapLevel::fetch_waves_from_file()
 }
 
 void
-SoMTD::MapLevel::start_wave()
+SoMTD::MapLevel::start_wave(unsigned now)
 {
-    for (auto it : m_waves[m_current_wave]->units()) {
-        spawners[it]->spawn_unit();
+    current_wave()->start(now);
+}
+
+void
+SoMTD::MapLevel::update_current_wave(unsigned now, unsigned last)
+{
+    current_wave()->update_self(now, last);
+    if (current_wave()->started_at()+(current_wave()->current_unit()*1000) < now) {
+        current_wave()->spawn_unit();
+        spawners[current_wave()->units()[current_wave()->current_unit()]]->spawn_unit();
     }
 }
+
+SoMTD::Wave*
+SoMTD::MapLevel::current_wave()
+{
+    return m_waves[m_current_wave];
+}
+
+void
+SoMTD::MapLevel::build_tower(unsigned tower_id, int x, int y)
+{
+    LuaScript towers_list("lua-src/Tower.lua");
+    std::string affix = "tower_";
+
+    ostringstream convert;
+    convert << tower_id;
+    affix.append(convert.str());
+
+    std::string tower_path = towers_list.get<std::string>((affix+".file_path").c_str());
+    std::string selected_tower_path = towers_list.get<std::string>((affix+".selected_file_path").c_str());
+    int tower_state_style = towers_list.get<int>((affix+".state_style").c_str());
+    int total_states = towers_list.get<int>((affix+".total_states").c_str());
+    int frame_per_state = towers_list.get<int>((affix+".frame_per_state").c_str());
+
+    SoMTD::Tower *m_tower = new SoMTD::Tower(tower_path, 9, x, y, selected_tower_path, m_player, (Animation::StateStyle)tower_state_style, frame_per_state, total_states);
+    m_tower->set_priority(50000+(5*x*y));
+    add_child(m_tower);
+}
+

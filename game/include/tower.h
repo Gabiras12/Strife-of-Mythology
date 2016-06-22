@@ -42,6 +42,8 @@ namespace SoMTD {
         std::string m_imageselected_path;
         Player *m_player;
         Animation *m_animation;
+        unsigned m_next_frame_time = 0;
+        void build_tower(unsigned tower_id);
     };
 }
 

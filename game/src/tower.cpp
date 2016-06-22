@@ -89,13 +89,13 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned a1, unsigned a2)
 void
 SoMTD::Tower::update_self(unsigned a1, unsigned)
 {
-    if (mytimer == 0) {
-        mytimer = a1;
-    } else {
-        if ((a1 % 50) == 0) {
-            mytimer = 0;
-            m_animation->next_frame();
-        }
+    if (m_next_frame_time == 0) {
+        m_next_frame_time = a1+(1000/m_animation->frame_per_state());
+    }
+
+    if (a1 > m_next_frame_time) {
+        m_animation->next_frame();
+        m_next_frame_time += 1000/m_animation->frame_per_state();
     }
 }
 
