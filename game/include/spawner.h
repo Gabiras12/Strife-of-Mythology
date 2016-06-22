@@ -50,13 +50,13 @@ namespace SoMTD {
         }
 
         bool on_event(const ijengine::GameEvent& event) {
-            // spawn_unit();
             return false;
         }
 
+        std::list<T*> units;
+
     private:
         T *m_prototype;
-        std::list<T*> units;
     };
 }
 

@@ -156,9 +156,9 @@ SoMTD::MovableUnit::move(int new_x, int new_y, unsigned now)
     const int tile_height = 81;
     desired_place = SoMTD::tools::grid_to_isometric(new_x, new_y, tile_width, tile_height, 1024/2, 11);
     m_movement_speed.first = desired_place.first - x();
-    m_movement_speed.first /= (500);
+    m_movement_speed.first /= (100);
     m_movement_speed.second = (desired_place.second - y());
-    m_movement_speed.second /= (500);
+    m_movement_speed.second /= (100);
 }
 
 SoMTD::MovableUnit*

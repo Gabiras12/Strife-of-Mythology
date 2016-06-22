@@ -48,6 +48,7 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     m_current_wave = 0;
 
     m_actions = new LuaScript("lua-src/Action.lua");
+    m_actual_state = MapLevel::State::IDLE;
 }
 
 SoMTD::MapLevel::~MapLevel()
@@ -156,23 +157,30 @@ SoMTD::MapLevel::next() const
     return m_next;
 }
 
+SoMTD::MapLevel::State
+SoMTD::MapLevel::actual_state() const
+{
+    return m_actual_state;
+}
+
 void
 SoMTD::MapLevel::update_self(unsigned now, unsigned last)
 {
-    if (!current_wave()->done() && !current_wave()->started()) {
-        printf("starting.. current_wave: %d\n", m_current_wave);
-        start_wave(now);
-    } else if (current_wave()->done()) {
-        printf("is done..\n");
-        if (m_current_wave >= m_waves.size()-1) {
-            m_done = true;
-            m_current_wave = 0;
-        } else {
-            printf("++ wave..\n");
-            m_current_wave++;
-        }
-    } else if (current_wave()->started()) {
-        update_current_wave(now, last);
+    switch (actual_state()) {
+        case IDLE:
+            handle_idle_state(now, last);
+        break;
+
+        case RESTING:
+            handle_resting_state(now, last);
+        break;
+
+        case PLAYING:
+            handle_playing_state(now, last);
+        break;
+
+        default:
+        break;
     }
 
     if (m_start == -1)
@@ -415,7 +423,17 @@ SoMTD::MapLevel::update_current_wave(unsigned now, unsigned last)
     current_wave()->update_self(now, last);
     if (current_wave()->started_at()+(current_wave()->current_unit()*1000) < now) {
         current_wave()->spawn_unit();
-        spawners[current_wave()->units()[current_wave()->current_unit()]]->spawn_unit();
+        if (current_wave()->spawning()) {
+            spawners[current_wave()->units()[current_wave()->current_unit()]]->spawn_unit();
+        } else {
+            int aux = 0;
+            for (auto spawner : spawners) {
+                aux += spawner->units.size();
+            }
+            if (aux == 0) {
+                current_wave()->finish();
+            }
+        }
     }
 }
 
@@ -446,3 +464,46 @@ SoMTD::MapLevel::build_tower(unsigned tower_id, int x, int y)
     add_child(m_tower);
 }
 
+void
+SoMTD::MapLevel::handle_idle_state(unsigned now, unsigned last)
+{
+    if (not m_state_started_at)
+        m_state_started_at = now;
+    if (now > 1000+m_state_started_at) {
+        transition_to(IDLE, PLAYING, now, last);
+    }
+}
+
+void
+SoMTD::MapLevel::handle_resting_state(unsigned now, unsigned last)
+{
+    if (now > m_state_started_at + 20000) {
+        transition_to(RESTING, PLAYING, now, last);
+    }
+}
+
+void
+SoMTD::MapLevel::handle_playing_state(unsigned now, unsigned last)
+{
+    if (not current_wave()->started()) {
+        start_wave(now);
+    } else if (current_wave()->done()) {
+        transition_to(PLAYING, RESTING, now, last);
+    } else {
+        update_current_wave(now, last);
+    }
+}
+
+void
+SoMTD::MapLevel::transition_to(MapLevel::State from, MapLevel::State to, unsigned now, unsigned last)
+{
+    m_actual_state = to;
+    m_state_started_at = now;
+    if (from == RESTING && to == PLAYING) {
+        if (m_current_wave >= m_waves.size()-1) {
+            m_done = true;
+        } else {
+            m_current_wave++;
+        }
+    }
+}
