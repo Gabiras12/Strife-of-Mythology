@@ -41,6 +41,7 @@ namespace SoMTD {
         void draw_self_after(ijengine::Canvas *, unsigned, unsigned);
 
     private:
+        void update_current_wave(unsigned now, unsigned last);
         void build_tower(unsigned tower_id, int x, int y);
         std::string m_next;
         std::string m_current;
@@ -58,7 +59,9 @@ namespace SoMTD {
         void fetch_waves_from_file();
         std::vector< SoMTD::Wave *> m_waves;
         int m_current_wave = 0;
-        void start_wave();
+        void start_wave(unsigned now);
+        int m_wave_index = 0;
+        SoMTD::Wave* current_wave();
     };
 }
 

@@ -31,6 +31,16 @@ SoMTD::Wave::add_unit(int unit_id)
     m_units.push_back(unit_id);
 }
 
+void
+SoMTD::Wave::spawn_unit()
+{
+    m_current_unit_idx += 1;
+    if (m_current_unit_idx+1 >= units().size()) {
+        printf("eh pq aqui eh true..\n");
+        m_done = true;
+    }
+}
+
 bool
 SoMTD::Wave::done() const
 {
@@ -40,8 +50,16 @@ SoMTD::Wave::done() const
 void
 SoMTD::Wave::update_self(unsigned a1, unsigned a2)
 {
-    if (a1 > 10000*id())
+    if (a1 > (10000*id() + started_at())) {
+        printf("true.!!!\n");
         m_done = true;
+    }
+}
+
+int
+SoMTD::Wave::current_unit()
+{
+    return m_current_unit_idx;
 }
 
 bool
@@ -51,7 +69,16 @@ SoMTD::Wave::started() const
 }
 
 void
-SoMTD::Wave::start()
+SoMTD::Wave::start(unsigned now)
 {
+    m_started_at = now;
     m_started = true;
+    m_current_unit_idx = 0;
 }
+
+unsigned
+SoMTD::Wave::started_at() const
+{
+    return m_started_at;
+}
+
