@@ -45,7 +45,10 @@ SoMTD::Tower::on_event(const ijengine::GameEvent& event)
     if (event.id() == SoMTD::MOUSEOVER) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
-        if (x_pos >= screen_pos.first && x_pos<screen_pos.first+m_animation->width() && (y_pos>screen_pos.second) && y_pos<(screen_pos.second+m_animation->height())) {
+        std::pair<int, int> click_as_tile = SoMTD::tools::isometric_to_grid(x_pos, y_pos, 100, 81, 1024/2, 11);
+        // printf("tile.first: %d, animation->tile.first :%d\n", click_as_tile.first, m_animation->tile().first);
+        if (click_as_tile.first == m_animation->tile().first && click_as_tile.second == m_animation->tile().second) {
+        // if (x_pos >= screen_pos.first && x_pos<screen_pos.first+m_animation->width() && (y_pos>screen_pos.second) && y_pos<(screen_pos.second+m_animation->height())) {
             m_mouseover = true;
         } else {
             m_mouseover = false;
@@ -55,7 +58,8 @@ SoMTD::Tower::on_event(const ijengine::GameEvent& event)
     if (event.id() == SoMTD::CLICK) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
-        if (x_pos >= screen_pos.first && x_pos<screen_pos.first+m_texture->w() && (y_pos>screen_pos.second) && y_pos<(screen_pos.second+m_texture->h())) {
+        std::pair<int, int> click_as_tile = SoMTD::tools::isometric_to_grid(x_pos, y_pos, 100, 81, 1024/2, 11);
+        if (click_as_tile.first == m_animation->tile().first && click_as_tile.second == m_animation->tile().second) {
             m_selected = true;
             m_animation->update_texture(m_imageselected_path);
             m_player->state = SoMTD::Player::PlayerState::SELECTED_TOWER;
@@ -78,7 +82,7 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned a1, unsigned a2)
         int half_w = m_animation->width()/2;
         int half_h = m_animation->height()/2;
         for (double theta=0.0; theta < 360; ++theta) {
-            double myx = ( (m_range * cos(theta)) + pos.first + half_w/2 );
+            double myx = ( (m_range * cos(theta)) + pos.first + m_animation->width() );
             double myy = ( m_range * sin(theta) + pos.second + half_h/2);
             ijengine::Point myp(myx, myy);
             canvas->draw(myp);
