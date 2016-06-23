@@ -18,6 +18,8 @@ SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::st
     m_imageselected_path(image_selected),
     m_player(p)
 {
+    m_attack = 10;
+    m_level = 1;
     m_range = 50.0;
     m_texture = ijengine::resources::get_texture(texture_name);
     m_animation = new Animation(x, y, texture_name, statestyle, frame_per_state, total_states);

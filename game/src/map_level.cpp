@@ -13,6 +13,7 @@
 #include <cstring>
 #include <algorithm>
 #include <sstream>
+#include <iostream>
 
 #include "spawner.h"
 #include "luascript.h"
@@ -335,7 +336,7 @@ SoMTD::MapLevel::audio() const
 }
 
 void
-SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
+SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2)
 {
     if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
         std::string tower_name = "tower_";
@@ -356,6 +357,37 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
     std::string mytext = "Wave ";
     mytext.append(convert.str());
     c->draw(mytext, 1024/2, 0);
+    draw_selected_panel(c, a1, a2);
+}
+
+void
+SoMTD::MapLevel::draw_selected_panel(ijengine::Canvas *c, unsigned now, unsigned last)
+{
+    if (player()->selected_object) {
+        auto font = ijengine::resources::get_font("Forelle.ttf", 30);
+        c->set_font(font);
+        std::ostringstream convert;
+        std::string expression;
+
+        SoMTD::Tower* t = dynamic_cast<SoMTD::Tower*>(player()->selected_object);
+        expression = "Damage: ";
+        convert << t->attack();
+        expression.append(convert.str());
+        c->draw(expression, 950, 600);
+        expression = "Range: ";
+        convert.str("");
+        convert.clear();
+        convert << t->range();
+        expression.append(convert.str());
+        c->draw(expression, 950, 500);
+        expression = "Level: ";
+        convert.str("");
+        convert.clear();
+        convert << t->level();
+        expression.append(convert.str());
+        c->draw(expression, 950, 550);
+    } else{
+    }
 }
 
 void
@@ -505,4 +537,10 @@ SoMTD::MapLevel::transition_to(MapLevel::State from, MapLevel::State to, unsigne
             m_current_wave++;
         }
     }
+}
+
+SoMTD::Player*
+SoMTD::MapLevel::player() const
+{
+    return m_player;
 }

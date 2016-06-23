@@ -13,6 +13,7 @@ namespace SoMTD {
             NOT_ENOUGH_GOLD = 4,
             SELECTED_TOWER = 5
         };
+
         void update_gold(int new_gold_count);
         Player();
         ~Player();

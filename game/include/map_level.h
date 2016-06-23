@@ -44,6 +44,7 @@ namespace SoMTD {
         void load_panels();
         void load_buttons();
         void load_spawners();
+        Player *player() const;
 
     protected:
         void draw_help_text(ijengine::Canvas *c);
@@ -79,6 +80,7 @@ namespace SoMTD {
         void transition_to(MapLevel::State from, MapLevel::State to, unsigned now, unsigned last);
         void handle_playing_state(unsigned now, unsigned last);
         void handle_resting_state(unsigned now, unsigned last);
+        void draw_selected_panel(ijengine::Canvas *c, unsigned now, unsigned last);
     };
 }
 
