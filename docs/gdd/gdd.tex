@@ -177,16 +177,31 @@ O final do jogo pode-se dar de duas formas:
 
 \section{Mecânicas do Jogo}
 \subsubsection{Movimentação}
-A movimentação das waves será em um caminho pré-determinado, cabendo ao jogador apenas posicionar as torres com o mouse próxima a esse caminho, não havendo assim movimentação por parte do jogador principal.
+A movimentação das \textit{waves} será em um caminho pré-determinado, cabendo ao jogador apenas posicionar as torres com o mouse próxima a esse caminho, não havendo assim movimentação por parte do jogador principal, caso não seja possível a inserção da torre no local desejado, como a trilha das \textit{waves}, ou um \textit{tiler} já ocupado por outra torre, tem-se um indicativo da impossibilidade de inserção da torre no local.
 
 \subsubsection{Resolução}
-\newpage
+A resolução do jogo será de 1124x700 \textit{pixels}, esta resolução deve dar um tamanho confortável para o jogador que terá a disposição um mapa relativamente grande.
 
-\subsection{Recursos}
+Os monstros terão uma resolução que pode variar bastante dependo do artista que desenvolver o protótipo para tal monstro, sendo aconselhável que tenha aproximadamente 30 \textit{pixels} de largura e 50 \textit{pixels} de largura, porém este valor é relativo uma vez que os monstros possuem características físicas diferentes.
 
-O jogo contará com 3 recursos distintos para realizar a progressão da base e dos personagens, sendo eles Data, Matéria e Energia.
+Para as torres definimos algo entre 80 a 100 \textit{pixels} de altura e 50 a 70 \textit{pixels} de largura, porém se o artista achar necessário fugir um pouco deste \textit{range}, para melhorar a caracterização do personagem e permanecendo dentro do \textit{Tile}, poderá haver esta mudança.
 
-\subsection{Estrutura}
+\subsection{Checkpoints}
+O jogo será direto, não havendo \textit{checkpoints} ou seja uma vez morto o jogador terá que reiniciar no inicio da fase, e ao sair do jogo perde-se todo o progresso salvo, porém caso o mesmo avance de fase, os níveis abertos estarão disponíveis para o jogo.
+
+\subsection{Mecânica das Torres}
+
+As torres terão \textit{range} que é um campo de ataque, no qual somente será possível causar dano no monstro caso este esteja no campo de ação da torre.
+
+Como dito na secção Inimigos, quando um inimigo entrar no \textit{range} das torres, as mesmas começarão a atacar os monstros obedecendo a ordem de entradas destes monstros, ou seja a torre continuara atacando o monstro até que este saia do \textit{range} de ataque ou até que o monstro esteja morto, assim atacando um novo monstro somente após estas duas condições.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.35]{res/atac.png} \quad
+\includegraphics[scale=0.3]{res/dont.png}
+\caption{Range de Ataque das torres, na primeira a torre ataca somente o primeiro a entrar no range, na segunda imagem a torre não ataca já que o inimigo encontra-se fora do range}
+\label{Tela Barracks}
+\end{figure}
 
 \newpage
 
