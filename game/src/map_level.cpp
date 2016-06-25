@@ -353,11 +353,15 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2)
     c->set_font(font);
     std::ostringstream convert;
 
-    convert << m_current_wave;
+    convert << m_current_wave + 1;
     std::string mytext = "Wave ";
     mytext.append(convert.str());
     c->draw(mytext, 1024/2, 0);
     draw_selected_panel(c, a1, a2);
+
+    if(m_actual_state == RESTING || m_actual_state == IDLE){
+    c->draw(set_time_to_start_wave(a1), 700/2, 0);
+    }
 }
 
 void
@@ -508,7 +512,7 @@ SoMTD::MapLevel::handle_idle_state(unsigned now, unsigned last)
 void
 SoMTD::MapLevel::handle_resting_state(unsigned now, unsigned last)
 {
-    if (now > m_state_started_at + 20000) {
+    if (now > m_state_started_at + 10000) {
         transition_to(RESTING, PLAYING, now, last);
     }
 }
@@ -537,6 +541,17 @@ SoMTD::MapLevel::transition_to(MapLevel::State from, MapLevel::State to, unsigne
             m_current_wave++;
         }
     }
+}
+
+
+std::string
+SoMTD::MapLevel::set_time_to_start_wave(unsigned now){
+
+  std::ostringstream convert;
+
+  convert << 10 - (now - m_state_started_at)/1000;
+
+  return convert.str();
 }
 
 SoMTD::Player*

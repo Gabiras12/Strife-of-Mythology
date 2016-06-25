@@ -81,8 +81,9 @@ namespace SoMTD {
         void handle_playing_state(unsigned now, unsigned last);
         void handle_resting_state(unsigned now, unsigned last);
         void draw_selected_panel(ijengine::Canvas *c, unsigned now, unsigned last);
+        std::string set_time_to_start_wave(unsigned now);
+
     };
 }
 
 #endif
-
