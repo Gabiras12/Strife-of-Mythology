@@ -94,7 +94,7 @@ void
 SoMTD::MovableUnit::die()
 {
     m_active = false;
-    m_player->m_hp -= 1;
+    m_player->discount_hp(1);
 }
 
 bool

@@ -44,8 +44,7 @@ SoMTD::TextureBar::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 void
 SoMTD::TextureBar::update_self(unsigned, unsigned)
 {
-    if (m_player->m_hp > 1) {
-        m_percentage = (m_player->m_hp*100/50);
+    if (m_player->hp() > 1) {
+        m_percentage = (m_player->hp() *100/50);
     }
 }
-

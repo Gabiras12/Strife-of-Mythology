@@ -38,8 +38,6 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
     if (event.id() == SoMTD::MOUSEOVER) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
-        m_player->m_x = x_pos;
-        m_player->m_y = y_pos;
 
         if (x_pos >= m_x && x_pos<m_x+m_texture->w() && y_pos>m_y && y_pos<m_y+m_texture->h()) {
             m_mouseover = true;
@@ -49,13 +47,12 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
     } else if (event.id() == SoMTD::CLICK) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
-        m_player->m_x = x_pos;
-        m_player->m_y = y_pos;
+
 
         if (x_pos >= m_x && x_pos<m_x+m_texture->w() && y_pos>m_y && y_pos<m_y+m_texture->h()) {
             if (m_id == 5 || m_id == 4 || m_id == 6) {
                 m_player->state = SoMTD::Player::PlayerState::HOLDING_BUILD;
-                m_player->desired_tower = m_id-4;
+                m_player->update_desired_tower(m_id);
                 return true;
             }
         }

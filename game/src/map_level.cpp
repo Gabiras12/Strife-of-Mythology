@@ -233,9 +233,9 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                 if (m_player->gold() >= 100) {
                     if (m_labyrinth->m_grid[tile_position.second][tile_position.first] == 6) {
                         m_labyrinth->m_grid[tile_position.second][tile_position.first] = 88;
-                        build_tower(m_player->desired_tower, tile_position.first, tile_position.second);
+                        build_tower(m_player->desired_tower(), tile_position.first, tile_position.second);
                         m_player->discount_gold(100);
-                        m_player->m_hp -= 1;
+                        m_player->discount_hp(1);
                     }
                 } else {
                     printf("You need moar gold! (%d)\n", m_player->gold());
@@ -340,7 +340,7 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2)
 {
     if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
         std::string tower_name = "tower_";
-        tower_name.append( std::to_string(m_player->desired_tower) );
+        tower_name.append( std::to_string(m_player->desired_tower()) );
         tower_name.append("_holding.png");
         auto mytext = ijengine::resources::get_texture(tower_name);
         auto pos = ijengine::event::mouse_position();

@@ -5,6 +5,7 @@
 
 namespace SoMTD {
     class Player {
+
     public:
         enum PlayerState {
             IDLE = 0,
@@ -14,20 +15,28 @@ namespace SoMTD {
             SELECTED_TOWER = 5
         };
 
-        void update_gold(int new_gold_count);
         Player();
         ~Player();
         int gold() const;
-        int m_y;
-        int m_x;
+        int hp() const;
+        int desired_tower() const;
+
         int state;
-        int m_hp = 50;
-        int desired_tower = 0;
         ijengine::GameObject *selected_object = nullptr;
 
         void discount_gold(int);
+        void update_gold(int new_gold_count);
+        void discount_hp(int);
+        void update_desired_tower(int);
+
     private:
         int m_gold;
+        int m_y;
+        int m_x;
+        int m_hp = 50;
+        int m_desired_tower = 0;
+
+
 
     };
 }
