@@ -323,45 +323,76 @@ Serão três torres para cada Deus, sendo divididas em dois níveis, para subir 
 
 
 
+\section{Inimigos}
 \subsection{Waves} 
 
-Haverão diversas \textit{waves}, onde estarão divididas entre 4 categorias, sendo elas normal, tanker, fly e  speed, havendo também um tipo especial de monstro o \textit{Boss}.
+Haverão diversas \textit{waves}, onde os monstros estarão divididas entre 4 categorias, sendo elas normal, tanker, fly e  speed, a principio não haverá um monstro o \textit{Boss}, caso o jogo evolua poderia-se pensar em um \textit{boss}.
 
-\textbf{{ {\large Normal}}} – os inimigos do tipo normal, não terão nenhum beneficio, eles serão \textbf{sátiros}.
+As \textit{waves} sempre nascerão no mesmo lugar, que pode ser alternado somente entre as fases do jogo, ao nascer as \textit{waves} farão sempre o mesmo caminho seguindo a trilha pre-definida e indicada por uma cor diferente no mapa, mantendo uma velocidade constante da sua categoria de \textit{waves}. 
+
+As \textit{waves} não interagirão no cenário ou seja não atacarão as torres nem possuirão um mecanismo para evitar ataques das torres, ou seja ao entrar no campo de visão de ataque de uma torre as \textit{waves} serão atacadas, porém caso a torre já esteja atacando um monstro esta continuara atacando a este monstro enquanto o monstro tiver no campo de visão da torre, podendo atacar o novo monstro somente quando o monstro anterior sair do campo de visão da torre.  
+
+Para a derrota da \textit{wave}, serão atribuídos \textit{golds} para cada monstro derrotado e caso toda a wave seja derrotada, sem que nenhum mostro consiga completar o percurso chegando ao outro lado do mapa, um bônus extra em \textit{gold} será atribuído ao jogador. 
+
+Cada monstro terá uma quantia de \textit{HP} especifica variando de acordo a sua categoria, no qual eles somente serão derrotados ao zerar este \textit{HP}, e caso isto ocorrer eles automaticamente somem do mapa e uma quantia de \textit{gold} é atribuída ao jogador.
+
+As \textit{waves} terão uma quantia de inimigos randômica, podendo variar entre as fases, e os monstros serão inseridos randomicamente nas \textit{waves}.
+
+Devido ao tempo de desenvolvimento de jogo não haverá diferenciação de inimigos por fases no jogo, isto acarretaria um esforço gigantesco na criação de personagens uma vez que por fase são 4 categorias diferentes de inimigos, ocasionando um grande trabalho inicialmente desnecessário. 
+
+\subsection{categorias}
+Descrição dos inimigos pertencentes as \textit{waves}, como o jogo é um \textit{Tower Defense} estes inimigos serão inseridos randomicamente nas fases do jogo, no caso inicialmente serão desenvolvidas somente três níveis, que alternam somente o mapa e cenário do jogo, assim não haverá diferenciação dos inimigos nos níveis que compõem o jogo.
+
+\textbf{{ {\large Normal}}} – na primeira categoria de inimigos tem-se os inimigos do tipo normal, estes não terão nenhum beneficio sendo bem equilibrados e aparecerão em maior quantidade, esta categoria de monstro será representada pela \textbf{Meduza}, que será como dito na mitologia grega uma mulher com cabeça de cobra e neste casso com um corpo de cobra abaixo da cintura.
+
 \begin{itemize}
 \item HP - 50
 \item Def - 50
-\item Sp -50
+\item Sp - 50
+\item Death - 50 golds.
 \end{itemize}
 
 \begin{figure}[!htp]
 \centering
-\includegraphics[scale=0.25]{res/characters/satiro.jpg}
-\caption{Exemplo de sátiro}
-\label{satiro}
+\includegraphics[scale=4]{res/characters/medusa.png}
+\caption{Meduza do jogo}
+\label{Meduza}
 \end{figure}
+
+\newpage
 
 \textbf{{\large Tanker}} – Os \textit{tankers}, serão inimigos que possuirão um HP mais alto do que os outros monstros, sendo necessário vários ataques para causar danos, eles serão os \textit{cyclops}.
 \begin{itemize}
 \item HP - 150
 \item Def - 50
 \item Sp - 50
+\item Death - 100 golds
 \end{itemize}
 
 \begin{figure}[!htp]
 \centering
-\includegraphics[scale=0.4]{res/characters/cyclops.jpg} \quad
-\includegraphics[scale=0.7]{res/characters/harpia.png}
-\caption{Exemplo de cyclops e harpia}
+\includegraphics[scale=1]{res/characters/cyclop.png} 
+\caption{cyclop sprite sheet}
 \label{cyclops}
 \end{figure}
+
+\newpage
 
 \textbf{{\large Fly}} – Os \textit{Fly}, serão inimigos que possuirão uma defesa elevada sendo necessário ataques fortes para causar dano, porém mantém um hp normal, estes inimigos são as \textit{harpias}.
 \begin{itemize}
 \item HP - 50
 \item Def - 100
 \item Sp -50
+\item Deth - 75 golds.
 \end{itemize}
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.75]{res/characters/harpia.png} \quad
+\includegraphics[scale=2]{res/characters/bat.png} 
+\caption{harpia conceito}
+\label{cyclops}
+\end{figure}
 
 \textbf{{\large Speed}} – Os \textit{Centauros}, serão os inimigos do tipo \textit{speed}, estes possuirão uma alta velocidade, porém um baixo hp.
 \begin{itemize}
@@ -372,17 +403,11 @@ Haverão diversas \textit{waves}, onde estarão divididas entre 4 categorias, se
 
 \begin{figure}[!htp]
 \centering
-\includegraphics[scale=0.6]{res/characters/centauro.jpg}
-\caption{Exemplo de centauros}
+\includegraphics[scale=0.4]{res/characters/centauro.jpg} \quad
+\includegraphics[scale=3]{res/characters/centauro.png} 
+\caption{Exemplo de centauros e pixel-art do centauro}
 \label{cyclops}
 \end{figure}
-
-\textbf{{\large Boss}} – O \textit{boss} poderá ser qualquer um dos inimigos anteriores, porém ele irá possuir um tamanho maior do que o de um inimigo comum, além de possuir maior defesa e \textit{HP}.
-\begin{itemize}
-\item HP - 200
-\item Def - 150
-\item Sp - 30
-\end{itemize}
 
 \newpage
 
