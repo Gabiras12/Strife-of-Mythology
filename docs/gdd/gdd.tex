@@ -177,16 +177,31 @@ O final do jogo pode-se dar de duas formas:
 
 \section{Mecânicas do Jogo}
 \subsubsection{Movimentação}
-A movimentação das waves será em um caminho pré-determinado, cabendo ao jogador apenas posicionar as torres com o mouse próxima a esse caminho, não havendo assim movimentação por parte do jogador principal.
+A movimentação das \textit{waves} será em um caminho pré-determinado, cabendo ao jogador apenas posicionar as torres com o mouse próxima a esse caminho, não havendo assim movimentação por parte do jogador principal, caso não seja possível a inserção da torre no local desejado, como a trilha das \textit{waves}, ou um \textit{tiler} já ocupado por outra torre, tem-se um indicativo da impossibilidade de inserção da torre no local.
 
 \subsubsection{Resolução}
-\newpage
+A resolução do jogo será de 1124x700 \textit{pixels}, esta resolução deve dar um tamanho confortável para o jogador que terá a disposição um mapa relativamente grande.
 
-\subsection{Recursos}
+Os monstros terão uma resolução que pode variar bastante dependo do artista que desenvolver o protótipo para tal monstro, sendo aconselhável que tenha aproximadamente 30 \textit{pixels} de largura e 50 \textit{pixels} de largura, porém este valor é relativo uma vez que os monstros possuem características físicas diferentes.
 
-O jogo contará com 3 recursos distintos para realizar a progressão da base e dos personagens, sendo eles Data, Matéria e Energia.
+Para as torres definimos algo entre 80 a 100 \textit{pixels} de altura e 50 a 70 \textit{pixels} de largura, porém se o artista achar necessário fugir um pouco deste \textit{range}, para melhorar a caracterização do personagem e permanecendo dentro do \textit{Tile}, poderá haver esta mudança.
 
-\subsection{Estrutura}
+\subsection{Checkpoints}
+O jogo será direto, não havendo \textit{checkpoints} ou seja uma vez morto o jogador terá que reiniciar no inicio da fase, e ao sair do jogo perde-se todo o progresso salvo, porém caso o mesmo avance de fase, os níveis abertos estarão disponíveis para o jogo.
+
+\subsection{Mecânica das Torres}
+
+As torres terão \textit{range} que é um campo de ataque, no qual somente será possível causar dano no monstro caso este esteja no campo de ação da torre.
+
+Como dito na secção Inimigos, quando um inimigo entrar no \textit{range} das torres, as mesmas começarão a atacar os monstros obedecendo a ordem de entradas destes monstros, ou seja a torre continuara atacando o monstro até que este saia do \textit{range} de ataque ou até que o monstro esteja morto, assim atacando um novo monstro somente após estas duas condições.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.35]{res/atac.png} \quad
+\includegraphics[scale=0.3]{res/dont.png}
+\caption{Range de Ataque das torres, na primeira a torre ataca somente o primeiro a entrar no range, na segunda imagem a torre não ataca já que o inimigo encontra-se fora do range}
+\label{Tela Barracks}
+\end{figure}
 
 \newpage
 
@@ -228,72 +243,171 @@ O HUD (Heads-Up Display) será composto de um menu inferior o qual será dividid
 \subsection{Deuses}
 Como dito nas secções anteriores, haverão 3 Deuses:
 
-{\large \textbf{Zeus}}:, sendo um Deus, cujo as torres utilizam predominantemente raios para atacar, possuirá dano maior em inimigos do tipo fly.
+{\large \textbf{Zeus}}: Zeus é um Deus imortal considerado como o pai dos Desuse e dos homens, tido como o mais poderoso dentre os Desuses do \textit{Olimpo}. É quem exerce a ordem e domínio sobre os outros Deuses, é o Deus dos \textbf{Céus, Raios e Relâmpagos}, tem como conjunge a deusa \textit{Hera}, a deusa da maternidade. 
+
+Diante da ameaça de invasão pelas \textit{waves} de monstros na terra, \textit{Zeus liderará} a tropa de Deuses responsáveis pela derrota destes monstros e vitoria da humanidade. 
+
+Deste modo, sendo um Deus cujo as torres utilizam predominantemente raios para atacar, possuirá dano maior em inimigos do tipo fly.
 \begin{figure}[!htp]
 \centering
 \includegraphics[scale=0.25]{res/characters/zeus.png}
-\caption{Exemplo de Zeus}
+\caption{Imagem conceitual de Zeus}
 \label{zeus}
 \end{figure}
 
-{\large \textbf{Poseidon}}: suas torres utilizam o poder das águas para atacar, possuirá dano maior em  inimigos do tipo speed.
+Zeus é possui a aparência de um senhor sábio, extremamente poderoso e respeitável.
+
+Para a caracterização do personagem foi adotada a técnica de \textit{Pixel-Arte}, uma vez que a equipe de artistas já possuem experiência neste tipo de técnica, otimizando  assim o tempo necessário para o desenvolvimento dos mesmos. Abaixo segue a imagem do personagem com a arte finalizada.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=2]{res/characters/zeus_panel.png}
+\caption{Pixel-Arte de Zeus}
+\label{zeus}
+\end{figure}
+
+\newpage
+
+{\large \textbf{Poseidon}}: Poseidon é o Deus supremo do mar, também conhecido como Deus dos terremotos, é um dos irmãos de \textbf{Zeus}, podendo ser tão forte quanto o próprio irmão, mas devido ao fato do irmão \textbf{Zeus} te-lo salvo da barriga de seus pai o Titan \textbf{Chronos}, Poseidon e Zeus selarão um acordo, no qual \textbf{Zeus} seria o Deus supremo do \textbf{Olimpo} e \textbf{Poseidon} manteria o poder absoluto sobre os mares e oceanos. Comandado por Zeus Poseidon utilizara seus poderes para destruir os monstros invasores e restaurar o equilíbrio entre os mundos.
+
+Como suas torres utilizam o poder das águas para atacar, possuirá assim dano maior em  inimigos do tipo \textit{speed}.
+
 \begin{figure}[!htp]
 \centering
 \includegraphics[scale=0.25]{res/characters/poseidom.png}
-\caption{Exemplo de poseidom}
+\caption{Exemplo conceitual de poseidom}
 \label{poseidom}
 \end{figure}
 
-{\large \textbf{Hades}}: sendo um Deus que utiliza maldições para atacar, possuirá dano maior em inimigos do tipo tanker.
+Para a caracterização deste personagens utilizou-se uma arte predominantemente azul, para simbolizar as águas.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=2]{res/characters/poseidon_panel.png}
+\caption{Pixel-Arte de Poseidon}
+\label{zeus}
+\end{figure}
+
+\newpage
+
+{\large \textbf{Hades}}: Hades é o deus dos mortos e do mundo inferior, é o deus mais odiado pelos humanos, não tendo também nenhuma simpatia pelos mesmos, porém ao ser recrutado por \textbf{Zeus}, acaba se juntando ao seu exercito de Deuses e combatendo os monstros invasores.
+
+Sendo um Deus que utiliza maldições para atacar, possuirá dano maior em inimigos do tipo tanker.
+
 \begin{figure}[!htp]
 \centering
 \includegraphics[scale=0.25]{res/characters/hades.png}
-\caption{Exemplo de hades}
+\caption{Exemplo conceitual de hades}
 \label{satiro}
 \end{figure}
 
-\subsection{Torres}
-Serão duas torres para cada Deus, sendo divididas em dois níveis, para subir de nível e liberar a torre de tier superior é necessário conseguir uma quantia \textit{gold}, hávera também uma torre de tier três, para chegar nesta torre é necessário conseguir acumular uma grande quantia de \textit{gold}. 
+Para a caracterização do personagem optou-se por um tom mais sombrio, uma vez que o mesmo é o senhor do mundo dos mortos, assim definiu-se um tom mais escuro e com fogo, representando as chamas do submundo.
 
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=2]{res/characters/hades_panel.png}
+\caption{Pixel-Arte de Poseidon}
+\label{zeus}
+\end{figure}
+
+\newpage
+
+
+\subsection{Torres}
+Serão três torres para cada Deus, sendo divididas em dois níveis, para subir de nível e liberar a torre de tier superior é necessário conseguir uma quantia \textit{gold}. A progressão de níveis entre as torres esta descrito na secção economia, detalhando o valor de cada uma das torres bem como os valores para evoluir as mesmas.
+
+\paragraph{{\Large Zeus}: As torres associadas à Zeus, terão como ataque raios. Sendo que os ataques, possuem um alto poder, porém demoram um pouco para serem lançados.}
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=1.3]{res/characters/zeus_tower.png}
+\caption{torre de Zeus}
+\label{satiro}
+\end{figure}
+
+\paragraph{{\Large Hades}: As torres associadas à Hades, atacarão com bolas de fogo. Sendo que os ataques, possuem um poder mediando e uma frequência rápida.}
+
+\paragraph{{\Large Poseidon}: As torres associadas à Poseidon, atacarão com ondas de água. Estas torres possuem o menor dano no ataque entre as torres, porém elas ao atacarem colocam os inimigos em velocidade \textit{slow} possuem um poder mediando e uma frequência rápida.}
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=1.3]{res/characters/poseidon_tower.png}
+\caption{torre do poseidon}
+\label{satiro}
+\end{figure}
+
+
+
+\section{Inimigos}
 \subsection{Waves} 
 
-Haverão diversas \textit{waves}, onde estarão divididas entre 4 categorias, sendo elas normal, tanker, fly e  speed, havendo também um tipo especial de monstro o \textit{Boss}.
+Haverão diversas \textit{waves}, onde os monstros estarão divididas entre 4 categorias, sendo elas normal, tanker, fly e  speed, a principio não haverá um monstro o \textit{Boss}, caso o jogo evolua poderia-se pensar em um \textit{boss}.
 
-\textbf{{ {\large Normal}}} – os inimigos do tipo normal, não terão nenhum beneficio, eles serão \textbf{sátiros}.
+As \textit{waves} sempre nascerão no mesmo lugar, que pode ser alternado somente entre as fases do jogo, ao nascer as \textit{waves} farão sempre o mesmo caminho seguindo a trilha pre-definida e indicada por uma cor diferente no mapa, mantendo uma velocidade constante da sua categoria de \textit{waves}. 
+
+As \textit{waves} não interagirão no cenário ou seja não atacarão as torres nem possuirão um mecanismo para evitar ataques das torres, ou seja ao entrar no campo de visão de ataque de uma torre as \textit{waves} serão atacadas, porém caso a torre já esteja atacando um monstro esta continuara atacando a este monstro enquanto o monstro tiver no campo de visão da torre, podendo atacar o novo monstro somente quando o monstro anterior sair do campo de visão da torre.  
+
+Para a derrota da \textit{wave}, serão atribuídos \textit{golds} para cada monstro derrotado e caso toda a wave seja derrotada, sem que nenhum mostro consiga completar o percurso chegando ao outro lado do mapa, um bônus extra em \textit{gold} será atribuído ao jogador. 
+
+Cada monstro terá uma quantia de \textit{HP} especifica variando de acordo a sua categoria, no qual eles somente serão derrotados ao zerar este \textit{HP}, e caso isto ocorrer eles automaticamente somem do mapa e uma quantia de \textit{gold} é atribuída ao jogador.
+
+As \textit{waves} terão uma quantia de inimigos randômica, podendo variar entre as fases, e os monstros serão inseridos randomicamente nas \textit{waves}.
+
+Devido ao tempo de desenvolvimento de jogo não haverá diferenciação de inimigos por fases no jogo, isto acarretaria um esforço gigantesco na criação de personagens uma vez que por fase são 4 categorias diferentes de inimigos, ocasionando um grande trabalho inicialmente desnecessário. 
+
+\subsection{categorias}
+Descrição dos inimigos pertencentes as \textit{waves}, como o jogo é um \textit{Tower Defense} estes inimigos serão inseridos randomicamente nas fases do jogo, no caso inicialmente serão desenvolvidas somente três níveis, que alternam somente o mapa e cenário do jogo, assim não haverá diferenciação dos inimigos nos níveis que compõem o jogo.
+
+\textbf{{ {\large Normal}}} – na primeira categoria de inimigos tem-se os inimigos do tipo normal, estes não terão nenhum beneficio sendo bem equilibrados e aparecerão em maior quantidade, esta categoria de monstro será representada pela \textbf{Meduza}, que será como dito na mitologia grega uma mulher com cabeça de cobra e neste casso com um corpo de cobra abaixo da cintura.
+
 \begin{itemize}
 \item HP - 50
 \item Def - 50
-\item Sp -50
+\item Sp - 50
+\item Death - 50 golds.
 \end{itemize}
 
 \begin{figure}[!htp]
 \centering
-\includegraphics[scale=0.25]{res/characters/satiro.jpg}
-\caption{Exemplo de sátiro}
-\label{satiro}
+\includegraphics[scale=4]{res/characters/medusa.png}
+\caption{Meduza do jogo}
+\label{Meduza}
 \end{figure}
+
+\newpage
 
 \textbf{{\large Tanker}} – Os \textit{tankers}, serão inimigos que possuirão um HP mais alto do que os outros monstros, sendo necessário vários ataques para causar danos, eles serão os \textit{cyclops}.
 \begin{itemize}
 \item HP - 150
 \item Def - 50
 \item Sp - 50
+\item Death - 100 golds
 \end{itemize}
 
 \begin{figure}[!htp]
 \centering
-\includegraphics[scale=0.4]{res/characters/cyclops.jpg} \quad
-\includegraphics[scale=0.7]{res/characters/harpia.png}
-\caption{Exemplo de cyclops e harpia}
+\includegraphics[scale=1]{res/characters/cyclop.png} 
+\caption{cyclop sprite sheet}
 \label{cyclops}
 \end{figure}
+
+\newpage
 
 \textbf{{\large Fly}} – Os \textit{Fly}, serão inimigos que possuirão uma defesa elevada sendo necessário ataques fortes para causar dano, porém mantém um hp normal, estes inimigos são as \textit{harpias}.
 \begin{itemize}
 \item HP - 50
 \item Def - 100
 \item Sp -50
+\item Deth - 75 golds.
 \end{itemize}
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.75]{res/characters/harpia.png} \quad
+\includegraphics[scale=2]{res/characters/bat.png} 
+\caption{harpia conceito}
+\label{cyclops}
+\end{figure}
 
 \textbf{{\large Speed}} – Os \textit{Centauros}, serão os inimigos do tipo \textit{speed}, estes possuirão uma alta velocidade, porém um baixo hp.
 \begin{itemize}
@@ -304,17 +418,11 @@ Haverão diversas \textit{waves}, onde estarão divididas entre 4 categorias, se
 
 \begin{figure}[!htp]
 \centering
-\includegraphics[scale=0.6]{res/characters/centauro.jpg}
-\caption{Exemplo de centauros}
+\includegraphics[scale=0.4]{res/characters/centauro.jpg} \quad
+\includegraphics[scale=3]{res/characters/centauro.png} 
+\caption{Exemplo de centauros e pixel-art do centauro}
 \label{cyclops}
 \end{figure}
-
-\textbf{{\large Boss}} – Os \textit{Centauros}, o \textit{boss} poderá ser qualquer um dos inimigos anteriores, porém ele irá possuir um tamanho maior do que o de um inimigo comum, além de possuir maior defesa e \textit{HP}.
-\begin{itemize}
-\item HP - 200
-\item Def - 150
-\item Sp - 30
-\end{itemize}
 
 \newpage
 
@@ -528,6 +636,124 @@ A classificação indicativa definida foi de 12 anos, devido a possíveis traço
 
 \newpage
 
+\section{Músicas e Efeitos Sonoros}
+\subsection{Músicas}
+Para a composição da musica do jogo tem-se três categorias uma abertura, fases créditos. 
+
+\begin{enumerate}
+\item 
+\textbf{Nome:} Musica de Abertura
+
+\textbf{Descrição:} Esta musica será sinfônica e curta ocorrendo em \textit{loop}, inspirada em jogos famosos como \textit{Mario} e principalmente \textit{Zelda}, assim deve ser uma música "exuberante" e chamativa de modo a ser identificada.
+
+\textbf{Utilização:} será utilizada na tela de abertura do jogo.
+
+\item
+\textbf{Nome:} Gameplay
+
+\textbf{Descrição:} Esta musica tem como intuito deixar o jogador confortável durante o jogo, assim deve ter uma melodia tranquila uma vez que a mesma será reproduzida em \textit{loop} durante a partida, assim será uma musica semelhante a "musica de elevador", calma com poucos picos, para evitar que a mesma acabe por "competir" com os efeitos sonoros do jogo, mesmo que sejam poucos.  
+
+\textbf{Utilização:} essa musica será utilizada durante todo o \textit{gameplay} do jogo.
+
+\item
+\textbf{Nome:} Créditos
+
+\textbf{Descrição:} Musica a ser exibida durante os créditos, esta é uma música de comemoração portanto deve ser uma música alegre e de preferencia eletrônica. 
+
+\textbf{Utilização:} Utilizada na tela de créditos.
+\end{enumerate}
+
+\subsection{Efeitos Sonoros}
+{\LARGE \textbf{Deuses}}
+
+\begin{enumerate}
+\item 
+\textbf{Nome:} Dublagem. 
+
+\textbf{Descrição}: haverá uma dublagem relativa ao deus e quando um deus for selecionado uma a frase especifica será lançada.
+
+\textbf{Utilização:} Será utilizada quando o jogador clicar na imagem de um deus no painel. Tem-se as seguintes frases relativas aos deuses:
+\begin{itemize}
+\item \textbf{Zeus}: "Eu sou o pai dos homens e dos Deuses".
+\item \textbf{Hades}: "Temam o poder do deus do sub mundo".
+\item \textbf{Poseidon}: "Eu sou o Deus supremo dos mares e dos Oceanos, temam o meu poder".
+\end{itemize}
+
+\item
+\textbf{Nome:} Efeito ao selecionar o Deus.
+
+\textbf{Descrição}: Ao clicar em um deus além da dublagem tem-se um efeito característico ao Deus associado, este efeito é rápido e com um volume baixo, uma vez que o jogador ira clicar varias vezes nos Deuses ao decorrer da partida, este efeito pode ser desligado, porém ao desliga-lo, desliga-se também a dublagem.
+
+\textbf{Utilização:} Será utilizado ao clicar em um deus.
+\begin{itemize}
+\item \textbf{Zeus}: barulho de trovão.
+\item \textbf{Hades}: ruídos de magia.
+\item \textbf{Poseidon}: barulho de ondas.
+\end{itemize}
+
+\begin{LARGE}
+\textbf{Waves}
+
+\end{LARGE}
+\item
+\textbf{Nome:} Movimentação das waves
+
+\textbf{Descrição:} tem-se um leve barulho de passos para os monstros (\textit{medusa, minotauro, cyclop} e um som de bater de assas para as harpias, estes sons devem ser baixos e acontecem principalmente quando uma nova \textit{wave} está entrando no cenário, diminuindo gradativamente na partida, para evitar uma poluição sonora no jogo.  
+
+\textbf{Utilização:} utiliza-se este efeito quando as \textit{waves} entrarem no cenário.
+
+\item
+\textbf{Nome:} Morte dos monstros
+
+\textbf{Descrição:} leve efeito semelhante a um "\textit{pou}", ou um barulho de fumaça. Este efeito é bem curto com aproximadamente 1 segundo. Todos os monstros compartilharão do mesmo efeito.
+
+\textbf{Utilização:} na morte de um monstro.
+
+
+{\LARGE \textbf{Torres}}
+
+\item
+\textbf{Nome:} Som de ataque.
+
+\textbf{Descrição:} como cada Deus terá duas torres, tem-se duas sons de ataque diferentes um para cada torre, porém nestes três tipos de ataque acontecem variações de sons referentes ao deus associado a torre.
+
+\textbf{Utilização:} 
+\begin{itemize}
+\item \textbf{Zeus}: Ao atacarem as torres terão variações de ataques com ruídos de raios e trovões.
+\item \textbf{Hades}: Para as torres de \textit{Hades}, tem-se variações ruídos de magia, semelhantes ao barulho de fumaça dos filmes.
+\item \textbf{Poseidon}: Para as torres do Poseidon, tem-se sons semelhantes ao barulho de água batendo no chão além de ondas de água.
+\end{itemize}
+
+{\LARGE \textbf{Cenário}}
+
+\item
+\textbf{Nome:} Tilintar de moedas
+
+\textbf{Descrição:} um barulho de tilintar de moedas para indicar que houve alteração no \textit{gold} durante a compra de uma torre. 
+
+\textbf{Utilização:} é utilizado quando o \textit{gold} do jogador é reduzido.
+
+\item
+\textbf{Nome:} Vitoria
+
+\textbf{Descrição:} Uma dublagem semelhante a frase "\textit{You wim}" de jogos antigos, com um barulho de fundo semelhante a um "\textit{tam tanram}".
+
+\textbf{Utilização:} é utilizada quando o jogador vence as \textit{waves}.
+
+\item
+\textbf{Nome:} Derrota
+
+\textbf{Descrição:} Semelhante ao efeito de vitoria porém esta é inspirada na derrota de jogos como "God of War" ou "Mortal Kombat", sendo algo parecido com um tintilar de metais, além de uma frase parecida com "\textit{You Lose}".
+
+\textbf{Utilização:} utilizada quando o jogador morre.
+
+\item
+\textbf{Nome:} Inimigo atravessando o campo.
+
+\textbf{Descrição:} Um chiado para representar que um inimigo chegou ao final do campo.
+\textbf{Utilização:} utilizado quando um inimigo atravessa e chega no final do campo.
+
+\end{enumerate}
 \section{Requisitos tecnológicos}
 
 \begin{figure}[!htp]
