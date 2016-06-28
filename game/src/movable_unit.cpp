@@ -17,7 +17,7 @@ SoMTD::MovableUnit::MovableUnit(
         Animation::StateStyle entity_state_style,
         int frame_per_state,
         int total_states) :
-    m_enemy(false),
+    m_enemy(true),
     end_position(e_pos),
     start_position(s_pos),
     m_texture(ijengine::resources::get_texture(t_path)),
@@ -28,16 +28,17 @@ SoMTD::MovableUnit::MovableUnit(
     m_frame_per_state(frame_per_state),
     m_total_states(total_states)
 {
+    m_done = false;
     m_movement_speed = std::make_pair(0.0, 0.0);
     m_labyrinth_path = best_path;
     m_animation = new Animation(s_pos.first, s_pos.second, t_path, entity_state_style, m_frame_per_state, total_states);
     std::pair<int, int> p = SoMTD::tools::grid_to_isometric(s_pos.first, s_pos.second, 100, 81, 1024/2, 11);
+    start_position = s_pos;
     desired_place = start_position;
     m_x = p.first;
     m_y = p.second;
     ijengine::event::register_listener(this);
     texture_name = t_path;
-    printf("UNIT SPAWN'D!!! %s\n", t_path.c_str());
 }
 
 SoMTD::MovableUnit::~MovableUnit()
@@ -81,6 +82,7 @@ SoMTD::MovableUnit::update_self(unsigned now, unsigned last)
             m_y = y() + m_movement_speed.second;
         } else {
             if (m_current_instruction == m_labyrinth_path.size()) {
+                printf("DIE!!!\n");
                 die();
             } else {
                 std::pair<int, int> pos = m_labyrinth_path[m_current_instruction];
@@ -94,6 +96,7 @@ void
 SoMTD::MovableUnit::die()
 {
     m_active = false;
+    m_done = true;
     m_player->discount_hp(1);
 }
 
@@ -165,4 +168,10 @@ SoMTD::MovableUnit*
 SoMTD::MovableUnit::clone()
 {
     return new MovableUnit(start_position, end_position, texture_name, m_labyrinth_path, m_player, m_state_style, m_frame_per_state, m_total_states);
+}
+
+bool
+SoMTD::MovableUnit::done() const
+{
+    return m_done;
 }
