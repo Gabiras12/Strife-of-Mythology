@@ -1,17 +1,21 @@
 #include <fstream>
 #include <vector>
 #include "wave.h"
+#include "movable_unit.h"
+#include <iostream>
 
 SoMTD::Wave::Wave(unsigned p_id) :
     m_done(false),
     m_started(false),
     m_id(p_id),
-    m_spawning(false)
+    m_spawning(false),
+    m_units(new std::list<SoMTD::MovableUnit*>())
 {
 }
 
 SoMTD::Wave::~Wave()
 {
+    delete m_units;
 }
 
 unsigned
@@ -21,24 +25,27 @@ SoMTD::Wave::id() const
 }
 
 std::vector<int>
-SoMTD::Wave::units() const
+SoMTD::Wave::units_idx() const
 {
-    return m_units;
+    return m_units_idx;
 }
 
 void
-SoMTD::Wave::add_unit(int unit_id)
+SoMTD::Wave::add_unit(SoMTD::MovableUnit *u)
 {
-    m_units.push_back(unit_id);
+    m_units->push_back(u);
 }
 
 void
 SoMTD::Wave::spawn_unit()
 {
-    if (m_current_unit_idx+1 >= units().size()) {
+    if (current_unit_it() == units()->end()) {
         m_spawning = false;
     } else {
-        m_current_unit_idx += 1;
+        if (current_unit()) {
+            current_unit()->spawn();
+            m_current_unit_it++;
+        }
     }
 }
 
@@ -49,8 +56,34 @@ SoMTD::Wave::done() const
 }
 
 void
-SoMTD::Wave::update_self(unsigned a1, unsigned a2)
+SoMTD::Wave::update_self(unsigned now, unsigned a2)
 {
+    if (started()) {
+        int i = 0;
+        for (auto it=units()->begin(); it != units()->end(); ++it) {
+            if ((*it)->done() == true) {
+                i++;
+            }
+        }
+        if (i == units()->size()) {
+            finish();
+        }
+        for (auto it=units()->begin(); it != units()->end(); ++it) {
+            if ((*it)->done() == true) {
+                it = units()->erase(it);
+            } else {
+                (*it)->update_self(now, a2);
+            }
+            ++i;
+        }
+    }
+
+    if (spawning()) {
+        if (m_last_spawned_unit_time+1000 < now) {
+            m_last_spawned_unit_time = now;
+            spawn_unit();
+        }
+    }
 }
 
 void
@@ -59,10 +92,16 @@ SoMTD::Wave::finish()
     m_done = true;
 }
 
-int
-SoMTD::Wave::current_unit()
+SoMTD::MovableUnit*
+SoMTD::Wave::current_unit() const
 {
-    return m_current_unit_idx;
+    return *m_current_unit_it;
+}
+
+std::list<SoMTD::MovableUnit*>::iterator
+SoMTD::Wave::current_unit_it() const
+{
+    return m_current_unit_it;
 }
 
 bool
@@ -74,10 +113,11 @@ SoMTD::Wave::started() const
 void
 SoMTD::Wave::start(unsigned now)
 {
+    m_current_unit_it = units()->begin();
     m_started_at = now;
     m_started = true;
     m_spawning = true;
-    m_current_unit_idx = 0;
+    m_last_spawned_unit_time = now;
 }
 
 unsigned
@@ -90,4 +130,25 @@ bool
 SoMTD::Wave::spawning() const
 {
     return m_spawning;
+}
+
+std::list<SoMTD::MovableUnit*>*
+SoMTD::Wave::units() const
+{
+    return m_units;
+}
+
+void
+SoMTD::Wave::draw_self(ijengine::Canvas *c, unsigned a1, unsigned a2)
+{
+    for (auto it : *units()) {
+        if (it->active()) {
+            it->draw_self(c, a1, a2);
+        }
+    }
+}
+
+void
+SoMTD::Wave::draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2)
+{
 }

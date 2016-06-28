@@ -31,6 +31,8 @@ namespace SoMTD {
         std::string texture_name;
         double x() const;
         double y() const;
+        bool done() const;
+        std::pair<int, int> start_position;
 
     protected:
         bool on_event(const ijengine::GameEvent& event);
@@ -38,9 +40,9 @@ namespace SoMTD {
     private:
         unsigned m_next_frame = 0;
         void die();
+        bool m_done = false;
         bool m_enemy;
         std::pair<int, int> end_position;
-        std::pair<int, int> start_position;
         std::pair<int, int> grid_position;
         std::shared_ptr<ijengine::Texture> m_texture;
         std::pair<int, int> desired_place;

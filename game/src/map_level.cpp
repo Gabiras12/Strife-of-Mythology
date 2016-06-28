@@ -191,7 +191,7 @@ SoMTD::MapLevel::update_self(unsigned now, unsigned last)
 }
 
 void
-SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
+SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned a1, unsigned a2)
 {
     canvas->clear();
     canvas->draw(ijengine::resources::get_texture("background.png").get(), 0, 0);
@@ -338,6 +338,9 @@ SoMTD::MapLevel::audio() const
 void
 SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2)
 {
+    current_wave()->draw_self(c, a1, a2);
+    current_wave()->draw_self_after(c, a1, a2);
+
     if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
         std::string tower_name = "tower_";
         tower_name.append( std::to_string(m_player->desired_tower()) );
@@ -360,7 +363,7 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2)
     draw_selected_panel(c, a1, a2);
 
     if(m_actual_state == RESTING || m_actual_state == IDLE){
-    c->draw(set_time_to_start_wave(a1), 700/2, 0);
+        c->draw(set_time_to_start_wave(a1), 700/2, 0);
     }
 }
 
@@ -418,7 +421,6 @@ SoMTD::MapLevel::load_spawners()
         myunit = new SoMTD::MovableUnit(origin, destiny, unit_path, m_labyrinth->solution, m_player, (Animation::StateStyle)unit_statestyle, unit_frame_per_state, unit_total_states);
         spawner = new SoMTD::Spawner<MovableUnit>(myunit);
         spawners.push_back(spawner);
-        add_child(spawner);
     }
 }
 
@@ -437,7 +439,8 @@ SoMTD::MapLevel::fetch_waves_from_file()
             map_data >> wave_length;
             for (int i=0; i < wave_length; ++i) {
                 map_data >> aux;
-                w->add_unit(aux);
+                SoMTD::MovableUnit *myunit = spawners[aux]->spawn_unit();
+                w->add_unit(myunit);
             }
             m_waves.push_back(w);
         }
@@ -455,20 +458,20 @@ void
 SoMTD::MapLevel::update_current_wave(unsigned now, unsigned last)
 {
     current_wave()->update_self(now, last);
-    if (current_wave()->started_at()+(current_wave()->current_unit()*1000) < now) {
-        current_wave()->spawn_unit();
-        if (current_wave()->spawning()) {
-            spawners[current_wave()->units()[current_wave()->current_unit()]]->spawn_unit();
-        } else {
-            int aux = 0;
-            for (auto spawner : spawners) {
-                aux += spawner->units.size();
-            }
-            if (aux == 0) {
-                current_wave()->finish();
-            }
-        }
-    }
+    // if (current_wave()->started_at()+(current_wave()->current_unit()*1000) < now) {
+    //     if (current_wave()->spawning()) {
+    //         spawners[current_wave()->units_idx()[current_wave()->current_unit()]]->spawn_unit();
+    //     } else {
+    //         int aux = 0;
+    //         for (auto spawner : spawners) {
+    //             aux += spawner->units.size();
+    //         }
+    //         if (aux == 0) {
+    //             current_wave()->finish();
+    //         }
+    //     }
+    //     current_wave()->current_unit()->spawn();
+    // }
 }
 
 SoMTD::Wave*
