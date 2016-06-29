@@ -17,7 +17,11 @@ SoMTD::MovableUnit::MovableUnit(
         Player* myp,
         Animation::StateStyle entity_state_style,
         int frame_per_state,
-        int total_states) :
+        int total_states,
+        int unit_hp,
+        int unit_reward,
+        int unit_time
+        ) :
     m_enemy(true),
     end_position(e_pos),
     start_position(s_pos),
@@ -29,7 +33,10 @@ SoMTD::MovableUnit::MovableUnit(
     m_frame_per_state(frame_per_state),
     m_total_states(total_states)
 {
-    m_gold_award = 100;
+    m_time_per_tile = unit_time;
+    m_initial_hp = unit_hp;
+    m_actual_hp = unit_hp;
+    m_gold_award = unit_reward;
     m_done = false;
     m_movement_speed = std::make_pair(0.0, 0.0);
     m_labyrinth_path = best_path;
@@ -161,15 +168,15 @@ SoMTD::MovableUnit::move(int new_x, int new_y, unsigned now)
     const int tile_height = 81;
     desired_place = SoMTD::tools::grid_to_isometric(new_x, new_y, tile_width, tile_height, 1024/2, 11);
     m_movement_speed.first = desired_place.first - x();
-    m_movement_speed.first /= (100);
+    m_movement_speed.first /= (m_time_per_tile);
     m_movement_speed.second = (desired_place.second - y());
-    m_movement_speed.second /= (100);
+    m_movement_speed.second /= (m_time_per_tile);
 }
 
 SoMTD::MovableUnit*
 SoMTD::MovableUnit::clone()
 {
-    return new MovableUnit(start_position, end_position, texture_name, m_labyrinth_path, m_player, m_state_style, m_frame_per_state, m_total_states);
+    return new MovableUnit(start_position, end_position, texture_name, m_labyrinth_path, m_player, m_state_style, m_frame_per_state, m_total_states, m_initial_hp, m_gold_award, m_time_per_tile);
 }
 
 bool

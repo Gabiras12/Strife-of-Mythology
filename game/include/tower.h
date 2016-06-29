@@ -34,6 +34,8 @@ namespace SoMTD {
         unsigned mytimer;
         Tower::State actual_state() const;
         int damage() const;
+        SoMTD::MovableUnit* target() const;
+        double attack_speed() const;
 
     protected:
         void level_up();
@@ -59,6 +61,7 @@ namespace SoMTD {
         void handle_attacking_state(unsigned now, unsigned last);
         SoMTD::MovableUnit* m_target;
         unsigned m_cooldown;
+        double m_attack_speed;
 
     };
 }

@@ -407,8 +407,7 @@ SoMTD::MapLevel::load_spawners()
     LuaScript units_list("lua-src/Unit.lua");
 
     std::vector< std::string > unit_names {
-        "cyclop", "medusa", "bat", "centauro",
-        "zeus"
+        "cyclop", "medusa", "bat", "centauro"
     };
 
     std::string unit_path;
@@ -416,15 +415,23 @@ SoMTD::MapLevel::load_spawners()
     int unit_total_states, unit_frame_per_state;
     SoMTD::MovableUnit *myunit;
     SoMTD::Spawner<MovableUnit> *spawner;
+    int unit_hp;
+    int unit_gold_reward;
+    int unit_time_per_tile;
 
     for (std::string it : unit_names) {
         unit_path = units_list.get<std::string>((it + ".file_path").c_str());
         unit_statestyle = units_list.get<int>((it + ".state_style").c_str());
         unit_total_states = units_list.get<int>((it + ".total_states").c_str());
         unit_frame_per_state = units_list.get<int>((it + ".frame_per_state").c_str());
-        myunit = new SoMTD::MovableUnit(origin, destiny, unit_path, m_labyrinth->solution, m_player, (Animation::StateStyle)unit_statestyle, unit_frame_per_state, unit_total_states);
+        unit_gold_reward = units_list.get<int>((it + ".gold_reward").c_str());
+        unit_time_per_tile = units_list.get<int>((it + ".time_per_tile").c_str());
+        unit_hp = units_list.get<int>((it + ".hp").c_str());
+
+        myunit = new SoMTD::MovableUnit(origin, destiny, unit_path, m_labyrinth->solution, m_player, (Animation::StateStyle)unit_statestyle, unit_frame_per_state, unit_total_states, unit_hp, unit_gold_reward, unit_time_per_tile);
         spawner = new SoMTD::Spawner<MovableUnit>(myunit);
         spawners.push_back(spawner);
+
     }
 }
 

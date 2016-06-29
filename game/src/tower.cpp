@@ -18,6 +18,7 @@ SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::st
     m_imageselected_path(image_selected),
     m_player(p)
 {
+    m_attack_speed = 1.0;
     m_damage = 10;
     m_level = 1;
     m_range = 50.0;
@@ -178,8 +179,16 @@ SoMTD::Tower::handle_attacking_state(unsigned now, unsigned last)
     if (now > m_cooldown) {
         if (m_target) {
             if (m_target->active()) {
-                m_target->suffer(damage());
-                m_cooldown = now+1000;
+                double dx = animation()->screen_position().first - target()->animation()->screen_position().first;
+                double dy = animation()->screen_position().second - target()->animation()->screen_position().second;
+                double distance = sqrt(dx*dx + dy*dy);
+                if (distance < range()+target()->animation()->width()/2) {
+                    m_target->suffer(damage());
+                    m_cooldown = now+1000;
+                } else {
+                    m_actual_state = SoMTD::Tower::IDLE;
+                    m_target = nullptr;
+                }
             } else {
                 m_actual_state = SoMTD::Tower::IDLE;
                 m_target = nullptr;
@@ -194,7 +203,19 @@ void
 SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
 {
     m_target = newtarget;
-    m_cooldown = now+1000;
+    m_cooldown = now+attack_speed()*1000;
     newtarget->suffer(damage());
     m_actual_state = SoMTD::Tower::State::ATTACKING;
+}
+
+SoMTD::MovableUnit*
+SoMTD::Tower::target() const
+{
+    return m_target;
+}
+
+double
+SoMTD::Tower::attack_speed() const
+{
+    return m_attack_speed;
 }

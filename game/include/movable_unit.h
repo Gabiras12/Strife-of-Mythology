@@ -16,7 +16,7 @@ namespace SoMTD {
 
     class MovableUnit : public ijengine::GameObject, public ijengine::GameEventsListener {
     public:
-        MovableUnit(std::pair<int, int> s_pos, std::pair<int, int> e_pos, std::string texture_path, std::vector< std::pair<int, int> >, Player* playerz, Animation::StateStyle entity_state, int frame_per_state, int total_states);
+        MovableUnit(std::pair<int, int> s_pos, std::pair<int, int> e_pos, std::string texture_path, std::vector< std::pair<int, int> >, Player* playerz, Animation::StateStyle entity_state, int frame_per_state, int total_states, int unit_hp, int unit_reward, int time_per_tiles);
         ~MovableUnit();
         bool enemy() const;
         void spawn();
@@ -37,6 +37,7 @@ namespace SoMTD {
         void suffer(int dmg);
         bool dead() const;
         int gold_award() const;
+        int time_per_tile() const;
 
     protected:
         bool on_event(const ijengine::GameEvent& event);
@@ -65,6 +66,7 @@ namespace SoMTD {
         Animation::StateStyle m_state_style;
         bool m_dead = false;
         int m_gold_award;
+        int m_time_per_tile;
     };
 }
 
