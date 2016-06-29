@@ -35,6 +35,8 @@ namespace SoMTD {
         std::pair<int, int> start_position;
         Animation* animation() const;
         void suffer(int dmg);
+        bool dead() const;
+        int gold_award() const;
 
     protected:
         bool on_event(const ijengine::GameEvent& event);
@@ -61,6 +63,8 @@ namespace SoMTD {
         int m_total_states = 1;
         int m_frame_per_state = 1;
         Animation::StateStyle m_state_style;
+        bool m_dead = false;
+        int m_gold_award;
     };
 }
 

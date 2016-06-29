@@ -29,6 +29,7 @@ SoMTD::MovableUnit::MovableUnit(
     m_frame_per_state(frame_per_state),
     m_total_states(total_states)
 {
+    m_gold_award = 100;
     m_done = false;
     m_movement_speed = std::make_pair(0.0, 0.0);
     m_labyrinth_path = best_path;
@@ -40,6 +41,7 @@ SoMTD::MovableUnit::MovableUnit(
     m_y = p.second;
     ijengine::event::register_listener(this);
     texture_name = t_path;
+    m_dead = false;
 }
 
 SoMTD::MovableUnit::~MovableUnit()
@@ -83,7 +85,7 @@ SoMTD::MovableUnit::update_self(unsigned now, unsigned last)
             m_y = y() + m_movement_speed.second;
         } else {
             if (m_current_instruction == m_labyrinth_path.size()) {
-                printf("DIE!!!\n");
+                m_player->discount_hp(1);
                 die();
             } else {
                 std::pair<int, int> pos = m_labyrinth_path[m_current_instruction];
@@ -98,7 +100,6 @@ SoMTD::MovableUnit::die()
 {
     m_active = false;
     m_done = true;
-    m_player->discount_hp(1);
 }
 
 bool
@@ -189,5 +190,19 @@ SoMTD::MovableUnit::suffer(int dmg)
     m_actual_hp -= dmg;
     if (m_actual_hp < 1) {
         die();
+        m_dead = true;
+        m_player->update_gold(m_player->gold()+gold_award());
     }
+}
+
+bool
+SoMTD::MovableUnit::dead() const
+{
+    return m_dead;
+}
+
+int
+SoMTD::MovableUnit::gold_award() const
+{
+    return m_gold_award;
 }

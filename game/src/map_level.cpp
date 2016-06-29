@@ -52,6 +52,7 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
     m_actions = new LuaScript("lua-src/Action.lua");
     m_actual_state = MapLevel::State::IDLE;
     m_towers = new std::list<SoMTD::Tower*>();
+    m_towers->clear();
 }
 
 SoMTD::MapLevel::~MapLevel()
@@ -543,11 +544,11 @@ SoMTD::MapLevel::check_towers_collisions(unsigned now, unsigned last)
     for (auto unit=current_wave()->units()->begin(); unit != current_wave()->units()->end(); ++unit) {
         if ((*unit)->active()) {
             for (auto tower=m_towers->begin(); tower != m_towers->end(); ++tower) {
-                double dx = (*tower)->animation()->screen_position().first - (*unit)->animation()->screen_position().first;
-                double dy = (*tower)->animation()->screen_position().second - (*unit)->animation()->screen_position().second;
-                double distance = sqrt(dx*dx + dy*dy);
-                if (distance < ((*tower)->range()+(*unit)->animation()->width()/2)) {
-                    if ((*tower)->actual_state() == SoMTD::Tower::State::IDLE) {
+                if ((*tower)->actual_state() == SoMTD::Tower::State::IDLE) {
+                    double dx = (*tower)->animation()->screen_position().first - (*unit)->animation()->screen_position().first;
+                    double dy = (*tower)->animation()->screen_position().second - (*unit)->animation()->screen_position().second;
+                    double distance = sqrt(dx*dx + dy*dy);
+                    if (distance < ((*tower)->range()+(*unit)->animation()->width()/2)) {
                         (*tower)->attack(*unit, now, last);
                     }
                 }
@@ -569,7 +570,6 @@ SoMTD::MapLevel::transition_to(MapLevel::State from, MapLevel::State to, unsigne
         }
     }
 }
-
 
 std::string
 SoMTD::MapLevel::set_time_to_start_wave(unsigned now){
