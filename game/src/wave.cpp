@@ -151,4 +151,9 @@ SoMTD::Wave::draw_self(ijengine::Canvas *c, unsigned a1, unsigned a2)
 void
 SoMTD::Wave::draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2)
 {
+    for (auto it : *units()) {
+        if (it->active()) {
+            it->draw_self_after(c, a1, a2);
+        }
+    }
 }

@@ -1,6 +1,7 @@
 #include "movable_unit.h"
 
 #include "game.h"
+#include "animation.h"
 #include <list>
 #include <algorithm>
 
@@ -118,7 +119,7 @@ void
 SoMTD::MovableUnit::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
 {
     int half_texture = m_texture->w()/2;
-    ijengine::Rectangle rect(m_x, m_y, 60*hp_percentage()/200, 5);
+    ijengine::Rectangle rect(m_x+100/2, m_y-20, 100*hp_percentage()/200, 5);
     c->draw(rect);
 }
 
@@ -174,4 +175,19 @@ bool
 SoMTD::MovableUnit::done() const
 {
     return m_done;
+}
+
+SoMTD::Animation*
+SoMTD::MovableUnit::animation() const
+{
+    return m_animation;
+}
+
+void
+SoMTD::MovableUnit::suffer(int dmg)
+{
+    m_actual_hp -= dmg;
+    if (m_actual_hp < 1) {
+        die();
+    }
 }

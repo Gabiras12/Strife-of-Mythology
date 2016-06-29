@@ -17,6 +17,7 @@
 #include "labyrinth.h"
 #include "spawner.h"
 #include "wave.h"
+#include "tower.h"
 
 namespace SoMTD {
     class MapLevel : public ijengine::Level, public ijengine::GameEventsListener {
@@ -82,7 +83,8 @@ namespace SoMTD {
         void handle_resting_state(unsigned now, unsigned last);
         void draw_selected_panel(ijengine::Canvas *c, unsigned now, unsigned last);
         std::string set_time_to_start_wave(unsigned now);
-
+        std::list<SoMTD::Tower*> *m_towers;
+        void check_towers_collisions(unsigned now, unsigned last);
     };
 }
 

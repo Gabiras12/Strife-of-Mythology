@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <sstream>
 #include <iostream>
+#include <cmath>
 
 #include "spawner.h"
 #include "luascript.h"
@@ -50,6 +51,7 @@ SoMTD::MapLevel::MapLevel(const string& next_level, const string& current_level,
 
     m_actions = new LuaScript("lua-src/Action.lua");
     m_actual_state = MapLevel::State::IDLE;
+    m_towers = new std::list<SoMTD::Tower*>();
 }
 
 SoMTD::MapLevel::~MapLevel()
@@ -57,6 +59,7 @@ SoMTD::MapLevel::~MapLevel()
     delete m_labyrinth;
     delete m_actions;
     delete m_player;
+    delete m_towers;
     ijengine::event::unregister_listener(this);
 }
 
@@ -378,7 +381,7 @@ SoMTD::MapLevel::draw_selected_panel(ijengine::Canvas *c, unsigned now, unsigned
 
         SoMTD::Tower* t = dynamic_cast<SoMTD::Tower*>(player()->selected_object);
         expression = "Damage: ";
-        convert << t->attack();
+        convert << t->damage();
         expression.append(convert.str());
         c->draw(expression, 950, 600);
         expression = "Range: ";
@@ -500,6 +503,7 @@ SoMTD::MapLevel::build_tower(unsigned tower_id, int x, int y)
     SoMTD::Tower *m_tower = new SoMTD::Tower(tower_path, 9, x, y, selected_tower_path, m_player, (Animation::StateStyle)tower_state_style, frame_per_state, total_states);
     m_tower->set_priority(50000+(5*x*y));
     add_child(m_tower);
+    m_towers->push_back(m_tower);
 }
 
 void
@@ -529,6 +533,26 @@ SoMTD::MapLevel::handle_playing_state(unsigned now, unsigned last)
         transition_to(PLAYING, RESTING, now, last);
     } else {
         update_current_wave(now, last);
+        check_towers_collisions(now, last);
+    }
+}
+
+void
+SoMTD::MapLevel::check_towers_collisions(unsigned now, unsigned last)
+{
+    for (auto unit=current_wave()->units()->begin(); unit != current_wave()->units()->end(); ++unit) {
+        if ((*unit)->active()) {
+            for (auto tower=m_towers->begin(); tower != m_towers->end(); ++tower) {
+                double dx = (*tower)->animation()->screen_position().first - (*unit)->animation()->screen_position().first;
+                double dy = (*tower)->animation()->screen_position().second - (*unit)->animation()->screen_position().second;
+                double distance = sqrt(dx*dx + dy*dy);
+                if (distance < ((*tower)->range()+(*unit)->animation()->width()/2)) {
+                    if ((*tower)->actual_state() == SoMTD::Tower::State::IDLE) {
+                        (*tower)->attack(*unit, now, last);
+                    }
+                }
+            }
+        }
     }
 }
 

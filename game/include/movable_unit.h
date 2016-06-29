@@ -33,6 +33,8 @@ namespace SoMTD {
         double y() const;
         bool done() const;
         std::pair<int, int> start_position;
+        Animation* animation() const;
+        void suffer(int dmg);
 
     protected:
         bool on_event(const ijengine::GameEvent& event);

@@ -18,7 +18,7 @@ SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::st
     m_imageselected_path(image_selected),
     m_player(p)
 {
-    m_attack = 10;
+    m_damage = 10;
     m_level = 1;
     m_range = 50.0;
     m_texture = ijengine::resources::get_texture(texture_name);
@@ -93,15 +93,27 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned a1, unsigned a2)
 }
 
 void
-SoMTD::Tower::update_self(unsigned a1, unsigned)
+SoMTD::Tower::update_self(unsigned now, unsigned last)
 {
     if (m_next_frame_time == 0) {
-        m_next_frame_time = a1+(1000/m_animation->frame_per_state());
+        m_next_frame_time = now+(1000/m_animation->frame_per_state());
     }
 
-    if (a1 > m_next_frame_time) {
+    if (now > m_next_frame_time) {
         m_animation->next_frame();
         m_next_frame_time += 1000/m_animation->frame_per_state();
+    }
+    switch (actual_state()) {
+        case IDLE:
+            handle_idle_state(now, last);
+        break;
+
+        case ATTACKING:
+            handle_attacking_state(now, last);
+        break;
+
+        default:
+        break;
     }
 }
 
@@ -109,7 +121,7 @@ void
 SoMTD::Tower::level_up()
 {
     m_level+=1;
-    m_attack*=1.15;
+    m_damage *=1.15;
     m_range+=30.0;
 }
 
@@ -120,9 +132,9 @@ SoMTD::Tower::level() const
 }
 
 int
-SoMTD::Tower::attack() const
+SoMTD::Tower::damage() const
 {
-    return m_attack;
+    return m_damage;
 }
 
 double
@@ -142,3 +154,47 @@ SoMTD::Tower::draw_self_after(ijengine::Canvas* c, unsigned, unsigned)
     }
 }
 
+
+SoMTD::Animation*
+SoMTD::Tower::animation() const
+{
+    return m_animation;
+}
+
+SoMTD::Tower::State
+SoMTD::Tower::actual_state() const
+{
+    return m_actual_state;
+}
+
+void
+SoMTD::Tower::handle_idle_state(unsigned now, unsigned last)
+{
+}
+
+void
+SoMTD::Tower::handle_attacking_state(unsigned now, unsigned last)
+{
+    if (now > m_cooldown) {
+        if (m_target) {
+            if (m_target->active()) {
+                m_target->suffer(damage());
+                m_cooldown = now+1000;
+            } else {
+                m_actual_state = SoMTD::Tower::IDLE;
+                m_target = nullptr;
+            }
+        } else {
+            m_actual_state = SoMTD::Tower::IDLE;
+        }
+    }
+}
+
+void
+SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
+{
+    m_target = newtarget;
+    m_cooldown = now+1000;
+    newtarget->suffer(damage());
+    m_actual_state = SoMTD::Tower::State::ATTACKING;
+}
