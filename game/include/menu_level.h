@@ -1,5 +1,5 @@
-#ifndef MENU_LEVEL_H
-#define MENU_LEVEL_H
+#ifndef SOMTD_MENU_LEVEL_H
+#define SOMTD_MENU_LEVEL_H
 
 #include <ijengine/level.h>
 #include <ijengine/texture.h>
@@ -8,12 +8,14 @@
 #include <string>
 
 #include <memory>
+#include "player.h"
 
 namespace SoMTD {
     class MenuLevel : public ijengine::Level, public ijengine::GameEventsListener {
     public:
         MenuLevel(std::string current_map_name, std::string next_map_name, std::string p_audio);
         ~MenuLevel();
+        void finish();
 
     protected:
         void draw_self(ijengine::Canvas *c, unsigned, unsigned);
@@ -23,13 +25,15 @@ namespace SoMTD {
         std::string audio() const;
         std::string next() const;
         bool done() const;
+        Player *player() const;
 
     private:
         std::string m_next;
         bool m_done;
         std::string m_audio="";
         std::shared_ptr<ijengine::Texture> m_texture;
-
+        void load_buttons();
+        Player* m_player;
     };
 }
 

@@ -171,6 +171,12 @@ SoMTD::MovableUnit::move(int new_x, int new_y, unsigned now)
     m_movement_speed.first /= (m_time_per_tile);
     m_movement_speed.second = (desired_place.second - y());
     m_movement_speed.second /= (m_time_per_tile);
+
+    if (m_movement_speed.first > 0) {
+        animation()->update_direction(Animation::DirectionState::DIRECTION_RIGHT);
+    } else if (m_movement_speed.first < 0) {
+        animation()->update_direction(Animation::DirectionState::DIRECTION_LEFT);
+    }
 }
 
 SoMTD::MovableUnit*

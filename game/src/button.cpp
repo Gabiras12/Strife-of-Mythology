@@ -18,6 +18,7 @@ SoMTD::Button::Button(std::string texture_name, unsigned id, int x, int y, std::
 {
     set_priority(myp);
     m_mouseover = false;
+    m_menu_level = nullptr;
     ijengine::event::register_listener(this);
 }
 
@@ -54,6 +55,9 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
                 m_player->state = SoMTD::Player::PlayerState::HOLDING_BUILD;
                 m_player->update_desired_tower(m_id);
                 return true;
+            } else if (m_id == 1000) {
+                m_menu_level->finish();
+                return true;
             }
         }
     }
@@ -68,4 +72,10 @@ SoMTD::Button::draw_self(ijengine::Canvas *c, unsigned, unsigned)
     } else  {
         c->draw(m_texture.get(), m_x, m_y);
     }
+}
+
+void
+SoMTD::Button::set_menu_level(SoMTD::MenuLevel* ml)
+{
+    m_menu_level = ml;
 }

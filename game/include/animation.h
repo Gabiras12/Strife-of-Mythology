@@ -15,7 +15,13 @@ namespace SoMTD {
         enum StateStyle {
             STATE_PER_COLUMN = 0x00,
             STATE_PER_LINE = 0x01,
-            TOTAL = 0x02
+            EVERYTHING_PER_LINE = 0x02,
+            TOTAL = 0x03
+        };
+
+        enum DirectionState {
+            DIRECTION_RIGHT = 0x00,
+            DIRECTION_LEFT = 0x01
         };
 
         Animation(int new_grid_x, int new_grid_y, std::string new_file_path, StateStyle new_state_style, int new_frame_per_state, int new_total_states);
@@ -33,8 +39,9 @@ namespace SoMTD {
         int width() const;
         int height() const;
         int frame_per_state() const;
+        void update_direction(SoMTD::Animation::DirectionState newstate);
 
-    public:
+    private:
         std::pair<int, int> m_screen_position;
         std::pair<int, int> m_tile;
         std::string m_file_path;
@@ -47,6 +54,8 @@ namespace SoMTD {
         StateStyle m_state_style;
         std::shared_ptr<ijengine::Texture> m_texture;
         ijengine::Rectangle *m_frame;
+        SoMTD::Animation::DirectionState m_actual_direction;
+
     };
 }
 

@@ -1,7 +1,7 @@
 cyclop = {
-  file_path = "units/cyclop.png",
-  state_style = 1,
-  total_states = 1,
+  file_path = "units/ciclopsheet.png",
+  state_style = 2,
+  total_states = 2,
   frame_per_state = 12,
   gold_reward = 300,
   hp = 100,
@@ -9,10 +9,10 @@ cyclop = {
 }
 
 medusa = {
-  file_path = "units/medusa.png",
-  state_style = 1,
-  total_states = 1,
-  frame_per_state = 1,
+  file_path = "units/medusasheet.png",
+  state_style = 2,
+  total_states = 2,
+  frame_per_state = 12,
   gold_reward = 400,
   hp = 150,
   time_per_tile = 100

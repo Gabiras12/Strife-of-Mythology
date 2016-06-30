@@ -17,9 +17,13 @@ SoMTD::Animation::Animation(int new_grid_x, int new_grid_y, std::string new_file
     if (new_state_style == Animation::StateStyle::STATE_PER_COLUMN) {
         m_width = m_texture->w()/m_total_states;
         m_height = m_texture->h()/m_frame_per_state;
-    } else {
+    } else if (new_state_style == Animation::StateStyle::STATE_PER_LINE) {
         m_width = m_texture->w()/m_frame_per_state;
         m_height = m_texture->h()/m_total_states;
+    } else if (new_state_style == Animation::StateStyle::EVERYTHING_PER_LINE) {
+        m_width = m_texture->w()/(m_total_states);
+        m_width /= m_frame_per_state;
+        m_height = m_texture->h();
     }
 }
 
@@ -49,8 +53,10 @@ SoMTD::Animation::draw(ijengine::Canvas *c, unsigned, unsigned)
     ijengine::Rectangle rect(0, 0, m_width, m_height);
     if (m_state_style ==  StateStyle::STATE_PER_COLUMN)
         rect.set_position(m_width*m_actual_state, m_height*m_actual_frame);
-    else
+    else if (m_state_style == StateStyle::STATE_PER_LINE)
         rect.set_position(m_width*m_actual_frame, m_height*m_actual_state);
+    else if (m_state_style == 0x02)
+        rect.set_position((m_actual_frame*m_width)+(m_width*m_frame_per_state*m_actual_state), 0);
 
     m_texture = ijengine::resources::get_texture(m_file_path);
     c->draw(m_texture.get(), rect, m_screen_position.first+(100-m_width)/2, m_screen_position.second+81/2-m_height);
@@ -103,4 +109,11 @@ int
 SoMTD::Animation::frame_per_state() const
 {
     return m_frame_per_state;
+}
+
+void
+SoMTD::Animation::update_direction(SoMTD::Animation::DirectionState ds)
+{
+    if (m_total_states >= (int)ds)
+        m_actual_state = (int)ds;
 }
