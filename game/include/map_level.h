@@ -85,6 +85,8 @@ namespace SoMTD {
         std::string set_time_to_start_wave(unsigned now);
         std::list<SoMTD::Tower*> *m_towers;
         void check_towers_collisions(unsigned now, unsigned last);
+        void update_units_events(unsigned now, unsigned last);
+        void handle_unit_event(int event_id, unsigned now, unsigned last);
     };
 }
 

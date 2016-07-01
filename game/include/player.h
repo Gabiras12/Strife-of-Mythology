@@ -2,6 +2,7 @@
 #define SOMTD_PLAYER_H
 
 #include <ijengine/game_object.h>
+#include <list>
 
 namespace SoMTD {
     class Player {
@@ -28,6 +29,8 @@ namespace SoMTD {
         void update_gold(int new_gold_count);
         void discount_hp(int);
         void update_desired_tower(int);
+        std::list<int> *units_events() const;
+        std::list<int> *event_args() const;
 
     private:
         int m_gold;
@@ -35,8 +38,8 @@ namespace SoMTD {
         int m_x;
         int m_hp = 50;
         int m_desired_tower = 0;
-
-
+        std::list<int> *m_units_events;
+        std::list<int> *m_event_args;
 
     };
 }

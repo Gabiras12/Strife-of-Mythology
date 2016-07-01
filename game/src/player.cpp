@@ -6,11 +6,14 @@ SoMTD::Player::Player() :
     state(0x0000)
 {
     m_gold = 300;
+    m_units_events = new std::list<int>();
+    m_event_args = new std::list<int>();
 }
 
 SoMTD::Player::~Player()
 {
-
+    delete m_units_events;
+    delete m_event_args;
 }
 
 int
@@ -52,4 +55,16 @@ void
 SoMTD::Player::discount_hp(int value)
 {
 	m_hp -= value;
+}
+
+std::list<int>*
+SoMTD::Player::units_events() const
+{
+    return m_units_events;
+}
+
+std::list<int>*
+SoMTD::Player::event_args() const
+{
+    return m_event_args;
 }

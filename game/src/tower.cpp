@@ -10,7 +10,8 @@
 #include "animation.h"
 
 SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::string image_selected, Player *p,
-        Animation::StateStyle statestyle, int frame_per_state, int total_states) :
+        Animation::StateStyle statestyle, int frame_per_state, int total_states, float newattackspeed,
+        int newdamage) :
     m_image_path(texture_name),
     m_id(id),
     m_start(-1),
@@ -18,8 +19,8 @@ SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::st
     m_imageselected_path(image_selected),
     m_player(p)
 {
-    m_attack_speed = 1.0;
-    m_damage = 10;
+    m_attack_speed = newattackspeed;
+    m_damage = newdamage;
     m_level = 1;
     m_range = 50.0;
     m_texture = ijengine::resources::get_texture(texture_name);
@@ -184,7 +185,7 @@ SoMTD::Tower::handle_attacking_state(unsigned now, unsigned last)
                 double distance = sqrt(dx*dx + dy*dy);
                 if (distance < range()+target()->animation()->width()/2) {
                     m_target->suffer(damage());
-                    m_cooldown = now+1000;
+                    m_cooldown = now+1000*attack_speed();
                 } else {
                     m_actual_state = SoMTD::Tower::IDLE;
                     m_target = nullptr;
@@ -202,10 +203,45 @@ SoMTD::Tower::handle_attacking_state(unsigned now, unsigned last)
 void
 SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
 {
-    m_target = newtarget;
-    m_cooldown = now+attack_speed()*1000;
-    newtarget->suffer(damage());
-    m_actual_state = SoMTD::Tower::State::ATTACKING;
+    // If it is a poseidon tower, it can have multiple targets
+    switch (id()) {
+        case 0x1000:
+            m_cooldown = now+attack_speed()*1000;
+            m_target = newtarget;
+            newtarget->suffer(damage());
+            m_actual_state = State::ATTACKING;
+            break;
+
+        case 0x1001:
+            m_cooldown = now+attack_speed()*1000;
+            m_target = newtarget;
+            newtarget->suffer(damage());
+            m_actual_state = State::ATTACKING;
+            break;
+
+        case 0x1002:
+            if (m_cooldown < now) {
+                m_cooldown = now+attack_speed()*1000;
+                m_actual_state = IDLE;
+
+                /* pushing an slow event to the queue of events. the first
+                 * argument is the x_position of the unit, the second argument
+                 * is the y_position of the unit, the third argument is the
+                 * range of the slow, 4th argument is the dmg of the slow,
+                 * 5th argument is the slow coefficient, and 6th the time penalization */
+                player()->units_events()->push_back(0x000);
+                player()->event_args()->push_back((int)newtarget->x());
+                player()->event_args()->push_back((int)newtarget->y());
+                player()->event_args()->push_back(50);
+                player()->event_args()->push_back(damage());
+                player()->event_args()->push_back(500);
+                player()->event_args()->push_back(2000);
+            }
+            break;
+
+        default:
+            break;
+    }
 }
 
 SoMTD::MovableUnit*
@@ -218,4 +254,16 @@ double
 SoMTD::Tower::attack_speed() const
 {
     return m_attack_speed;
+}
+
+unsigned
+SoMTD::Tower::id() const
+{
+    return m_id;
+}
+
+SoMTD::Player*
+SoMTD::Tower::player() const
+{
+    return m_player;
 }

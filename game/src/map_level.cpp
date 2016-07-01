@@ -469,20 +469,6 @@ void
 SoMTD::MapLevel::update_current_wave(unsigned now, unsigned last)
 {
     current_wave()->update_self(now, last);
-    // if (current_wave()->started_at()+(current_wave()->current_unit()*1000) < now) {
-    //     if (current_wave()->spawning()) {
-    //         spawners[current_wave()->units_idx()[current_wave()->current_unit()]]->spawn_unit();
-    //     } else {
-    //         int aux = 0;
-    //         for (auto spawner : spawners) {
-    //             aux += spawner->units.size();
-    //         }
-    //         if (aux == 0) {
-    //             current_wave()->finish();
-    //         }
-    //     }
-    //     current_wave()->current_unit()->spawn();
-    // }
 }
 
 SoMTD::Wave*
@@ -506,9 +492,11 @@ SoMTD::MapLevel::build_tower(unsigned tower_id, int x, int y)
     int tower_state_style = towers_list.get<int>((affix+".state_style").c_str());
     int total_states = towers_list.get<int>((affix+".total_states").c_str());
     int frame_per_state = towers_list.get<int>((affix+".frame_per_state").c_str());
-    printf("building tower on x: %d, y: %d\n", x, y);
+    float tower_attack_speed = towers_list.get<float>((affix + ".attack_speed").c_str());
+    int tower_damage = towers_list.get<int>((affix + ".damage").c_str());
+    int towerid = towers_list.get<int>((affix + ".id").c_str());
 
-    SoMTD::Tower *m_tower = new SoMTD::Tower(tower_path, 9, x, y, selected_tower_path, m_player, (Animation::StateStyle)tower_state_style, frame_per_state, total_states);
+    SoMTD::Tower *m_tower = new SoMTD::Tower(tower_path, towerid, x, y, selected_tower_path, m_player, (Animation::StateStyle)tower_state_style, frame_per_state, total_states, tower_attack_speed, tower_damage);
     m_tower->set_priority(50000+(5*x*y));
     add_child(m_tower);
     m_towers->push_back(m_tower);
@@ -541,7 +529,61 @@ SoMTD::MapLevel::handle_playing_state(unsigned now, unsigned last)
         transition_to(PLAYING, RESTING, now, last);
     } else {
         update_current_wave(now, last);
+        update_units_events(now, last);
         check_towers_collisions(now, last);
+    }
+}
+
+void
+SoMTD::MapLevel::update_units_events(unsigned now, unsigned last)
+{
+    if (not player()->units_events()->empty()) {
+        for (auto event=player()->units_events()->begin(); event != player()->units_events()->end(); ++event) {
+            handle_unit_event((*event), now, last);
+        }
+
+        while (not player()->units_events()->empty()) {
+            player()->units_events()->pop_back();
+        }
+    }
+}
+
+void
+SoMTD::MapLevel::handle_unit_event(int event_id, unsigned now, unsigned last)
+{
+    double dx, dy, distance;
+    int x_event, y_event, slow_range, time_penalization, slow_coeff, slow_damage;
+    switch (event_id){
+        case 0x000:
+            x_event = player()->event_args()->front();
+            player()->event_args()->pop_front();
+            y_event = player()->event_args()->front();
+            player()->event_args()->pop_front();
+            slow_range = player()->event_args()->front();
+            player()->event_args()->pop_front();
+            slow_damage = player()->event_args()->front();
+            player()->event_args()->pop_front();
+            slow_coeff = player()->event_args()->front();
+            player()->event_args()->pop_front();
+            time_penalization = player()->event_args()->front();
+            player()->event_args()->pop_front();
+
+            for (auto unit=current_wave()->units()->begin(); unit != current_wave()->units()->end(); ++unit) {
+                if ((*unit)->active()) {
+                    dx = x_event - (*unit)->animation()->screen_position().first;
+                    dy = y_event - (*unit)->animation()->screen_position().second;
+                    distance = sqrt(dx*dx + dy*dy);
+                    if (distance < (slow_range +(*unit)->animation()->width()/2)) {
+                        (*unit)->suffer(slow_damage);
+                        (*unit)->suffer_slow(slow_coeff, time_penalization, now, last);
+                    }
+                }
+            }
+            break;
+
+        default:
+            break;
+
     }
 }
 

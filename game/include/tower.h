@@ -10,12 +10,19 @@
 #include "animation.h"
 #include "movable_unit.h"
 
+/* IDS FOR TOWERS:
+ * from 0x1000 to 0x2000
+ * 0x1000 = zeus tower
+ * 0x1001 = hades tower
+ * 0x1002 = poseidon tower
+ */
+
 namespace SoMTD {
     class Tower : public ijengine::GameObject, public ijengine::GameEventsListener {
 
     public:
         Tower(std::string texture_name, unsigned id, int x, int y, std::string m_imageselected_path, Player *p,
-                Animation::StateStyle state_style, int frame_per_state, int total_states);
+                Animation::StateStyle state_style, int frame_per_state, int total_states, float attackspeed, int newdamage);
         ~Tower();
 
         enum State {
@@ -36,6 +43,8 @@ namespace SoMTD {
         int damage() const;
         SoMTD::MovableUnit* target() const;
         double attack_speed() const;
+        unsigned id() const;
+        SoMTD::Player* player() const;
 
     protected:
         void level_up();
