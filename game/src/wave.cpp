@@ -79,7 +79,7 @@ SoMTD::Wave::update_self(unsigned now, unsigned a2)
     }
 
     if (spawning()) {
-        if (m_last_spawned_unit_time+50 < now) {
+        if (m_last_spawned_unit_time+300 < now) {
             m_last_spawned_unit_time = now;
             spawn_unit();
         }

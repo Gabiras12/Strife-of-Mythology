@@ -234,11 +234,11 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
 
         if (m_player->state == 0x01 || m_player->state == 0x05 || m_player->state == 0x06 || m_player->state == 0x07) {
             if (tile_position.first >= 0 && tile_position.second >= 0 && tile_position.first < 10 && tile_position.second < 10) {
-                if (m_player->gold() >= 100) {
+                if (m_player->gold() >= 130) {
                     if (m_labyrinth->m_grid[tile_position.second][tile_position.first] == 6) {
                         m_labyrinth->m_grid[tile_position.second][tile_position.first] = 88;
                         build_tower(m_player->desired_tower(), tile_position.first, tile_position.second);
-                        m_player->discount_gold(100);
+                        m_player->discount_gold(150);
                         m_player->discount_hp(1);
                     }
                 } else {
@@ -507,7 +507,7 @@ SoMTD::MapLevel::handle_idle_state(unsigned now, unsigned last)
 {
     if (not m_state_started_at)
         m_state_started_at = now;
-    if (now > 10000+m_state_started_at) {
+    if (now > 5000+m_state_started_at) {
         transition_to(IDLE, PLAYING, now, last);
     }
 }
@@ -515,7 +515,7 @@ SoMTD::MapLevel::handle_idle_state(unsigned now, unsigned last)
 void
 SoMTD::MapLevel::handle_resting_state(unsigned now, unsigned last)
 {
-    if (now > m_state_started_at + 10000) {
+    if (now > m_state_started_at + 5000) {
         transition_to(RESTING, PLAYING, now, last);
     }
 }
@@ -625,7 +625,7 @@ SoMTD::MapLevel::set_time_to_start_wave(unsigned now){
 
   std::ostringstream convert;
 
-  convert << 10 - (now - m_state_started_at)/1000;
+  convert << 5 - (now - m_state_started_at)/1000;
 
   return convert.str();
 }

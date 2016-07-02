@@ -22,7 +22,7 @@ SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::st
     m_attack_speed = newattackspeed;
     m_damage = newdamage;
     m_level = 1;
-    m_range = 50.0;
+    m_range = 110.0;
     m_texture = ijengine::resources::get_texture(texture_name);
     m_animation = new Animation(x, y, texture_name, statestyle, frame_per_state, total_states);
     ijengine::event::register_listener(this);
