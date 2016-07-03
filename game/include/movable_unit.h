@@ -80,6 +80,7 @@ namespace SoMTD {
         std::list<MovableUnit::Status>* m_status_list;
         int m_slow_penalization;
         int m_slow_coeff;
+        int m_hp_discount_unit;
     };
 }
 
