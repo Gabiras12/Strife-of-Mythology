@@ -33,7 +33,7 @@ SoMTD::MovableUnit::MovableUnit(
     m_frame_per_state(frame_per_state),
     m_total_states(total_states)
 {
-    m_actual_status = Status::NORMAL;
+    m_status_list = new std::list<MovableUnit::Status>();
     m_time_per_tile = unit_time;
     m_initial_hp = unit_hp;
     m_actual_hp = unit_hp;
@@ -54,6 +54,7 @@ SoMTD::MovableUnit::MovableUnit(
 
 SoMTD::MovableUnit::~MovableUnit()
 {
+    delete m_status_list;
     ijengine::event::unregister_listener(this);
 }
 
@@ -79,26 +80,34 @@ SoMTD::MovableUnit::update_self(unsigned now, unsigned last)
 
     if (m_active) {
         m_animation->update_screen_position(std::make_pair(m_x, m_y));
+        double status_coeff = 1;
         if (m_moving) {
-            if (m_actual_status == SLOWED) {
-                if (now > m_slow_penalization) {
-                    m_actual_status = Status::NORMAL;
+            if (not status_list()->empty()) {
+                for (auto status=status_list()->begin(); status != status_list()->end(); ++status) {
+                    switch ((int)(*status)) {
+                        case SLOWED:
+                            if (now > m_slow_penalization) {
+                                status = status_list()->erase(status);
+                            } else {
+                                status_coeff = (double)m_slow_coeff/1000.0;
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
             }
+
+            m_x = x() + m_movement_speed.first*status_coeff;
+            m_y = y() + m_movement_speed.second*status_coeff;
+
             if (x()+1 > desired_place.first && x()-1 < desired_place.first && y()+1>desired_place.second && y()-1<desired_place.second) {
                 m_moving = false;
                 m_current_instruction++;
                 if (m_current_instruction > m_labyrinth_path.size()) {
                     m_active = false;
                 }
-            }
-
-            if (m_actual_status == SLOWED) {
-                m_x = x() + m_movement_speed.first*((double)m_slow_coeff/1000);
-                m_y = y() + m_movement_speed.second*((double)m_slow_coeff/1000);
-            } else {
-                m_x = x() + m_movement_speed.first;
-                m_y = y() + m_movement_speed.second;
             }
         } else {
             if (m_current_instruction == m_labyrinth_path.size()) {
@@ -234,7 +243,13 @@ void
 SoMTD::MovableUnit::suffer_slow(int slow_coeff, int time_penalization, unsigned now, unsigned)
 {
     m_slow_coeff = slow_coeff;
-    m_actual_status = Status::SLOWED;
+    m_status_list->push_back(Status::SLOWED);
     m_slow_penalization = time_penalization + now;
 
+}
+
+std::list<SoMTD::MovableUnit::Status>*
+SoMTD::MovableUnit::status_list() const
+{
+    return m_status_list;
 }

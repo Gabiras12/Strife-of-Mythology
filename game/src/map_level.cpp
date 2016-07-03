@@ -238,7 +238,7 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                     if (m_labyrinth->m_grid[tile_position.second][tile_position.first] == 6) {
                         m_labyrinth->m_grid[tile_position.second][tile_position.first] = 88;
                         build_tower(m_player->desired_tower(), tile_position.first, tile_position.second);
-                        m_player->discount_gold(150);
+                        m_player->discount_gold(130);
                         m_player->discount_hp(1);
                     }
                 } else {

@@ -8,6 +8,7 @@
 #include <memory>
 #include <queue>
 #include <list>
+#include <set>
 #include <vector>
 #include "player.h"
 #include "animation.h"
@@ -45,6 +46,7 @@ namespace SoMTD {
         int gold_award() const;
         int time_per_tile() const;
         void suffer_slow(int slow_coeff, int time_penalization, unsigned now, unsigned last);
+        std::list<MovableUnit::Status> *status_list() const;
 
     protected:
         bool on_event(const ijengine::GameEvent& event);
@@ -74,7 +76,7 @@ namespace SoMTD {
         bool m_dead = false;
         int m_gold_award;
         int m_time_per_tile;
-        MovableUnit::Status m_actual_status;
+        std::list<MovableUnit::Status>* m_status_list;
         int m_slow_penalization;
         int m_slow_coeff;
     };
