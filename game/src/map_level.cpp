@@ -73,67 +73,24 @@ SoMTD::MapLevel::load_tiles()
     for (int line = 0; line < line_count; ++line) {
         int column_count = m_labyrinth->m_grid[line].size();
         for (auto column = 0; column < column_count; ++column) {
-            switch (m_labyrinth->m_grid[line][column]) {
-                case 1:
-                    _path = "caminho1.png";
-                    _id = 1;
-                break;
-
-                case 2:
-                    _path = "caminho2.png";
-                    _id = 2;
-                break;
-
-                case 3:
-                    _path = "curva3.png";
-                    _id = 3;
-                break;
-
-                case 4:
-                    _path = "curva4.png";
-                    _id = 4;
-                break;
-
-                case 5:
-                    _path = "curva1.png";
-                    _id = 5;
-                break;
-
-                case 6:
-                    _path = "tile_grama.png";
-                    _id = 6;
-                break;
-
-                case 7:
-                    _path = "curva2.png";
-                    _id = 7;
-                break;
-
-                case 8:
-                    _path = "waterfallEndS.png";
-                    _id = 8;
-                break;
-
-                case 50:
-                    origin.first = column;
-                    origin.second = line;
-                    _path = "caminho2.png";
-                    _id = 2;
-                break;
-
-                case 60:
-                    destiny.first = column;
-                    destiny.second = line;
-                    _path = "caminho2.png";
-                    _id = 2;
-                break;
-
-                default:
-                    continue;
-                break;
+            string expression;
+            expression = "tile_";
+            std::ostringstream convert;
+            convert << m_labyrinth->m_grid[line][column];
+            if (m_labyrinth->m_grid[line][column] == 0x0 || m_labyrinth->m_grid[line][column] == 0xA) {
+                printf("origin: %d %d\n", column, line);
+                origin.first = column;
+                origin.second = line;
+            } else if (m_labyrinth->m_grid[line][column] == 0x9 || m_labyrinth->m_grid[line][column] == 0x13) {
+                printf("destination : %d %d\n", column, line);
+                destiny.first = column;
+                destiny.second = line;
             }
-
-            add_child(new SoMTD::LevelArea(_path, _id, column, line, 0));
+            expression.append(convert.str());
+            expression.append(".png");
+            _id = m_labyrinth->m_grid[line][column];
+            std::cout << "path: " << expression.c_str() << std::endl;
+            add_child(new SoMTD::LevelArea(expression, _id, column, line, 0));
         }
     }
 }
@@ -235,7 +192,8 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
 
             if (tile_position.first >= 0 && tile_position.second >= 0 && tile_position.first < 10 && tile_position.second < 10) {
                 if (m_player->gold() >= m_player->m_desired_tower_price) {
-                    if (m_labyrinth->m_grid[tile_position.second][tile_position.first] == 6) {
+                    if (m_labyrinth->m_grid[tile_position.second][tile_position.first] == 0x7 ||
+                            m_labyrinth->m_grid[tile_position.second][tile_position.first] == 0x11) {
                         m_labyrinth->m_grid[tile_position.second][tile_position.first] = 88;
                         build_tower(m_player->desired_tower(), tile_position.first, tile_position.second);
                         m_player->discount_gold(m_player->m_desired_tower_price);
