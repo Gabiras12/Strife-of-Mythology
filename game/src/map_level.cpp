@@ -234,11 +234,11 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
             auto tile_position = SoMTD::tools::isometric_to_grid((int)x_pos, (int)y_pos, 100, 81, 1024/2, 11);
 
             if (tile_position.first >= 0 && tile_position.second >= 0 && tile_position.first < 10 && tile_position.second < 10) {
-                if (m_player->gold() >= 130) {
+                if (m_player->gold() >= m_player->m_desired_tower_price) {
                     if (m_labyrinth->m_grid[tile_position.second][tile_position.first] == 6) {
                         m_labyrinth->m_grid[tile_position.second][tile_position.first] = 88;
                         build_tower(m_player->desired_tower(), tile_position.first, tile_position.second);
-                        m_player->discount_gold(130);
+                        m_player->discount_gold(m_player->m_desired_tower_price);
                         m_player->discount_hp(1);
                     }
                 } else {
@@ -311,7 +311,10 @@ SoMTD::MapLevel::load_buttons()
         button_id = button_list.get<int>((it + ".id").c_str());
         button_priority = button_list.get<int>((it + ".priority").c_str());
         button_mouseover_path = button_list.get<std::string>((it + ".mouseover_file_path").c_str());
-        SoMTD::Button *b = new SoMTD::Button(button_file_path, button_id, button_screen_position.first, button_screen_position.second, button_mouseover_path, m_player, button_priority);
+        std::vector<int> *infos = new std::vector<int>();
+        infos->push_back(button_list.get<int>((it + ".tower_price").c_str()));
+        infos->push_back(button_list.get<int>((it + ".requirements").c_str()));
+        SoMTD::Button *b = new SoMTD::Button(button_file_path, button_id, button_screen_position.first, button_screen_position.second, button_mouseover_path, m_player, button_priority, infos);
         add_child(b);
     }
 }
@@ -343,8 +346,6 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2)
     current_wave()->draw_self_after(c, a1, a2);
 
     if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
-        printf("desired hex: %x\n", m_player->desired_tower());
-        printf("desired: %d\n", m_player->desired_tower());
         std::string tower_name = "tower_";
         tower_name.append( std::to_string(m_player->desired_tower()) );
         tower_name.append("_holding.png");

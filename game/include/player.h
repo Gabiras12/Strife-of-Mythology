@@ -29,11 +29,12 @@ namespace SoMTD {
         void discount_gold(int);
         void update_gold(int new_gold_count);
         void discount_hp(int);
-        void update_desired_tower(int);
+        void update_desired_tower(int towerid, int towerprice);
         std::list<int> *units_events() const;
         std::list<int> *event_args() const;
         void open_tower_panel(unsigned tower_id);
         unsigned tower_panel_id() const;
+        int m_desired_tower_price;
 
     private:
         int m_gold;

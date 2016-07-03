@@ -205,21 +205,10 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
 {
     // If it is a poseidon tower, it can have multiple targets
     switch (id()) {
-        case 0x1000:
-            m_cooldown = now+attack_speed()*1000;
-            m_target = newtarget;
-            newtarget->suffer(damage());
-            m_actual_state = State::ATTACKING;
-            break;
-
-        case 0x1001:
-            m_cooldown = now+attack_speed()*1000;
-            m_target = newtarget;
-            newtarget->suffer(damage());
-            m_actual_state = State::ATTACKING;
-            break;
-
-        case 0x1002:
+        case 0x10:
+        case 0x11:
+        case 0x12:
+        case 0x13:
             if (m_cooldown < now) {
                 m_cooldown = now+attack_speed()*1000;
                 m_actual_state = IDLE;
@@ -240,6 +229,10 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
             break;
 
         default:
+            m_cooldown = now+attack_speed()*1000;
+            m_target = newtarget;
+            newtarget->suffer(damage());
+            m_actual_state = State::ATTACKING;
             break;
     }
 }

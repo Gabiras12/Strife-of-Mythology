@@ -76,6 +76,8 @@ exit_button = {
   height = 65
 }
 
+-- towers buttons below
+-- info[0] = tower price, info[1] = tower prerequisites
 tower_1_button = {
   file_path = "buy_tower.png",
   mouseover_file_path = "buy_tower_mouseover.png",
@@ -86,7 +88,9 @@ tower_1_button = {
   priority = 500230,
   id = 0x2000,
   width = 105,
-  height = 134
+  height = 134,
+  tower_price = 150,
+  requirements = 0
 }
 
 tower_2_button = {
@@ -99,7 +103,9 @@ tower_2_button = {
   priority = 500230,
   id = 0x2001,
   width = 105,
-  height = 134
+  height = 134,
+  tower_price = 200,
+  requirements = 1
 }
 
 tower_3_button = {
@@ -112,7 +118,9 @@ tower_3_button = {
   priority = 500230,
   id = 0x2002,
   width = 105,
-  height = 134
+  height = 134,
+  tower_price = 300,
+  requirements = 2
 }
 
 tower_4_button = {
@@ -125,5 +133,7 @@ tower_4_button = {
   priority = 500230,
   id = 0x2003,
   width = 105,
-  height = 134
+  height = 134,
+  tower_price = 500,
+  requirements = 4
 }

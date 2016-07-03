@@ -36,8 +36,9 @@ SoMTD::Player::desired_tower() const
 }
 
 void
-SoMTD::Player::update_desired_tower(int m_id){
+SoMTD::Player::update_desired_tower(int m_id, int price){
   m_desired_tower = m_id;
+  m_desired_tower_price = price;
 }
 
 void

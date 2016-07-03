@@ -9,16 +9,17 @@
 #include "menu_level.h"
 
 #include <memory>
+#include <vector>
 
 namespace SoMTD {
     class Button : public ijengine::GameObject, public ijengine::GameEventsListener {
     public:
-        Button(std::string texture_name, unsigned id, int x, int y, std::string mouseover_texture, Player *m, int myp);
+        Button(std::string texture_name, unsigned id, int x, int y, std::string mouseover_texture, Player *m, int myp, std::vector<int> *args);
         ~Button();
         void set_menu_level(SoMTD::MenuLevel *ml);
 
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);
-        void draw_self_after(ijengine::Canvas*, unsigned, unsigned) { }
+        void draw_self_after(ijengine::Canvas*, unsigned, unsigned);
         bool on_event(const ijengine::GameEvent& event);
         void update_self(unsigned, unsigned);
 
@@ -36,6 +37,7 @@ namespace SoMTD {
         bool m_done;
         int m_priority;
         SoMTD::MenuLevel *m_menu_level;
+        std::vector<int> *m_infos;
     };
 }
 
