@@ -3,6 +3,7 @@
 
 #include <ijengine/game_object.h>
 #include <list>
+#include <bitset>
 
 namespace SoMTD {
     class Player {
@@ -35,6 +36,7 @@ namespace SoMTD {
         void open_tower_panel(unsigned tower_id);
         unsigned tower_panel_id() const;
         int m_desired_tower_price;
+        std::bitset<12> upgrade_state() const;
 
     private:
         int m_gold;
@@ -46,6 +48,8 @@ namespace SoMTD {
         std::list<int> *m_event_args;
         bool m_buy_tower_panel_opened;
         unsigned m_tower_panel_id;
+        std::bitset<12> m_upgrade_state;
+
     };
 }
 

@@ -9,6 +9,8 @@ SoMTD::Player::Player() :
     m_units_events = new std::list<int>();
     m_event_args = new std::list<int>();
     m_buy_tower_panel_opened = false;
+    m_upgrade_state.reset();
+    m_upgrade_state.set(0);
 }
 
 SoMTD::Player::~Player()
@@ -82,4 +84,10 @@ unsigned
 SoMTD::Player::tower_panel_id() const
 {
     return m_tower_panel_id;
+}
+
+std::bitset<12>
+SoMTD::Player::upgrade_state() const
+{
+    return m_upgrade_state;
 }

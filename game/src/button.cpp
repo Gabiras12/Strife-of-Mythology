@@ -5,6 +5,7 @@
 #include <ijengine/canvas.h>
 #include <ijengine/engine.h>
 #include <ijengine/texture.h>
+#include <bitset>
 
 #include "button.h"
 #include <vector>
@@ -62,6 +63,8 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
             int last_bit_button;
             int last_bit_panel;
             int desired_tower;
+            bool result1;
+            std::bitset<12> upgrade_state;
             switch (m_id) {
                 case 1000:
                     m_menu_level->finish();
@@ -73,7 +76,12 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
                 case 0x2002:
                 case 0x2003:
                     if (m_player->state == Player::PlayerState::OPENED_TOWER_PANEL) {
-                        if (m_player->gold() >= (*m_infos)[0]) {
+                        upgrade_state = (*m_infos)[1];
+                        std::cout << "aqui: " << upgrade_state << std::endl;
+                        std::cout << "player: " << m_player->upgrade_state() << std::endl;
+                        result1 = upgrade_state.to_ulong() & m_player->upgrade_state().to_ulong();
+                        std::cout << "result1: " << result1 << std::endl;
+                        if ((m_player->gold() >= (*m_infos)[0]) and result1) {
                             m_player->state = Player::PlayerState::HOLDING_BUILD;
                             last_bit_button = (m_id & 0xF);
                             last_bit_panel = m_player->tower_panel_id() & 0xF;
@@ -98,16 +106,19 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
 void
 SoMTD::Button::draw_self(ijengine::Canvas *c, unsigned, unsigned)
 {
-    if (m_mouseover) {
-        c->draw(m_mouseover_texture.get(), m_x, m_y);
-    } else  {
-        c->draw(m_texture.get(), m_x, m_y);
-    }
-
-    if (m_player->state == SoMTD::Player::PlayerState::OPENED_TOWER_PANEL) {
-        auto font = ijengine::resources::get_font("Forelle.ttf", 40);
-        c->set_font(font);
-        c->draw("Tower 1", m_w+400, m_h+300);
+    if (m_id >= 0x2000 && m_id < 0x2100) {
+        if (m_player->state == SoMTD::Player::PlayerState::OPENED_TOWER_PANEL) {
+            if (m_mouseover)
+                c->draw(m_mouseover_texture.get(), m_x, m_y);
+            else
+                c->draw(m_texture.get(), m_x, m_y);
+        }
+    } else {
+        if (m_mouseover) {
+            c->draw(m_mouseover_texture.get(), m_x, m_y);
+        } else  {
+            c->draw(m_texture.get(), m_x, m_y);
+        }
     }
 }
 
@@ -120,7 +131,7 @@ SoMTD::Button::set_menu_level(SoMTD::MenuLevel* ml)
 void
 SoMTD::Button::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
 {
-    if (m_id >= 0x2000 && m_id < 0x2100) {
+    if (m_id >= 0x2000 && m_id < 0x2100 && m_player->state == SoMTD::Player::PlayerState::OPENED_TOWER_PANEL) {
         auto font = ijengine::resources::get_font("Inconsolata-Regular.ttf", 20);
         c->set_font(font);
         std::ostringstream convert;

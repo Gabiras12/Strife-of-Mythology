@@ -90,7 +90,7 @@ tower_1_button = {
   width = 105,
   height = 134,
   tower_price = 150,
-  requirements = 0
+  requirements = 0x0001
 }
 
 tower_2_button = {
@@ -105,7 +105,7 @@ tower_2_button = {
   width = 105,
   height = 134,
   tower_price = 200,
-  requirements = 1
+  requirements = 0x0002
 }
 
 tower_3_button = {
@@ -120,7 +120,7 @@ tower_3_button = {
   width = 105,
   height = 134,
   tower_price = 300,
-  requirements = 2
+  requirements = 0x0004
 }
 
 tower_4_button = {
@@ -135,5 +135,5 @@ tower_4_button = {
   width = 105,
   height = 134,
   tower_price = 500,
-  requirements = 4
+  requirements = 0x0008
 }
