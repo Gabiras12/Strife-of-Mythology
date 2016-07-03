@@ -8,7 +8,8 @@ cyclop = {
   frame_per_state = 12,
   gold_reward = 10,
   hp = 100,
-  time_per_tile = 200
+  time_per_tile = 200,
+  hp_discount_unit_win = 1
 }
 
 --[[
@@ -21,7 +22,8 @@ medusa = {
   frame_per_state = 12,
   gold_reward = 15,
   hp = 150,
-  time_per_tile = 200
+  time_per_tile = 200,
+  hp_discount_unit_win = 2
 }
 --[[
     Tanker
@@ -33,7 +35,8 @@ centauro = {
   frame_per_state = 1,
   gold_reward = 40,
   hp = 400,
-  time_per_tile = 200
+  time_per_tile = 200,
+  hp_discount_unit_win = 4
 }
 --[[
     Fly
@@ -45,5 +48,6 @@ bat = {
   frame_per_state = 1,
   gold_reward = 8,
   hp = 80,
-  time_per_tile = 80
+  time_per_tile = 80,
+  hp_discount_unit_win = 2
 }

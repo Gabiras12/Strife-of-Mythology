@@ -428,8 +428,9 @@ SoMTD::MapLevel::load_spawners()
         unit_gold_reward = units_list.get<int>((it + ".gold_reward").c_str());
         unit_time_per_tile = units_list.get<int>((it + ".time_per_tile").c_str());
         unit_hp = units_list.get<int>((it + ".hp").c_str());
+        unit_hp_discount_unit_win = units_list.get<int>((it + ".hp_discount_unit_win").c_str());
 
-        myunit = new SoMTD::MovableUnit(origin, destiny, unit_path, m_labyrinth->solution, m_player, (Animation::StateStyle)unit_statestyle, unit_frame_per_state, unit_total_states, unit_hp, unit_gold_reward, unit_time_per_tile);
+        myunit = new SoMTD::MovableUnit(origin, destiny, unit_path, m_labyrinth->solution, m_player, (Animation::StateStyle)unit_statestyle, unit_frame_per_state, unit_total_states, unit_hp, unit_gold_reward, unit_time_per_tile, unit_hp_discount_unit_win);
         spawner = new SoMTD::Spawner<MovableUnit>(myunit);
         spawners.push_back(spawner);
 

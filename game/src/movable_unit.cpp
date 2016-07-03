@@ -20,7 +20,8 @@ SoMTD::MovableUnit::MovableUnit(
         int total_states,
         int unit_hp,
         int unit_reward,
-        int unit_time
+        int unit_time,
+        int hp_discount_unit_win
         ) :
     m_enemy(true),
     end_position(e_pos),
@@ -37,6 +38,7 @@ SoMTD::MovableUnit::MovableUnit(
     m_time_per_tile = unit_time;
     m_initial_hp = unit_hp;
     m_actual_hp = unit_hp;
+    m_hp_dicount_unit = hp_discount_unit_win;
     m_gold_award = unit_reward;
     m_done = false;
     m_movement_speed = std::make_pair(0.0, 0.0);
@@ -111,7 +113,7 @@ SoMTD::MovableUnit::update_self(unsigned now, unsigned last)
             }
         } else {
             if (m_current_instruction == m_labyrinth_path.size()) {
-                m_player->discount_hp(1);
+                m_player->discount_hp(m_hp_dicount_unit);
                 die();
             } else {
                 std::pair<int, int> pos = m_labyrinth_path[m_current_instruction];
