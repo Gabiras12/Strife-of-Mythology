@@ -13,7 +13,8 @@ namespace SoMTD {
             HOLDING_BUILD = 1,
             INVALID_BUILD = 3,
             NOT_ENOUGH_GOLD = 4,
-            SELECTED_TOWER = 5
+            SELECTED_TOWER = 5,
+            OPENED_TOWER_PANEL = 6
         };
 
         Player();
@@ -31,6 +32,8 @@ namespace SoMTD {
         void update_desired_tower(int);
         std::list<int> *units_events() const;
         std::list<int> *event_args() const;
+        void open_tower_panel(unsigned tower_id);
+        unsigned tower_panel_id() const;
 
     private:
         int m_gold;
@@ -40,7 +43,8 @@ namespace SoMTD {
         int m_desired_tower = 0;
         std::list<int> *m_units_events;
         std::list<int> *m_event_args;
-
+        bool m_buy_tower_panel_opened;
+        unsigned m_tower_panel_id;
     };
 }
 

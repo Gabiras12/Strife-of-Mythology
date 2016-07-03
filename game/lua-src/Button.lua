@@ -6,7 +6,7 @@ zeus_button = {
     y = 600
   },
   priority = 50000,
-  id = 4,
+  id = 0x0,
   width = 66,
   height = 65
 }
@@ -18,7 +18,7 @@ hades_button = {
     y = 600
   },
   priority = 50000,
-  id = 6,
+  id = 0x1,
   width = 66,
   height = 65
 }
@@ -31,7 +31,7 @@ poseidon_button = {
     y = 600
   },
   priority = 50000,
-  id = 5,
+  id = 0x2,
   width = 66,
   height = 65
 }
@@ -74,4 +74,56 @@ exit_button = {
   id = 1002,
   width = 66,
   height = 65
+}
+
+tower_1_button = {
+  file_path = "buy_tower.png",
+  mouseover_file_path = "buy_tower_mouseover.png",
+  screen_position = {
+    x = 300,
+    y = 550
+  },
+  priority = 500230,
+  id = 0x2000,
+  width = 105,
+  height = 134
+}
+
+tower_2_button = {
+  file_path = "buy_tower.png",
+  mouseover_file_path = "buy_tower_mouseover.png",
+  screen_position = {
+    x = 450,
+    y = 550
+  },
+  priority = 500230,
+  id = 0x2001,
+  width = 105,
+  height = 134
+}
+
+tower_3_button = {
+  file_path = "buy_tower.png",
+  mouseover_file_path = "buy_tower_mouseover.png",
+  screen_position = {
+    x = 570,
+    y = 550
+  },
+  priority = 500230,
+  id = 0x2002,
+  width = 105,
+  height = 134
+}
+
+tower_4_button = {
+  file_path = "buy_tower.png",
+  mouseover_file_path = "buy_tower_mouseover.png",
+  screen_position = {
+    x = 700,
+    y = 550
+  },
+  priority = 500230,
+  id = 0x2003,
+  width = 105,
+  height = 134
 }

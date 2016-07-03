@@ -17,7 +17,7 @@ SoMTD::Translator::translate(ijengine::GameEvent& to, const ijengine::MouseEvent
 
     if (from.state() == ijengine::MouseEvent::MOTION)
         to.set_id(SoMTD::Translator::MOTION);
-    else
+    else if (from.state() == ijengine::MouseEvent::PRESSED)
         to.set_id(SoMTD::Translator::CLICK);
 
     return true;

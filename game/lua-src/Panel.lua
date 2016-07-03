@@ -4,7 +4,7 @@ hp_panel = {
     y = 10,
     x = 10
   },
-  id = 0,
+  id = 0xFFF0,
   priority = 500000,
   width = 230,
   height = 48
@@ -18,7 +18,7 @@ left_upgrade_panel = {
     x = 0
   },
   priority = 5000,
-  id = 0
+  id = 0xFFF1
 }
 left_upgrade_panel.screen_position.y = left_upgrade_panel.screen_position.y - left_upgrade_panel.height
 
@@ -31,7 +31,7 @@ right_upgrade_panel = {
     x = 1124
   },
   priority = 50000,
-  id = 0
+  id = 0xFFF2
 }
 right_upgrade_panel.screen_position.y = right_upgrade_panel.screen_position.y - right_upgrade_panel.height
 right_upgrade_panel.screen_position.x = right_upgrade_panel.screen_position.x - right_upgrade_panel.width
@@ -45,7 +45,7 @@ coins_panel = {
     x = 1124
   },
   priority = 500000,
-  id = 0
+  id = 0xFFF3
 }
 coins_panel.screen_position.x = coins_panel.screen_position.x - coins_panel.width - 25
 zeus_panel = {
@@ -55,7 +55,7 @@ zeus_panel = {
     y = 615
   },
   priority = 500220,
-  id = 0,
+  id = 0x0,
   width = 38,
   height = 40
 }
@@ -66,7 +66,7 @@ poseidon_panel = {
     y = 605
   },
   priority = 500220,
-  id = 0,
+  id = 0x1,
   width = 28,
   height = 50
 }
@@ -77,18 +77,18 @@ hades_panel = {
     y = 610
   },
   priority = 500220,
-  id = 0,
+  id = 0x2,
   width = 32,
   height = 46
 }
--- buy_tower_panel = {
---   file_path = "buy_tower_panel.png",
---   screen_position = {
---     x = 100,
---     y = 566
---   },
---   priority = 500220,
---   id = 0,
---   width = 766,
---   height = 136
--- }
+towerbox_panel = {
+  file_path = "towerbox.png",
+  screen_position = {
+    x = 265,
+    y = 605
+  },
+  priority = 500220,
+  id = 0xFFF4,
+  width = 766,
+  height = 136
+}

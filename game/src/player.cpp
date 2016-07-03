@@ -8,6 +8,7 @@ SoMTD::Player::Player() :
     m_gold = 450;
     m_units_events = new std::list<int>();
     m_event_args = new std::list<int>();
+    m_buy_tower_panel_opened = false;
 }
 
 SoMTD::Player::~Player()
@@ -36,7 +37,7 @@ SoMTD::Player::desired_tower() const
 
 void
 SoMTD::Player::update_desired_tower(int m_id){
-  m_desired_tower = m_id - 4;
+  m_desired_tower = m_id;
 }
 
 void
@@ -67,4 +68,17 @@ std::list<int>*
 SoMTD::Player::event_args() const
 {
     return m_event_args;
+}
+
+void
+SoMTD::Player::open_tower_panel(unsigned id)
+{
+    m_buy_tower_panel_opened = true;
+    m_tower_panel_id = id;
+}
+
+unsigned
+SoMTD::Player::tower_panel_id() const
+{
+    return m_tower_panel_id;
 }

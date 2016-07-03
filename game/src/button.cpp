@@ -49,15 +49,39 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
 
-
         if (x_pos >= m_x && x_pos<m_x+m_texture->w() && y_pos>m_y && y_pos<m_y+m_texture->h()) {
-            if (m_id == 5 || m_id == 4 || m_id == 6) {
-                m_player->state = SoMTD::Player::PlayerState::HOLDING_BUILD;
-                m_player->update_desired_tower(m_id);
+            if (m_id < 0xF) {
+                m_player->state = SoMTD::Player::PlayerState::OPENED_TOWER_PANEL;
+                m_player->open_tower_panel(m_id);
+                printf("foi aqui..\n");
                 return true;
-            } else if (m_id == 1000) {
-                m_menu_level->finish();
-                return true;
+            }
+
+            int last_bit_button;
+            int last_bit_panel;
+            int desired_tower;
+            switch (m_id) {
+                case 1000:
+                    m_menu_level->finish();
+                    return true;
+                    break;
+
+                case 0x2000:
+                case 0x2001:
+                case 0x2002:
+                case 0x2003:
+                    if (m_player->state == Player::PlayerState::OPENED_TOWER_PANEL) {
+                        m_player->state = Player::PlayerState::HOLDING_BUILD;
+                        last_bit_button = (m_id & 0xF);
+                        last_bit_panel = m_player->tower_panel_id() & 0xF;
+                        if (last_bit_panel)
+                            last_bit_panel = last_bit_panel << 4;
+                        desired_tower = last_bit_panel | last_bit_button;
+                        m_player->update_desired_tower(desired_tower);
+                    }
+
+                default:
+                    break;
             }
         }
     }
@@ -71,6 +95,12 @@ SoMTD::Button::draw_self(ijengine::Canvas *c, unsigned, unsigned)
         c->draw(m_mouseover_texture.get(), m_x, m_y);
     } else  {
         c->draw(m_texture.get(), m_x, m_y);
+    }
+
+    if (m_player->state == SoMTD::Player::PlayerState::OPENED_TOWER_PANEL) {
+        auto font = ijengine::resources::get_font("Forelle.ttf", 40);
+        c->set_font(font);
+        c->draw("Tower 1", m_w+400, m_h+300);
     }
 }
 

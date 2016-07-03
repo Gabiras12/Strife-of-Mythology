@@ -227,12 +227,12 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
 {
 
     if (event.id() == SoMTD::CLICK) {
-        double x_pos = event.get_property<double>("x");
-        double y_pos = event.get_property<double>("y");
+        if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
+            double x_pos = event.get_property<double>("x");
+            double y_pos = event.get_property<double>("y");
 
-        auto tile_position = SoMTD::tools::isometric_to_grid((int)x_pos, (int)y_pos, 100, 81, 1024/2, 11);
+            auto tile_position = SoMTD::tools::isometric_to_grid((int)x_pos, (int)y_pos, 100, 81, 1024/2, 11);
 
-        if (m_player->state == 0x01 || m_player->state == 0x05 || m_player->state == 0x06 || m_player->state == 0x07) {
             if (tile_position.first >= 0 && tile_position.second >= 0 && tile_position.first < 10 && tile_position.second < 10) {
                 if (m_player->gold() >= 130) {
                     if (m_labyrinth->m_grid[tile_position.second][tile_position.first] == 6) {
@@ -243,21 +243,15 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                     }
                 } else {
                     printf("You need moar gold! (%d)\n", m_player->gold());
-                    m_player->state = SoMTD::Player::PlayerState::NOT_ENOUGH_GOLD;
                 }
             }
-            m_player->state= SoMTD::Player::PlayerState::IDLE;
+            m_player->state = SoMTD::Player::PlayerState::IDLE;
             return true;
         }
     }
 
     if (event.id() == 777) {
         m_done = true;
-        return true;
-    }
-
-    if (event.id() == SoMTD::BUILD_TOWER) {
-        m_player->state = SoMTD::Player::PlayerState::HOLDING_BUILD;
         return true;
     }
 
@@ -277,7 +271,8 @@ SoMTD::MapLevel::load_panels()
 
     std::vector< std::string > panel_names {
         "hp_panel", "left_upgrade_panel", "right_upgrade_panel",
-        "coins_panel", "poseidon_panel", "zeus_panel", "hades_panel"
+        "coins_panel", "poseidon_panel", "zeus_panel", "hades_panel",
+        "towerbox_panel"
         // "buy_tower_panel"
     };
 
@@ -304,7 +299,9 @@ SoMTD::MapLevel::load_buttons()
     std::string button_mouseover_path;
 
     std::vector< std::string > button_names {
-        "zeus_button", "hades_button", "poseidon_button"
+        "zeus_button", "hades_button", "poseidon_button",
+        "tower_1_button", "tower_2_button", "tower_3_button", "tower_4_button"
+
     };
 
     for (std::string it : button_names) {
@@ -346,6 +343,8 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2)
     current_wave()->draw_self_after(c, a1, a2);
 
     if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
+        printf("desired hex: %x\n", m_player->desired_tower());
+        printf("desired: %d\n", m_player->desired_tower());
         std::string tower_name = "tower_";
         tower_name.append( std::to_string(m_player->desired_tower()) );
         tower_name.append("_holding.png");
@@ -356,6 +355,7 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2)
 
         c->draw(mytext.get(), xpos - mytext->w()/2, ypos - mytext->h()/2);
     }
+
     auto font = ijengine::resources::get_font("Forelle.ttf", 40);
     c->set_font(font);
     std::ostringstream convert;
