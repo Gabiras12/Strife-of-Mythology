@@ -23,7 +23,7 @@ namespace SoMTD {
             TOTAL = 0x0002
         };
 
-        MovableUnit(std::pair<int, int> s_pos, std::pair<int, int> e_pos, std::string texture_path, std::vector< std::pair<int, int> >, Player* playerz, Animation::StateStyle entity_state, int frame_per_state, int total_states, int unit_hp, int unit_reward, int time_per_tiles, int hp_discount_unit_win);
+        MovableUnit(std::pair<int, int> s_pos, std::pair<int, int> e_pos, std::string texture_path, std::vector< std::pair<int, int> >, Player* playerz, Animation::StateStyle entity_state, int frame_per_state, int total_states, int unit_hp, int unit_reward, int time_per_tiles, int hp_discount_unit_win, std::string slowed_path);
         ~MovableUnit();
         bool enemy() const;
         void spawn();
@@ -54,6 +54,9 @@ namespace SoMTD {
     private:
         unsigned m_next_frame = 0;
         void die();
+        std::string m_slowed_path;
+        std::string m_poisoned_path;
+        std::string m_bleeding_path;
         bool m_done = false;
         bool m_enemy;
         std::pair<int, int> end_position;

@@ -9,7 +9,10 @@ cyclop = {
   gold_reward = 10,
   hp = 100,
   time_per_tile = 200,
-  hp_discount_unit_win = 1
+  hp_discount_unit_win = 1,
+  slowed_path = "units/ciclopsheet_congelado.png",
+  bleeding_path = "units/ciclopsheet_vermelho.png",
+  poisoned_path = "units/ciclopsheet_verde.png"
 }
 
 --[[
@@ -23,7 +26,10 @@ medusa = {
   gold_reward = 15,
   hp = 150,
   time_per_tile = 200,
-  hp_discount_unit_win = 2
+  hp_discount_unit_win = 2,
+  slowed_path = "units/medusasheet_congelada.png",
+  bleeding_path = "units/medusasheet_vermelho.png",
+  poisoned_path = "units/medusasheet_verde.png"
 }
 --[[
     Tanker
@@ -36,7 +42,10 @@ centauro = {
   gold_reward = 40,
   hp = 400,
   time_per_tile = 200,
-  hp_discount_unit_win = 4
+  hp_discount_unit_win = 4,
+  slowed_path = "units/centauro.png",
+  bleeding_path = "units/centauro.png",
+  poisoned_path = "units/centauro.png"
 }
 --[[
     Fly
@@ -49,5 +58,8 @@ bat = {
   gold_reward = 8,
   hp = 80,
   time_per_tile = 80,
-  hp_discount_unit_win = 2
+  hp_discount_unit_win = 2,
+  slowed_path = "units/bat.png",
+  bleeding_path = "units/bat.png",
+  poisoned_path = "units/bat.png"
 }
