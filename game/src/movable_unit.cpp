@@ -21,7 +21,8 @@ SoMTD::MovableUnit::MovableUnit(
         int unit_hp,
         int unit_reward,
         int unit_time,
-        int hp_discount_unit_win
+        int hp_discount_unit_win,
+        std::string newslowed_path
         ) :
     m_enemy(true),
     end_position(e_pos),
@@ -32,7 +33,8 @@ SoMTD::MovableUnit::MovableUnit(
     m_player(myp),
     m_state_style(entity_state_style),
     m_frame_per_state(frame_per_state),
-    m_total_states(total_states)
+    m_total_states(total_states),
+    m_slowed_path(newslowed_path)
 {
     m_status_list = new std::list<MovableUnit::Status>();
     m_time_per_tile = unit_time;
@@ -90,6 +92,7 @@ SoMTD::MovableUnit::update_self(unsigned now, unsigned last)
                         case SLOWED:
                             if (now > m_slow_penalization) {
                                 status = status_list()->erase(status);
+                                m_animation->update_texture(texture_name);
                             } else {
                                 status_coeff = (double)m_slow_coeff/1000.0;
                             }
@@ -203,7 +206,7 @@ SoMTD::MovableUnit::move(int new_x, int new_y, unsigned now)
 SoMTD::MovableUnit*
 SoMTD::MovableUnit::clone()
 {
-    return new MovableUnit(start_position, end_position, texture_name, m_labyrinth_path, m_player, m_state_style, m_frame_per_state, m_total_states, m_initial_hp, m_gold_award, m_time_per_tile, m_hp_discount_unit);
+    return new MovableUnit(start_position, end_position, texture_name, m_labyrinth_path, m_player, m_state_style, m_frame_per_state, m_total_states, m_initial_hp, m_gold_award, m_time_per_tile, m_hp_discount_unit, m_slowed_path);
 }
 
 bool
@@ -247,7 +250,7 @@ SoMTD::MovableUnit::suffer_slow(int slow_coeff, int time_penalization, unsigned 
     m_slow_coeff = slow_coeff;
     m_status_list->push_back(Status::SLOWED);
     m_slow_penalization = time_penalization + now;
-
+    m_animation->update_texture(m_slowed_path);
 }
 
 std::list<SoMTD::MovableUnit::Status>*
