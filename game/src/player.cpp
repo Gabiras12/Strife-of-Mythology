@@ -5,7 +5,7 @@ SoMTD::Player::Player() :
     m_x(0),
     state(0x0000)
 {
-    m_gold = 450;
+    m_gold = 100450;
     m_units_events = new std::list<int>();
     m_event_args = new std::list<int>();
     m_buy_tower_panel_opened = false;
@@ -90,4 +90,10 @@ std::bitset<12>
 SoMTD::Player::upgrade_state() const
 {
     return m_upgrade_state;
+}
+
+void
+SoMTD::Player::research(std::bitset<12> upgrade)
+{
+    m_upgrade_state |= upgrade;
 }

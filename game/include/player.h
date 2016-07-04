@@ -37,6 +37,7 @@ namespace SoMTD {
         unsigned tower_panel_id() const;
         int m_desired_tower_price;
         std::bitset<12> upgrade_state() const;
+        void research(std::bitset<12> upgrade);
 
     private:
         int m_gold;

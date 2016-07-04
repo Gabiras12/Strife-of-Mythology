@@ -77,10 +77,7 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
                 case 0x2003:
                     if (m_player->state == Player::PlayerState::OPENED_TOWER_PANEL) {
                         upgrade_state = (*m_infos)[1];
-                        std::cout << "aqui: " << upgrade_state << std::endl;
-                        std::cout << "player: " << m_player->upgrade_state() << std::endl;
-                        result1 = upgrade_state.to_ulong() & m_player->upgrade_state().to_ulong();
-                        std::cout << "result1: " << result1 << std::endl;
+                        result1 = (*m_infos)[1] & m_player->upgrade_state().to_ulong();
                         if ((m_player->gold() >= (*m_infos)[0]) and result1) {
                             m_player->state = Player::PlayerState::HOLDING_BUILD;
                             last_bit_button = (m_id & 0xF);
@@ -91,9 +88,24 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
                             desired_tower = last_bit_panel | last_bit_button;
                             m_player->update_desired_tower(desired_tower, (*m_infos)[0]);
                         } else {
-                            printf("not enough gold..\n");
+                            printf("not enough gold or not requirements meet..\n");
                         }
                     }
+                    break;
+
+                case 0x3000:
+                case 0x3001:
+                case 0x3002:
+                    last_bit_button = (m_id & 0xF);
+                    upgrade_state.reset();
+                    upgrade_state.set(1+last_bit_button);
+                    if (m_player->gold() >= (*m_infos)[0] && ((*m_infos)[1] & m_player->upgrade_state().to_ulong())) {
+                        m_player->research(upgrade_state);
+                        m_player->discount_gold((*m_infos)[0]);
+                    } else {
+                        printf("not enough gold or not met requirements..\n");
+                    }
+                    break;
 
                 default:
                     break;
