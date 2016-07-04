@@ -104,3 +104,10 @@ SoMTD::MenuLevel::finish()
 {
     m_done = true;
 }
+
+void
+SoMTD::MenuLevel::exit_game()
+{
+  m_next = "";
+  m_done = true;
+}

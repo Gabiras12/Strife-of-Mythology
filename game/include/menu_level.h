@@ -16,6 +16,7 @@ namespace SoMTD {
         MenuLevel(std::string current_map_name, std::string next_map_name, std::string p_audio);
         ~MenuLevel();
         void finish();
+        void exit_game();
 
     protected:
         void draw_self(ijengine::Canvas *c, unsigned, unsigned);

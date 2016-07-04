@@ -71,6 +71,10 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
                     return true;
                     break;
 
+                case 1002:
+                    m_menu_level->exit_game();
+                  break;
+
                 case 0x2000:
                 case 0x2001:
                 case 0x2002:
