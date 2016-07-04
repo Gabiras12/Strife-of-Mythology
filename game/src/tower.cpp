@@ -228,6 +228,14 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
             }
             break;
 
+        case 0x103:
+            if (m_cooldown < now) {
+                m_cooldown = now+attack_speed()*1000;
+                m_actual_state = State::ATTACKING;
+                newtarget->suffer(damage());
+                newtarget->suffer_bleed(damage(), 10000, now, last);
+            }
+
         default:
             m_cooldown = now+attack_speed()*1000;
             m_target = newtarget;

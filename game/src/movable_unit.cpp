@@ -22,7 +22,8 @@ SoMTD::MovableUnit::MovableUnit(
         int unit_reward,
         int unit_time,
         int hp_discount_unit_win,
-        std::string newslowed_path
+        std::string newslowed_path,
+        std::string newbleed_path
         ) :
     m_enemy(true),
     end_position(e_pos),
@@ -34,7 +35,8 @@ SoMTD::MovableUnit::MovableUnit(
     m_state_style(entity_state_style),
     m_frame_per_state(frame_per_state),
     m_total_states(total_states),
-    m_slowed_path(newslowed_path)
+    m_slowed_path(newslowed_path),
+    m_bleeding_path(newbleed_path)
 {
     m_status_list = new std::list<MovableUnit::Status>();
     m_time_per_tile = unit_time;
@@ -97,6 +99,18 @@ SoMTD::MovableUnit::update_self(unsigned now, unsigned last)
                                 status_coeff = (double)m_slow_coeff/1000.0;
                             }
                             break;
+
+                        case BLEEDING:
+                            if (now > m_bleed_penalization) {
+                                status = status_list()->erase(status);
+                                m_animation->update_texture(texture_name);
+                                printf("expirou..\n");
+                            } else {
+                                if (m_last_bleeding_tick+1000 < now) {
+                                    suffer(m_bleed_coeff);
+                                    m_last_bleeding_tick = now;
+                                }
+                            }
 
                         default:
                             break;
@@ -206,7 +220,7 @@ SoMTD::MovableUnit::move(int new_x, int new_y, unsigned now)
 SoMTD::MovableUnit*
 SoMTD::MovableUnit::clone()
 {
-    return new MovableUnit(start_position, end_position, texture_name, m_labyrinth_path, m_player, m_state_style, m_frame_per_state, m_total_states, m_initial_hp, m_gold_award, m_time_per_tile, m_hp_discount_unit, m_slowed_path);
+    return new MovableUnit(start_position, end_position, texture_name, m_labyrinth_path, m_player, m_state_style, m_frame_per_state, m_total_states, m_initial_hp, m_gold_award, m_time_per_tile, m_hp_discount_unit, m_slowed_path, m_bleeding_path);
 }
 
 bool
@@ -251,6 +265,16 @@ SoMTD::MovableUnit::suffer_slow(int slow_coeff, int time_penalization, unsigned 
     m_status_list->push_back(Status::SLOWED);
     m_slow_penalization = time_penalization + now;
     m_animation->update_texture(m_slowed_path);
+}
+
+void
+SoMTD::MovableUnit::suffer_bleed(double bleed_coeff, int time_penalization, unsigned now, unsigned)
+{
+    m_bleed_coeff = bleed_coeff;
+    m_status_list->push_back(Status::BLEEDING);
+    m_bleed_penalization = time_penalization + now;
+    m_animation->update_texture(m_bleeding_path);
+    m_last_bleeding_tick = now;
 }
 
 std::list<SoMTD::MovableUnit::Status>*
