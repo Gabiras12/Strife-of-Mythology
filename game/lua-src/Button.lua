@@ -1,6 +1,7 @@
 zeus_button = {
   file_path = "hero_button.png",
   mouseover_file_path = "hero_button_mouseover.png",
+   tower_file_path = "branco.png",
   screen_position = {
     x = 20,
     y = 600
@@ -13,6 +14,7 @@ zeus_button = {
 hades_button = {
   file_path = "hero_button.png",
   mouseover_file_path = "hero_button_mouseover.png",
+  tower_file_path = "branco.png",
   screen_position = {
     x = 20,
     y = 600
@@ -26,6 +28,7 @@ hades_button.screen_position.x = hades_button.screen_position.x + hades_button.w
 poseidon_button = {
   file_path = "hero_button.png",
   mouseover_file_path = "hero_button_mouseover.png",
+  tower_file_path = "branco.png",
   screen_position = {
     x = 20,
     y = 600
@@ -40,6 +43,7 @@ poseidon_button.screen_position.x = poseidon_button.screen_position.x + poseidon
 play_button = {
   file_path = "Play.png",
   mouseover_file_path = "Play.png",
+  tower_file_path = "branco.png",
   screen_position = {
     x = 943,
     y = 380
@@ -53,6 +57,7 @@ play_button = {
 credits_button = {
   file_path = "Credits.png",
   mouseover_file_path = "Credits.png",
+  tower_file_path = "branco.png",
   screen_position = {
     x = 910,
     y = 450
@@ -66,6 +71,7 @@ credits_button = {
 exit_button = {
   file_path = "exit.png",
   mouseover_file_path = "exit.png",
+  tower_file_path = "branco.png",
   screen_position = {
     x = 945,
     y = 535
@@ -78,9 +84,12 @@ exit_button = {
 
 -- towers buttons below
 -- info[0] = tower price, info[1] = tower prerequisites
-tower_1_button = {
+
+--Zeus
+tower_zeus_1_button = {
   file_path = "buy_tower.png",
   mouseover_file_path = "buy_tower_mouseover.png",
+  tower_file_path = "zeus_tower_button.png",
   screen_position = {
     x = 300,
     y = 550
@@ -93,9 +102,10 @@ tower_1_button = {
   requirements = 0x0001
 }
 
-tower_2_button = {
+tower_zeus_2_button = {
   file_path = "buy_tower.png",
   mouseover_file_path = "buy_tower_mouseover.png",
+  tower_file_path = "zeus_tower_button.png",
   screen_position = {
     x = 450,
     y = 550
@@ -108,9 +118,10 @@ tower_2_button = {
   requirements = 0x0002
 }
 
-tower_3_button = {
+tower_zeus_3_button = {
   file_path = "buy_tower.png",
   mouseover_file_path = "buy_tower_mouseover.png",
+  tower_file_path = "zeus_tower_button.png",
   screen_position = {
     x = 570,
     y = 550
@@ -123,9 +134,139 @@ tower_3_button = {
   requirements = 0x0004
 }
 
-tower_4_button = {
+tower_zeus_4_button = {
   file_path = "buy_tower.png",
   mouseover_file_path = "buy_tower_mouseover.png",
+  tower_file_path = "zeus_tower_button.png",
+  screen_position = {
+    x = 700,
+    y = 550
+  },
+  priority = 500230,
+  id = 0x2003,
+  width = 105,
+  height = 134,
+  tower_price = 500,
+  requirements = 0x0008
+}
+
+--Hades
+tower_hades_1_button = {
+  file_path = "buy_tower.png",
+  mouseover_file_path = "buy_tower_mouseover.png",
+  tower_file_path = "hades_tower_button.png",
+  screen_position = {
+    x = 300,
+    y = 550
+  },
+  priority = 500230,
+  id = 0x2000,
+  width = 105,
+  height = 134,
+  tower_price = 150,
+  requirements = 0x0001
+}
+
+tower_hades_2_button = {
+  file_path = "buy_tower.png",
+  mouseover_file_path = "buy_tower_mouseover.png",
+  tower_file_path = "hades_tower_button.png",
+  screen_position = {
+    x = 450,
+    y = 550
+  },
+  priority = 500230,
+  id = 0x2001,
+  width = 105,
+  height = 134,
+  tower_price = 200,
+  requirements = 0x0002
+}
+
+tower_hades_3_button = {
+  file_path = "buy_tower.png",
+  mouseover_file_path = "buy_tower_mouseover.png",
+  tower_file_path = "hades_tower_button.png",
+  screen_position = {
+    x = 570,
+    y = 550
+  },
+  priority = 500230,
+  id = 0x2002,
+  width = 105,
+  height = 134,
+  tower_price = 300,
+  requirements = 0x0004
+}
+
+tower_hades_4_button = {
+  file_path = "buy_tower.png",
+  mouseover_file_path = "buy_tower_mouseover.png",
+  tower_file_path = "hades_tower_button.png",
+  screen_position = {
+    x = 700,
+    y = 550
+  },
+  priority = 500230,
+  id = 0x2003,
+  width = 105,
+  height = 134,
+  tower_price = 500,
+  requirements = 0x0008
+}
+--Poseidon
+tower_poseidon_1_button = {
+  file_path = "buy_tower.png",
+  mouseover_file_path = "buy_tower_mouseover.png",
+  tower_file_path = "podeison_tower_button.png",
+  screen_position = {
+    x = 300,
+    y = 550
+  },
+  priority = 500230,
+  id = 0x2000,
+  width = 105,
+  height = 134,
+  tower_price = 150,
+  requirements = 0x0001
+}
+
+tower_poseidon_2_button = {
+  file_path = "buy_tower.png",
+  mouseover_file_path = "buy_tower_mouseover.png",
+  tower_file_path = "podeison_tower_button.png",
+  screen_position = {
+    x = 450,
+    y = 550
+  },
+  priority = 500230,
+  id = 0x2001,
+  width = 105,
+  height = 134,
+  tower_price = 200,
+  requirements = 0x0002
+}
+
+tower_poseidon_3_button = {
+  file_path = "buy_tower.png",
+  mouseover_file_path = "buy_tower_mouseover.png",
+  tower_file_path = "podeison_tower_button.png",
+  screen_position = {
+    x = 570,
+    y = 550
+  },
+  priority = 500230,
+  id = 0x2002,
+  width = 105,
+  height = 134,
+  tower_price = 300,
+  requirements = 0x0004
+}
+
+tower_poseidon_4_button = {
+  file_path = "buy_tower.png",
+  mouseover_file_path = "buy_tower_mouseover.png",
+  tower_file_path = "podeison_tower_button.png",
   screen_position = {
     x = 700,
     y = 550
@@ -142,6 +283,7 @@ tower_4_button = {
 tier_2_button = {
   file_path = "hero_button.png",
   mouseover_file_path = "hero_button_mouseover.png",
+  tower_file_path = "branco.png",
   screen_position = {
     x = 20,
     y = 500
@@ -157,6 +299,7 @@ tier_2_button = {
 tier_3_button = {
   file_path = "hero_button.png",
   mouseover_file_path = "hero_button_mouseover.png",
+  tower_file_path = "branco.png",
   screen_position = {
     x = 86,
     y = 500
@@ -172,6 +315,7 @@ tier_3_button = {
 tier_4_button = {
   file_path = "hero_button.png",
   mouseover_file_path = "hero_button_mouseover.png",
+  tower_file_path = "branco.png", 
   screen_position = {
     x = 152,
     y = 500

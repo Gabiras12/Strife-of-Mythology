@@ -75,7 +75,8 @@ SoMTD::MenuLevel::load_buttons()
     int button_id;
     int button_priority = 0;
     std::string button_mouseover_path;
-
+    std::string button_tower_file_path;
+    
     std::vector< std::string > button_names {
         "play_button", "exit_button", "credits_button"
     };
@@ -87,7 +88,9 @@ SoMTD::MenuLevel::load_buttons()
         button_id = button_list.get<int>((it + ".id").c_str());
         button_priority = button_list.get<int>((it + ".priority").c_str());
         button_mouseover_path = button_list.get<std::string>((it + ".mouseover_file_path").c_str());
-        SoMTD::Button *b = new SoMTD::Button(button_file_path, button_id, button_screen_position.first, button_screen_position.second, button_mouseover_path, m_player, button_priority, new std::vector<int>());
+        button_tower_file_path = button_list.get<std::string>((it + ".tower_file_path").c_str());
+       
+        SoMTD::Button *b = new SoMTD::Button(button_file_path, button_id, button_screen_position.first, button_screen_position.second, button_mouseover_path, button_tower_file_path, m_player, button_priority, new std::vector<int>());
         b->set_menu_level(this);
         add_child(b);
     }

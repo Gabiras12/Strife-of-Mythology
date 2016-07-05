@@ -10,12 +10,13 @@
 #include "button.h"
 #include <vector>
 
-SoMTD::Button::Button(std::string texture_name, unsigned id, int x, int y, std::string mtexture, Player *m, int myp, std::vector<int> *args) :
+SoMTD::Button::Button(std::string texture_name, unsigned id, int x, int y, std::string mtexture, std::string button_tower_texture, Player *m, int myp, std::vector<int> *args) :
     m_texture(ijengine::resources::get_texture(texture_name)),
     m_id(id),
     m_x(x),
     m_y(y),
     m_mouseover_texture(ijengine::resources::get_texture(mtexture)),
+    m_button_tower_texture(ijengine::resources::get_texture(button_tower_texture)),
     m_player(m)
 {
     set_priority(myp);
@@ -57,6 +58,7 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
             if (m_id < 0xF) {
                 m_player->state = SoMTD::Player::PlayerState::OPENED_TOWER_PANEL;
                 m_player->open_tower_panel(m_id);
+
                 return true;
             }
 
@@ -124,10 +126,13 @@ SoMTD::Button::draw_self(ijengine::Canvas *c, unsigned, unsigned)
 {
     if (m_id >= 0x2000 && m_id < 0x2100) {
         if (m_player->state == SoMTD::Player::PlayerState::OPENED_TOWER_PANEL) {
-            if (m_mouseover)
-                c->draw(m_mouseover_texture.get(), m_x, m_y);
-            else
+            if (m_mouseover) {
+                    c->draw(m_mouseover_texture.get(), m_x, m_y);
+            }
+            else{
                 c->draw(m_texture.get(), m_x, m_y);
+                c->draw(m_button_tower_texture.get(), m_x+30, m_y+15);
+            }
         }
     } else {
         if (m_mouseover) {
