@@ -68,11 +68,13 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
             switch (m_id) {
                 case 1000:
                     m_menu_level->finish();
+                    ijengine::audio::play_sound_effect("res/menu-button.ogg");
                     return true;
                     break;
 
                 case 1002:
                     m_menu_level->exit_game();
+                    ijengine::audio::play_sound_effect("res/menu-button.ogg");
                   break;
 
                 case 0x2000:
@@ -93,6 +95,7 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
                             m_player->update_desired_tower(desired_tower, (*m_infos)[0]);
                         } else {
                             printf("not enough gold or not requirements meet..\n");
+                            ijengine::audio::play_sound_effect("res/invalidaction.ogg");
                         }
                     }
                     break;
@@ -108,6 +111,7 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
                         m_player->discount_gold((*m_infos)[0]);
                     } else {
                         printf("not enough gold or not met requirements..\n");
+                        ijengine::audio::play_sound_effect("res/invalidaction.ogg");
                     }
                     break;
 

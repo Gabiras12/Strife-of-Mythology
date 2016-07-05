@@ -198,10 +198,15 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                         build_tower(m_player->desired_tower(), tile_position.first, tile_position.second);
                         m_player->discount_gold(m_player->m_desired_tower_price);
                         m_player->discount_hp(1);
+                    } else {
+                        ijengine::audio::play_sound_effect("res/invalidaction.ogg");
                     }
                 } else {
                     printf("You need moar gold! (%d)\n", m_player->gold());
+                    ijengine::audio::play_sound_effect("res/invalidaction.ogg");
                 }
+            } else {
+                ijengine::audio::play_sound_effect("res/invalidaction.ogg");
             }
             m_player->state = SoMTD::Player::PlayerState::IDLE;
             return true;
@@ -479,6 +484,7 @@ SoMTD::MapLevel::build_tower(unsigned tower_id, int x, int y)
     int tower_damage = towers_list.get<int>((affix + ".damage").c_str());
     int towerid = towers_list.get<int>((affix + ".id").c_str());
 
+    ijengine::audio::play_sound_effect("res/success.ogg");
     SoMTD::Tower *m_tower = new SoMTD::Tower(tower_path, towerid, x, y, selected_tower_path, m_player, (Animation::StateStyle)tower_state_style, frame_per_state, total_states, tower_attack_speed, tower_damage);
     m_tower->set_priority(50000+(5*x*y));
     add_child(m_tower);
