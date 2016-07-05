@@ -131,16 +131,19 @@ SoMTD::Button::draw_self(ijengine::Canvas *c, unsigned, unsigned)
         if (m_player->state == SoMTD::Player::PlayerState::OPENED_TOWER_PANEL) {
             if (m_mouseover) {
                     c->draw(m_mouseover_texture.get(), m_x, m_y);
+
             }
             else{
                 c->draw(m_texture.get(), m_x, m_y);
             }
-            switch (m_id) {
+            /*switch (m_id) {
                 printf("IIIIDTa aqui -- m_id %d\n", m_id);
                 case 2:
-                     c->draw(m_button_tower_texture.get(), m_x+30, m_y+15);
+                    
                      break;
             }
+            */
+            c->draw(m_button_tower_texture.get(), m_x+30, m_y+15);
         }
     } else {
         if (m_mouseover) {
