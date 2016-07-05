@@ -46,8 +46,6 @@ SoMTD::Tower::on_event(const ijengine::GameEvent& event)
         }
     }
 
-    std::pair<int, int> screen_pos = m_animation->screen_position();
-
     if (event.id() == SoMTD::MOUSEOVER) {
         double x_pos = event.get_property<double>("x");
         double y_pos = event.get_property<double>("y");
@@ -83,7 +81,6 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned a1, unsigned a2)
     m_animation->draw(canvas, a1, a2);
     if (m_mouseover) {
         std::pair<int, int> pos = m_animation->screen_position();
-        int half_w = m_animation->width()/2;
         int half_h = m_animation->height()/2;
         for (double theta=0.0; theta < 360; ++theta) {
             double myx = ( (m_range * cos(theta)) + pos.first + m_animation->width() );
@@ -170,12 +167,12 @@ SoMTD::Tower::actual_state() const
 }
 
 void
-SoMTD::Tower::handle_idle_state(unsigned now, unsigned last)
+SoMTD::Tower::handle_idle_state(unsigned, unsigned)
 {
 }
 
 void
-SoMTD::Tower::handle_attacking_state(unsigned now, unsigned last)
+SoMTD::Tower::handle_attacking_state(unsigned now, unsigned)
 {
     if (now > m_cooldown) {
         if (m_target) {

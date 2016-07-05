@@ -65,7 +65,7 @@ SoMTD::Wave::update_self(unsigned now, unsigned a2)
                 i++;
             }
         }
-        if (i == units()->size()) {
+        if (i == (int)units()->size()) {
             finish();
         }
         for (auto it=units()->begin(); it != units()->end(); ++it) {

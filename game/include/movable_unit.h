@@ -40,7 +40,6 @@ namespace SoMTD {
         double x() const;
         double y() const;
         bool done() const;
-        std::pair<int, int> start_position;
         Animation* animation() const;
         void suffer(int dmg);
         bool dead() const;
@@ -56,12 +55,10 @@ namespace SoMTD {
     private:
         unsigned m_next_frame = 0;
         void die();
-        std::string m_slowed_path;
-        std::string m_poisoned_path;
-        std::string m_bleeding_path;
         bool m_done = false;
         bool m_enemy;
         std::pair<int, int> end_position;
+        std::pair<int, int> start_position;
         std::pair<int, int> grid_position;
         std::shared_ptr<ijengine::Texture> m_texture;
         std::pair<int, int> desired_place;
@@ -76,9 +73,9 @@ namespace SoMTD {
         int m_actual_hp = 100;
         int m_hp_discount_unit_win;
         Animation *m_animation;
-        int m_total_states = 1;
-        int m_frame_per_state = 1;
         Animation::StateStyle m_state_style;
+        int m_frame_per_state = 1;
+        int m_total_states = 1;
         bool m_dead = false;
         int m_gold_award;
         int m_time_per_tile;
@@ -89,6 +86,9 @@ namespace SoMTD {
         double m_bleed_coeff;
         int m_bleed_penalization;
         unsigned m_last_bleeding_tick;
+        std::string m_slowed_path;
+        std::string m_poisoned_path;
+        std::string m_bleeding_path;
     };
 }
 

@@ -77,7 +77,7 @@ SoMTD::MovableUnit::y() const
 }
 
 void
-SoMTD::MovableUnit::update_self(unsigned now, unsigned last)
+SoMTD::MovableUnit::update_self(unsigned now, unsigned)
 {
     if (m_next_frame < now) {
         m_next_frame = now + (1000/m_animation->frame_per_state());
@@ -92,7 +92,7 @@ SoMTD::MovableUnit::update_self(unsigned now, unsigned last)
                 for (auto status=status_list()->begin(); status != status_list()->end(); ++status) {
                     switch ((int)(*status)) {
                         case SLOWED:
-                            if (now > m_slow_penalization) {
+                            if ((int)now > m_slow_penalization) {
                                 status = status_list()->erase(status);
                                 m_animation->update_texture(texture_name);
                             } else {
@@ -101,7 +101,7 @@ SoMTD::MovableUnit::update_self(unsigned now, unsigned last)
                             break;
 
                         case BLEEDING:
-                            if (now > m_bleed_penalization) {
+                            if ((int)now > m_bleed_penalization) {
                                 status = status_list()->erase(status);
                                 m_animation->update_texture(texture_name);
                                 printf("expirou..\n");
@@ -164,7 +164,6 @@ SoMTD::MovableUnit::draw_self(ijengine::Canvas *c, unsigned a1, unsigned a2)
 void
 SoMTD::MovableUnit::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
 {
-    int half_texture = m_texture->w()/2;
     ijengine::Rectangle rect(m_x+100/2, m_y-20, 100*hp_percentage()/200, 5);
     c->draw(rect);
 }
@@ -199,7 +198,7 @@ SoMTD::MovableUnit::active() const
 }
 
 void
-SoMTD::MovableUnit::move(int new_x, int new_y, unsigned now)
+SoMTD::MovableUnit::move(int new_x, int new_y, unsigned)
 {
     m_moving = true;
     const int tile_width = 100;

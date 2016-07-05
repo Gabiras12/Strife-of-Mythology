@@ -3,9 +3,9 @@
 
 SoMTD::Player::Player() :
     m_y(0),
-    m_x(0),
-    state(0x0000)
+    m_x(0)
 {
+    state = 0x0000;
     m_gold = 100450;
     m_units_events = new std::list<int>();
     m_event_args = new std::list<int>();

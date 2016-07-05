@@ -29,12 +29,12 @@ namespace SoMTD {
         void draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2);
 
     private:
-        unsigned m_id;
         unsigned m_started_at;
         bool m_done;
         std::vector<int> m_units_idx;
         void fetch_file(std::string);
         bool m_started;
+        unsigned m_id;
         std::list<MovableUnit*>::iterator m_current_unit_it;
         int m_current_unit_idx;
         bool m_spawning;

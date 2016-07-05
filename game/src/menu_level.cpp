@@ -7,7 +7,7 @@
 #include "button.h"
 #include "player.h"
 
-SoMTD::MenuLevel::MenuLevel(std::string _map_path, std::string _new_map_path, std::string p_audio) :
+SoMTD::MenuLevel::MenuLevel(std::string, std::string _new_map_path, std::string p_audio) :
     m_next(_new_map_path),
     m_audio(p_audio),
     m_done(false)
@@ -37,7 +37,7 @@ SoMTD::MenuLevel::draw_self_after(ijengine::Canvas*, unsigned, unsigned)
 
 
 bool
-SoMTD::MenuLevel::on_event(const ijengine::GameEvent& event)
+SoMTD::MenuLevel::on_event(const ijengine::GameEvent&)
 {
     return false;
 }

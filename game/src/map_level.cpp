@@ -166,7 +166,7 @@ SoMTD::MapLevel::update_self(unsigned now, unsigned last)
 }
 
 void
-SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned a1, unsigned a2)
+SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 {
     canvas->clear();
     canvas->draw(ijengine::resources::get_texture("background.png").get(), 0, 0);
@@ -370,7 +370,7 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2)
 }
 
 void
-SoMTD::MapLevel::draw_selected_panel(ijengine::Canvas *c, unsigned now, unsigned last)
+SoMTD::MapLevel::draw_selected_panel(ijengine::Canvas *c, unsigned, unsigned)
 {
     if (player()->selected_object) {
         auto font = ijengine::resources::get_font("Forelle.ttf", 30);
@@ -616,7 +616,7 @@ SoMTD::MapLevel::transition_to(MapLevel::State from, MapLevel::State to, unsigne
     m_actual_state = to;
     m_state_started_at = now;
     if (from == RESTING && to == PLAYING) {
-        if (m_current_wave >= m_waves.size()-1) {
+        if (m_current_wave >= (int)m_waves.size()-1) {
             transition_to(MapLevel::State::RESTING, MapLevel::State::WIN, now, last);
             ijengine::audio::play_sound_effect("res/victory.ogg");
         } else {
@@ -642,7 +642,7 @@ SoMTD::MapLevel::player() const
 }
 
 void
-SoMTD::MapLevel::handle_win_state(unsigned now, unsigned last)
+SoMTD::MapLevel::handle_win_state(unsigned now, unsigned)
 {
     if (m_state_started_at + 10000 < now) {
         m_done = true;
@@ -650,7 +650,7 @@ SoMTD::MapLevel::handle_win_state(unsigned now, unsigned last)
 }
 
 void
-SoMTD::MapLevel::handle_over_state(unsigned now, unsigned last)
+SoMTD::MapLevel::handle_over_state(unsigned now, unsigned)
 {
     if (m_state_started_at + 10000 < now) {
         m_done = true;

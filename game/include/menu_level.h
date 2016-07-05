@@ -30,8 +30,8 @@ namespace SoMTD {
 
     private:
         std::string m_next;
-        bool m_done;
         std::string m_audio="";
+        bool m_done;
         std::shared_ptr<ijengine::Texture> m_texture;
         void load_buttons();
         Player* m_player;
