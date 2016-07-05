@@ -153,12 +153,25 @@ SoMTD::Button::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
 {
     if (m_id >= 0x2000 && m_id < 0x2100 && m_player->state == SoMTD::Player::PlayerState::OPENED_TOWER_PANEL) {
         auto font = ijengine::resources::get_font("Inconsolata-Regular.ttf", 20);
+        std::string tower_name = "tower_";
         c->set_font(font);
         std::ostringstream convert;
         std::string expression;
         expression = "";
         convert << (*m_infos)[0];
         expression.append(convert.str());
+        convert.clear();
+        convert.str("");
+        int panel_id = m_player->tower_panel_id();
+        if (panel_id != 0)
+            panel_id = 8 << m_player->tower_panel_id();
+        panel_id |= (m_id & 0xF);
+        convert << panel_id;
+        tower_name.append(convert.str());
+        tower_name.append("_holding");
+        tower_name.append(".png");
         c->draw(expression, m_x+50, m_y+90);
+        c->draw(ijengine::resources::get_texture(tower_name).get(), m_x+15, m_y-10);
+        // printf("desenhando o %s\n", tower_name.c_str());
     }
 }

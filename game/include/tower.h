@@ -11,10 +11,9 @@
 #include "movable_unit.h"
 
 /* IDS FOR TOWERS:
- * from 0x1000 to 0x2000
- * 0x1000 = zeus tower
- * 0x1001 = hades tower
- * 0x1002 = poseidon tower
+ * 0x0000 = zeus tower
+ * 0x0010 = poseidon tower
+ * 0x0100 = hades tower
  */
 
 namespace SoMTD {

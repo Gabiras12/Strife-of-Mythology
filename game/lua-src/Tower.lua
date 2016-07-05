@@ -8,7 +8,7 @@ tower_0 = {
   selected_file_path = "tower_0.png",
   attack_speed = 2.0,
   damage = 95,
-  id = 0x1000
+  id = 0x0
 }
 
 tower_1 = {
@@ -20,7 +20,7 @@ tower_1 = {
   selected_file_path = "tower_0.png",
   attack_speed = 2.0,
   damage = 95,
-  id = 0x1000
+  id = 0x1
 }
 
 tower_2 = {
@@ -32,7 +32,7 @@ tower_2 = {
   selected_file_path = "tower_0.png",
   attack_speed = 2.0,
   damage = 95,
-  id = 0x1000
+  id = 0x2
 }
 
 tower_3 = {
@@ -44,7 +44,7 @@ tower_3 = {
   selected_file_path = "tower_0.png",
   attack_speed = 2.0,
   damage = 95,
-  id = 0x1000
+  id = 0x3
 }
 
 -- POSEIDON TOWERS
