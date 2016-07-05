@@ -91,7 +91,7 @@ tower_zeus_1_button = {
   mouseover_file_path = "buy_tower_mouseover.png",
   tower_file_path = "zeus_tower_button.png",
   screen_position = {
-    x = 300,
+    x = 315,
     y = 550
   },
   priority = 500230,
@@ -107,7 +107,7 @@ tower_zeus_2_button = {
   mouseover_file_path = "buy_tower_mouseover.png",
   tower_file_path = "zeus_tower_button.png",
   screen_position = {
-    x = 450,
+    x = 445,
     y = 550
   },
   priority = 500230,
@@ -123,7 +123,7 @@ tower_zeus_3_button = {
   mouseover_file_path = "buy_tower_mouseover.png",
   tower_file_path = "zeus_tower_button.png",
   screen_position = {
-    x = 570,
+    x = 574,
     y = 550
   },
   priority = 500230,
@@ -139,7 +139,7 @@ tower_zeus_4_button = {
   mouseover_file_path = "buy_tower_mouseover.png",
   tower_file_path = "zeus_tower_button.png",
   screen_position = {
-    x = 700,
+    x = 702,
     y = 550
   },
   priority = 500230,
@@ -156,7 +156,7 @@ tower_hades_1_button = {
   mouseover_file_path = "buy_tower_mouseover.png",
   tower_file_path = "hades_tower_button.png",
   screen_position = {
-    x = 300,
+    x = 315,
     y = 550
   },
   priority = 500230,
@@ -172,7 +172,7 @@ tower_hades_2_button = {
   mouseover_file_path = "buy_tower_mouseover.png",
   tower_file_path = "hades_tower_button.png",
   screen_position = {
-    x = 450,
+    x = 445,
     y = 550
   },
   priority = 500230,
@@ -188,7 +188,7 @@ tower_hades_3_button = {
   mouseover_file_path = "buy_tower_mouseover.png",
   tower_file_path = "hades_tower_button.png",
   screen_position = {
-    x = 570,
+    x = 574,
     y = 550
   },
   priority = 500230,
@@ -204,7 +204,7 @@ tower_hades_4_button = {
   mouseover_file_path = "buy_tower_mouseover.png",
   tower_file_path = "hades_tower_button.png",
   screen_position = {
-    x = 700,
+    x = 702,
     y = 550
   },
   priority = 500230,
@@ -220,7 +220,7 @@ tower_poseidon_1_button = {
   mouseover_file_path = "buy_tower_mouseover.png",
   tower_file_path = "podeison_tower_button.png",
   screen_position = {
-    x = 300,
+    x = 315,
     y = 550
   },
   priority = 500230,
@@ -236,7 +236,7 @@ tower_poseidon_2_button = {
   mouseover_file_path = "buy_tower_mouseover.png",
   tower_file_path = "podeison_tower_button.png",
   screen_position = {
-    x = 450,
+    x = 445,
     y = 550
   },
   priority = 500230,
@@ -252,7 +252,7 @@ tower_poseidon_3_button = {
   mouseover_file_path = "buy_tower_mouseover.png",
   tower_file_path = "podeison_tower_button.png",
   screen_position = {
-    x = 570,
+    x = 574,
     y = 550
   },
   priority = 500230,
@@ -268,7 +268,7 @@ tower_poseidon_4_button = {
   mouseover_file_path = "buy_tower_mouseover.png",
   tower_file_path = "podeison_tower_button.png",
   screen_position = {
-    x = 700,
+    x = 702,
     y = 550
   },
   priority = 500230,

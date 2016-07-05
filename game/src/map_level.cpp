@@ -259,8 +259,8 @@ SoMTD::MapLevel::load_buttons()
     
     std::vector< std::string > button_names {
         "zeus_button", "hades_button", "poseidon_button",
-        "tower_poseidon_1_button", "tower_poseidon_2_button", "tower_poseidon_3_button", "tower_poseidon_4_button",
         "tower_zeus_1_button", "tower_zeus_2_button", "tower_zeus_3_button", "tower_zeus_4_button",
+        "tower_poseidon_1_button", "tower_poseidon_2_button", "tower_poseidon_3_button", "tower_poseidon_4_button",
         "tower_hades_1_button", "tower_hades_2_button", "tower_hades_3_button", "tower_hades_4_button",
         "tier_2_button", "tier_3_button", "tier_4_button"
 

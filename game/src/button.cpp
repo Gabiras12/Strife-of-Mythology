@@ -55,7 +55,9 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
         double y_pos = event.get_property<double>("y");
 
         if (x_pos >= m_x && x_pos<m_x+m_texture->w() && y_pos>m_y && y_pos<m_y+m_texture->h()) {
+            //m_id 0 Zeus, m_id 1 poseidon, m_id 2 hades
             if (m_id < 0xF) {
+                printf("Ta aqui -- m_id %d\n", m_id);
                 m_player->state = SoMTD::Player::PlayerState::OPENED_TOWER_PANEL;
                 m_player->open_tower_panel(m_id);
 
@@ -82,6 +84,7 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
                 case 0x2002:
                 case 0x2003:
                     if (m_player->state == Player::PlayerState::OPENED_TOWER_PANEL) {
+                        printf("Ta criando\n");
                         upgrade_state = (*m_infos)[1];
                         result1 = (*m_infos)[1] & m_player->upgrade_state().to_ulong();
                         if ((m_player->gold() >= (*m_infos)[0]) and result1) {
@@ -131,7 +134,12 @@ SoMTD::Button::draw_self(ijengine::Canvas *c, unsigned, unsigned)
             }
             else{
                 c->draw(m_texture.get(), m_x, m_y);
-                c->draw(m_button_tower_texture.get(), m_x+30, m_y+15);
+            }
+            switch (m_id) {
+                printf("IIIIDTa aqui -- m_id %d\n", m_id);
+                case 2:
+                     c->draw(m_button_tower_texture.get(), m_x+30, m_y+15);
+                     break;
             }
         }
     } else {
