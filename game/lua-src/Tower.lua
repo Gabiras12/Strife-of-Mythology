@@ -1,11 +1,11 @@
 -- ZEUS TOWERS
 tower_0 = {
   name = "Zeus",
-  file_path = "tower_0.png",
+  file_path = "towers/tower_0.png",
   state_style = 1,
   total_states = 1,
   frame_per_state = 4,
-  selected_file_path = "tower_0.png",
+  selected_file_path = "towers/tower_0.png",
   attack_speed = 2.0,
   damage = 95,
   id = 0x1000
@@ -13,48 +13,48 @@ tower_0 = {
 
 tower_1 = {
   name = "Zeus",
-  file_path = "tower_0.png",
+  file_path = "towers/tower_1.png",
   state_style = 1,
   total_states = 1,
-  frame_per_state = 4,
-  selected_file_path = "tower_0.png",
+  frame_per_state = 1,
+  selected_file_path = "towers/tower_1.png",
   attack_speed = 2.0,
   damage = 95,
-  id = 0x1000
+  id = 0x1001
 }
 
 tower_2 = {
   name = "Zeus",
-  file_path = "tower_0.png",
+  file_path = "towers/tower_2.png",
   state_style = 1,
   total_states = 1,
   frame_per_state = 4,
-  selected_file_path = "tower_0.png",
+  selected_file_path = "towers/tower_2.png",
   attack_speed = 2.0,
   damage = 95,
-  id = 0x1000
+  id = 0x1002
 }
 
 tower_3 = {
   name = "Zeus",
-  file_path = "tower_0.png",
+  file_path = "towers/tower_3.png",
   state_style = 1,
   total_states = 1,
-  frame_per_state = 4,
-  selected_file_path = "tower_0.png",
+  frame_per_state = 1,
+  selected_file_path = "towers/tower_3.png",
   attack_speed = 2.0,
   damage = 95,
-  id = 0x1000
+  id = 0x1003
 }
 
 -- POSEIDON TOWERS
 tower_16 = {
   name = "Poseidon",
-  file_path = "tower_16.png",
+  file_path = "towers/tower_16.png",
   state_style = 1,
   total_states = 1,
   frame_per_state = 1,
-  selected_file_path = "tower_16_holding.png",
+  selected_file_path = "towers/tower_16.png",
   attack_speed = 1.0,
   damage = 5,
   id = 0x10
@@ -62,11 +62,11 @@ tower_16 = {
 
 tower_17 = {
   name = "Poseidon",
-  file_path = "tower_16.png",
+  file_path = "towers/tower_17.png",
   state_style = 1,
   total_states = 1,
   frame_per_state = 1,
-  selected_file_path = "tower_16_holding.png",
+  selected_file_path = "towers/tower_17.png",
   attack_speed = 1.0,
   damage = 5,
   id = 0x11
@@ -74,11 +74,11 @@ tower_17 = {
 
 tower_18 = {
   name = "Poseidon",
-  file_path = "tower_16.png",
+  file_path = "towers/tower_18.png",
   state_style = 1,
   total_states = 1,
   frame_per_state = 1,
-  selected_file_path = "tower_16_holding.png",
+  selected_file_path = "towers/tower_18.png",
   attack_speed = 1.0,
   damage = 5,
   id = 0x12
@@ -86,11 +86,11 @@ tower_18 = {
 
 tower_19 = {
   name = "Poseidon",
-  file_path = "tower_16.png",
+  file_path = "towers/tower_19.png",
   state_style = 1,
   total_states = 1,
   frame_per_state = 1,
-  selected_file_path = "tower_16_holding.png",
+  selected_file_path = "towers/tower_19.png",
   attack_speed = 1.0,
   damage = 5,
   id = 0x13
@@ -99,11 +99,11 @@ tower_19 = {
 -- HADES TOWERS
 tower_32 = {
   name = "Hades",
-  file_path = "tower_32.png",
+  file_path = "towers/tower_32.png",
   state_style = 1,
   total_states = 1,
-  frame_per_state = 4,
-  selected_file_path = "tower_32.png",
+  frame_per_state = 1,
+  selected_file_path = "towers/tower_32.png",
   attack_speed = 0.1,
   damage = 5,
   id = 0x100
@@ -111,11 +111,11 @@ tower_32 = {
 
 tower_33 = {
   name = "Hades",
-  file_path = "tower_32.png",
+  file_path = "towers/tower_33.png",
   state_style = 1,
   total_states = 1,
-  frame_per_state = 4,
-  selected_file_path = "tower_32.png",
+  frame_per_state = 1,
+  selected_file_path = "towers/tower_33.png",
   attack_speed = 0.1,
   damage = 5,
   id = 0x101
@@ -123,11 +123,11 @@ tower_33 = {
 
 tower_34 = {
   name = "Hades",
-  file_path = "tower_32.png",
+  file_path = "towers/tower_34.png",
   state_style = 1,
   total_states = 1,
-  frame_per_state = 4,
-  selected_file_path = "tower_32.png",
+  frame_per_state = 1,
+  selected_file_path = "towers/tower_34.png",
   attack_speed = 0.1,
   damage = 5,
   id = 0x102
@@ -135,11 +135,11 @@ tower_34 = {
 
 tower_35 = {
   name = "Hades",
-  file_path = "tower_32.png",
+  file_path = "towers/tower_35.png",
   state_style = 1,
   total_states = 1,
-  frame_per_state = 4,
-  selected_file_path = "tower_32.png",
+  frame_per_state = 1,
+  selected_file_path = "towers/tower_35.png",
   attack_speed = 1,
   damage = 10,
   id = 0x103

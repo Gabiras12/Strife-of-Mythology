@@ -274,7 +274,9 @@ SoMTD::MapLevel::load_buttons()
         button_priority = button_list.get<int>((it + ".priority").c_str());
         button_mouseover_path = button_list.get<std::string>((it + ".mouseover_file_path").c_str());
         button_tower_file_path = button_list.get<std::string>((it + ".tower_file_path").c_str());
+        
         std::vector<int> *infos = new std::vector<int>();
+        
         switch (button_id) {
             case 0x2000:
             case 0x2001:
@@ -327,7 +329,7 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2)
     current_wave()->draw_self_after(c, a1, a2);
 
     if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
-        std::string tower_name = "tower_";
+        std::string tower_name = "towers/tower_";
         tower_name.append( std::to_string(m_player->desired_tower()) );
         tower_name.append("_holding.png");
         auto mytext = ijengine::resources::get_texture(tower_name);
