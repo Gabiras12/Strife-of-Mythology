@@ -1,4 +1,5 @@
 #include "player.h"
+#include <ijengine/engine.h>
 
 SoMTD::Player::Player() :
     m_y(0),
@@ -53,6 +54,7 @@ void
 SoMTD::Player::discount_gold(int value)
 {
 	m_gold -= value;
+    ijengine::audio::play_sound_effect("res/gold.ogg");
 }
 
 void
