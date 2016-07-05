@@ -128,6 +128,12 @@ SoMTD::MapLevel::actual_state() const
 void
 SoMTD::MapLevel::update_self(unsigned now, unsigned last)
 {
+    if (m_player->hp() <= 0 && actual_state() != SoMTD::MapLevel::State::OVER) {
+        transition_to(actual_state(), SoMTD::MapLevel::State::OVER, now, last);
+        ijengine::audio::play_sound_effect("res/lose.ogg");
+        m_next = "mainmenu";
+    }
+
     switch (actual_state()) {
         case IDLE:
             handle_idle_state(now, last);
@@ -139,6 +145,14 @@ SoMTD::MapLevel::update_self(unsigned now, unsigned last)
 
         case PLAYING:
             handle_playing_state(now, last);
+        break;
+
+        case OVER:
+            handle_over_state(now, last);
+        break;
+
+        case WIN:
+            handle_win_state(now, last);
         break;
 
         default:
@@ -197,7 +211,6 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                         m_labyrinth->m_grid[tile_position.second][tile_position.first] = 88;
                         build_tower(m_player->desired_tower(), tile_position.first, tile_position.second);
                         m_player->discount_gold(m_player->m_desired_tower_price);
-                        m_player->discount_hp(1);
                     } else {
                         ijengine::audio::play_sound_effect("res/invalidaction.ogg");
                     }
@@ -352,6 +365,8 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2)
     if(m_actual_state == RESTING || m_actual_state == IDLE){
         c->draw(set_time_to_start_wave(a1), 700/2, 0);
     }
+    if (m_actual_state == OVER)
+        c->draw(ijengine::resources::get_texture("Game_Over.png").get(), 0, 0);
 }
 
 void
@@ -602,7 +617,8 @@ SoMTD::MapLevel::transition_to(MapLevel::State from, MapLevel::State to, unsigne
     m_state_started_at = now;
     if (from == RESTING && to == PLAYING) {
         if (m_current_wave >= m_waves.size()-1) {
-            m_done = true;
+            transition_to(MapLevel::State::RESTING, MapLevel::State::WIN, now, last);
+            ijengine::audio::play_sound_effect("res/victory.ogg");
         } else {
             m_current_wave++;
         }
@@ -623,4 +639,20 @@ SoMTD::Player*
 SoMTD::MapLevel::player() const
 {
     return m_player;
+}
+
+void
+SoMTD::MapLevel::handle_win_state(unsigned now, unsigned last)
+{
+    if (m_state_started_at + 10000 < now) {
+        m_done = true;
+    }
+}
+
+void
+SoMTD::MapLevel::handle_over_state(unsigned now, unsigned last)
+{
+    if (m_state_started_at + 10000 < now) {
+        m_done = true;
+    }
 }

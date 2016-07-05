@@ -27,7 +27,8 @@ namespace SoMTD {
             IDLE = 0x00,
             RESTING = 0x01,
             PLAYING = 0x02,
-            OVER = 0x03
+            OVER = 0x03,
+            WIN = 0x04
         };
 
         MapLevel(const string& actual_map = "", const string& next_map = "", const string& audio_path = "");
@@ -81,6 +82,8 @@ namespace SoMTD {
         void transition_to(MapLevel::State from, MapLevel::State to, unsigned now, unsigned last);
         void handle_playing_state(unsigned now, unsigned last);
         void handle_resting_state(unsigned now, unsigned last);
+        void handle_over_state(unsigned now, unsigned last);
+        void handle_win_state(unsigned now, unsigned last);
         void draw_selected_panel(ijengine::Canvas *c, unsigned now, unsigned last);
         std::string set_time_to_start_wave(unsigned now);
         std::list<SoMTD::Tower*> *m_towers;
