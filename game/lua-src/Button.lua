@@ -82,7 +82,7 @@ tower_1_button = {
   file_path = "buy_tower.png",
   mouseover_file_path = "buy_tower_mouseover.png",
   screen_position = {
-    x = 300,
+    x = 315,
     y = 550
   },
   priority = 500230,
@@ -97,7 +97,7 @@ tower_2_button = {
   file_path = "buy_tower.png",
   mouseover_file_path = "buy_tower_mouseover.png",
   screen_position = {
-    x = 450,
+    x = 445,
     y = 550
   },
   priority = 500230,
@@ -112,7 +112,7 @@ tower_3_button = {
   file_path = "buy_tower.png",
   mouseover_file_path = "buy_tower_mouseover.png",
   screen_position = {
-    x = 570,
+    x = 574,
     y = 550
   },
   priority = 500230,
@@ -127,7 +127,7 @@ tower_4_button = {
   file_path = "buy_tower.png",
   mouseover_file_path = "buy_tower_mouseover.png",
   screen_position = {
-    x = 700,
+    x = 702,
     y = 550
   },
   priority = 500230,

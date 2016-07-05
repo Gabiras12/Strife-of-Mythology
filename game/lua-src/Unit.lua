@@ -2,7 +2,7 @@
     Normal
 --]]
 cyclop = {
-  file_path = "units/ciclopsheet.png",
+  file_path = "units/ciclope/ciclopsheet.png",
   state_style = 2,
   total_states = 2,
   frame_per_state = 12,
@@ -10,16 +10,16 @@ cyclop = {
   hp = 100,
   time_per_tile = 200,
   hp_discount_unit_win = 1,
-  slowed_path = "units/ciclopsheet_congelado.png",
-  bleeding_path = "units/ciclopsheet_vermelho.png",
-  poisoned_path = "units/ciclopsheet_verde.png"
+  slowed_path = "units/ciclope/ciclopsheet_congelado.png",
+  bleeding_path = "units/ciclope/ciclopsheet_vermelho.png",
+  poisoned_path = "units/ciclope/ciclopsheet_verde.png"
 }
 
 --[[
     Speed
 --]]
 medusa = {
-  file_path = "units/medusasheet.png",
+  file_path = "units/medusa/medusasheet.png",
   state_style = 2,
   total_states = 2,
   frame_per_state = 12,
@@ -27,31 +27,31 @@ medusa = {
   hp = 150,
   time_per_tile = 200,
   hp_discount_unit_win = 2,
-  slowed_path = "units/medusasheet_congelada.png",
-  bleeding_path = "units/medusasheet_vermelho.png",
-  poisoned_path = "units/medusasheet_verde.png"
+  slowed_path = "units/medusa/medusasheet_congelada.png",
+  bleeding_path = "units/medusa/medusasheet_vermelho.png",
+  poisoned_path = "units/medusa/medusasheet_verde.png"
 }
 --[[
     Tanker
 --]]
 centauro = {
-  file_path = "units/centauro.png",
-  state_style = 1,
-  total_states = 1,
-  frame_per_state = 1,
+  file_path = "units/centauro/centaurosheet.png",
+  state_style = 2,
+  total_states = 2,
+  frame_per_state = 14,
   gold_reward = 40,
   hp = 400,
   time_per_tile = 200,
   hp_discount_unit_win = 4,
-  slowed_path = "units/centauro.png",
-  bleeding_path = "units/centauro.png",
-  poisoned_path = "units/centauro.png"
+  slowed_path = "units/centauro/centaurosheet_congelado.png",
+  bleeding_path = "units/centauro/centaurosheet_vermelho.png",
+  poisoned_path = "units/centauro/centaurosheet_verde.png"
 }
 --[[
     Fly
 --]]
 bat = {
-  file_path = "units/bat.png",
+  file_path = "units/harpia/bat.png",
   state_style = 1,
   total_states = 1,
   frame_per_state = 1,
@@ -59,7 +59,7 @@ bat = {
   hp = 80,
   time_per_tile = 80,
   hp_discount_unit_win = 2,
-  slowed_path = "units/bat.png",
-  bleeding_path = "units/bat.png",
-  poisoned_path = "units/bat.png"
+  slowed_path = "units/harpia/bat.png",
+  bleeding_path = "units/harpia/bat.png",
+  poisoned_path = "units/harpia/bat.png"
 }
