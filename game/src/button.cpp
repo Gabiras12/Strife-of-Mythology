@@ -72,6 +72,12 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
                     return true;
                     break;
 
+                case 1001:
+                    m_menu_level->update_next_level("menucredits");
+                    m_menu_level->finish();
+                    return true;
+                    break;
+
                 case 1002:
                     m_menu_level->exit_game();
                     ijengine::audio::play_sound_effect("res/sound_efects/menu-button.ogg");

@@ -7,13 +7,18 @@
 #include "button.h"
 #include "player.h"
 
-SoMTD::MenuLevel::MenuLevel(std::string, std::string _new_map_path, std::string p_audio) :
+SoMTD::MenuLevel::MenuLevel(std::string mapname, std::string _new_map_path, std::string p_audio) :
     m_next(_new_map_path),
     m_audio(p_audio),
     m_done(false)
 {
+    m_level_name = mapname;
     m_player = new SoMTD::Player();
-    m_texture = ijengine::resources::get_texture("Menu.png");
+    if (mapname == "mainmenu")
+        m_texture = ijengine::resources::get_texture("Menu.png");
+    else if (mapname == "menucredits")
+        m_texture = ijengine::resources::get_texture("telacreditos.png");
+
     ijengine::event::register_listener(this);
     load_buttons();
 }
@@ -31,8 +36,15 @@ SoMTD::MenuLevel::draw_self(ijengine::Canvas *c, unsigned, unsigned)
 }
 
 void
-SoMTD::MenuLevel::draw_self_after(ijengine::Canvas*, unsigned, unsigned)
+SoMTD::MenuLevel::draw_self_after(ijengine::Canvas* canvas, unsigned, unsigned)
 {
+    if (m_level_name == "menucredits") {
+        auto font = ijengine::resources::get_font("Forelle.ttf", 40);
+        canvas->set_font(font);
+        canvas->draw(std::string("Desenvolvimento: Dylan, Jonnatas, Marcelo e Victor\n"), m_x+70, m_y+10);
+        canvas->draw(std::string("Arte: Gabriel Andrade e Vitor Bichara\n"), m_x+70, m_y+80);
+        canvas->draw(std::string("Música: Raul Marques\n"), m_x+70, m_y+140);
+    }
 }
 
 
@@ -110,4 +122,10 @@ SoMTD::MenuLevel::exit_game()
 {
   m_next = "";
   m_done = true;
+}
+
+void
+SoMTD::MenuLevel::update_next_level(std::string next_map)
+{
+    m_next = next_map;
 }

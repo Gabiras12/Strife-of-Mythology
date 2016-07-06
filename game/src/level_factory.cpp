@@ -9,13 +9,17 @@ ijengine::Level *
 SoMTD::LevelFactory::make_level(const string& level_id)
 {
     if (level_id == "mainmenu")
-        return new SoMTD::MenuLevel("mainmenu", "map003", "res/sound_efects/somtd-menu.ogg");
-    else if (level_id == "map003")
-        return new SoMTD::MapLevel("map002", "map001");
+        return new SoMTD::MenuLevel("mainmenu", "map001", "res/sound_efects/somtd-menu.ogg");
+    else if (level_id == "map001")
+        return new SoMTD::MapLevel("map002", "map001", "res/gameplay.ogg");
     else if (level_id == "map002")
-        return new SoMTD::MapLevel("map003", "map002");
+        return new SoMTD::MapLevel("map003", "map002", "res/gameplay.ogg");
     else if (level_id == "map003")
-        return new SoMTD::MapLevel("mainmenu", "map003");
+        return new SoMTD::MapLevel("mainmenu", "map003", "res/gameplay.ogg");
+    else if (level_id == "menuoptions")
+        return new SoMTD::MenuLevel("menuoptions", "mainmenu", "res/sound_efects/somtd-menu.ogg");
+    else if (level_id == "menucredits")
+        return new SoMTD::MenuLevel("menucredits", "map001", "res/credits.ogg");
 
     return nullptr;
 }
