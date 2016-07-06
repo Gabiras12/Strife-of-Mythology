@@ -51,15 +51,15 @@ centauro = {
     Fly
 --]]
 bat = {
-  file_path = "units/harpia/bat.png",
-  state_style = 1,
-  total_states = 1,
-  frame_per_state = 1,
+  file_path = "units/harpia/harpiasheet.png",
+  state_style = 2,
+  total_states = 2,
+  frame_per_state = 16,
   gold_reward = 8,
   hp = 80,
   time_per_tile = 80,
   hp_discount_unit_win = 2,
-  slowed_path = "units/harpia/bat.png",
-  bleeding_path = "units/harpia/bat.png",
-  poisoned_path = "units/harpia/bat.png"
+  slowed_path = "units/harpia/harpiasheet_congelado.png",
+  bleeding_path = "units/harpia/harpiasheet_vermelho.png",
+  poisoned_path = "units/harpia/harpiasheet_verde.png"
 }
