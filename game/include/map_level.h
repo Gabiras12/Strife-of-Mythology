@@ -49,7 +49,6 @@ namespace SoMTD {
         Player *player() const;
 
     protected:
-        void draw_help_text(ijengine::Canvas *c);
         void update_self(unsigned now, unsigned last);
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);
         void draw_self_after(ijengine::Canvas *, unsigned, unsigned);
