@@ -77,10 +77,10 @@ SoMTD::MapLevel::load_tiles()
             expression = "Tiles/tile_";
             std::ostringstream convert;
             convert << m_labyrinth->m_grid[line][column];
-            if (m_labyrinth->m_grid[line][column] == 0x0 || m_labyrinth->m_grid[line][column] == 0xA) {
+            if (m_labyrinth->m_grid[line][column] == 0x0 || m_labyrinth->m_grid[line][column] == 0xA || m_labyrinth->m_grid[line][column] == 0x14) {
                 origin.first = column;
                 origin.second = line;
-            } else if (m_labyrinth->m_grid[line][column] == 0x9 || m_labyrinth->m_grid[line][column] == 0x13) {
+            } else if (m_labyrinth->m_grid[line][column] == 0x9 || m_labyrinth->m_grid[line][column] == 0x13 || m_labyrinth->m_grid[line][column] == 0x1D) {
                 destiny.first = column;
                 destiny.second = line;
             }
@@ -183,7 +183,8 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
             if (tile_position.first >= 0 && tile_position.second >= 0 && tile_position.first < 10 && tile_position.second < 10) {
                 if (m_player->gold() >= m_player->m_desired_tower_price) {
                     if (m_labyrinth->m_grid[tile_position.second][tile_position.first] == 0x7 ||
-                            m_labyrinth->m_grid[tile_position.second][tile_position.first] == 0x11) {
+                            m_labyrinth->m_grid[tile_position.second][tile_position.first] == 0x11 ||
+                            m_labyrinth->m_grid[tile_position.second][tile_position.first] == 0x1B) {
                         m_labyrinth->m_grid[tile_position.second][tile_position.first] = 88;
                         build_tower(m_player->desired_tower(), tile_position.first, tile_position.second);
                         m_player->discount_gold(m_player->m_desired_tower_price);

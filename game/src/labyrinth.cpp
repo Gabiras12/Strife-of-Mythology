@@ -83,7 +83,7 @@ SoMTD::Labyrinth::solve()
         std::vector< std::pair<int, int> > myv { std::make_pair(pos.first+1, pos.second), std::make_pair(pos.first-1, pos.second), std::make_pair(pos.first, pos.second+1), std::make_pair(pos.first, pos.second-1) };
         for (auto adj : myv) {
             if (adj.first >= 0 && adj.second >= 0 && adj.first < m_columns && adj.second < m_lines) {
-                if (m_grid[adj.second][adj.first] != 0 && m_grid[adj.second][adj.first] != 10 && m_grid[adj.second][adj.first] != 0x7 && m_grid[adj.second][adj.first] != 0x11) {
+                if (m_grid[adj.second][adj.first] != 0 && m_grid[adj.second][adj.first] != 10 && m_grid[adj.second][adj.first] != 0x7 && m_grid[adj.second][adj.first] != 0x11 && m_grid[adj.second][adj.first] != 20 && m_grid[adj.second][adj.first] != 27) {
                     if (visited[adj.second][adj.first] == 0) {
                         visited[adj.second][adj.first] = 1;
                         father[adj.second][adj.first] = pos;
