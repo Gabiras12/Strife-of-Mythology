@@ -244,6 +244,7 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
         case 0x102:
             if (m_cooldown < now) {
                 m_cooldown = now+attack_speed()*1000;
+                m_target = newtarget;
                 m_actual_state = State::ATTACKING;
                 newtarget->suffer(damage());
                 newtarget->suffer_poison(damage()*5, 10000, now, last);

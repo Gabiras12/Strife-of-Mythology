@@ -45,6 +45,17 @@ SoMTD::Panel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 }
 
 void
+SoMTD::Panel::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
+{
+          auto font = ijengine::resources::get_font("Inconsolata-Regular.ttf", 15);
+          c->set_font(font);
+          c->draw("1000", 40 , 573);
+          c->draw("3000", 110 , 573);
+          c->draw("10000", 180 , 573);
+}
+
+
+void
 SoMTD::Panel::update_self(unsigned, unsigned)
 {
 }

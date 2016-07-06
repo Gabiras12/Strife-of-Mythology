@@ -16,7 +16,7 @@ namespace SoMTD {
         ~Panel();
 
         void draw_self(ijengine::Canvas *canvas, unsigned now, unsigned last);
-        void draw_self_after(ijengine::Canvas *, unsigned, unsigned) { }
+        void draw_self_after(ijengine::Canvas *, unsigned, unsigned);
         bool on_event(const ijengine::GameEvent& event);
         void update_self(unsigned, unsigned);
 

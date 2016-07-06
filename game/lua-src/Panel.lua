@@ -92,3 +92,33 @@ towerbox_panel = {
   width = 766,
   height = 136
 }
+
+coins_tier_panel_1 = {
+  file_path = "button/buy_tier.png",
+  screen_position = {
+    x = 11,
+    y = 565
+  },
+  priority = 500220,
+  id = 0x20,
+}
+
+coins_tier_panel_2 = {
+  file_path = "button/buy_tier.png",
+  screen_position = {
+    x = 82,
+    y = 565
+  },
+  priority = 500220,
+  id = 0xFFF7,
+}
+
+coins_tier_panel_3 = {
+  file_path = "button/buy_tier.png",
+  screen_position = {
+    x = 154,
+    y = 565
+  },
+  priority = 500220,
+  id = 0xFFF8,
+}
