@@ -19,7 +19,7 @@ tower_1 = {
   frame_per_state = 1,
   selected_file_path = "tower_1.png",
   attack_speed = 2.0,
-  damage = 100,
+  damage = 40,
   id = 0x1
 }
 

@@ -94,6 +94,8 @@ namespace SoMTD {
         std::string m_slowed_path;
         std::string m_bleeding_path;
         std::string m_poisoned_path;
+        double m_bleed_x;
+        double m_bleed_y;
     };
 }
 

@@ -4,6 +4,7 @@
 #include "animation.h"
 #include <list>
 #include <algorithm>
+#include <cmath>
 
 #include <ijengine/canvas.h>
 #include <ijengine/engine.h>
@@ -89,6 +90,7 @@ SoMTD::MovableUnit::update_self(unsigned now, unsigned)
     if (m_active) {
         m_animation->update_screen_position(std::make_pair(m_x, m_y));
         double status_coeff = 1;
+        double dmg_coeff = 0;
         if (m_moving) {
             if (not status_list()->empty()) {
                 for (auto status=status_list()->begin(); status != status_list()->end(); ++status) {
@@ -108,7 +110,8 @@ SoMTD::MovableUnit::update_self(unsigned now, unsigned)
                                 m_animation->update_texture(texture_name);
                             } else {
                                 if (m_last_bleeding_tick+1000 < now) {
-                                    suffer(m_bleed_coeff);
+                                    dmg_coeff = (abs((m_bleed_x - m_x)) + abs((m_bleed_y - m_y)))*0.05;
+                                    suffer(dmg_coeff);
                                     m_last_bleeding_tick = now;
                                 }
                             }
@@ -287,6 +290,8 @@ SoMTD::MovableUnit::suffer_bleed(double bleed_coeff, int time_penalization, unsi
     m_bleed_penalization = time_penalization + now;
     m_animation->update_texture(m_bleeding_path);
     m_last_bleeding_tick = now;
+    m_bleed_x = m_x;
+    m_bleed_y = m_y;
 }
 
 void

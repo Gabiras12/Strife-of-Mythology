@@ -29,6 +29,7 @@ namespace SoMTD {
 
         void discount_gold(int);
         void update_gold(int new_gold_count);
+        void increase_gold(int new_gold_count);
         void discount_hp(int);
         void update_desired_tower(int towerid, int towerprice);
         std::list<int> *units_events() const;

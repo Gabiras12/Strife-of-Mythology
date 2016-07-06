@@ -183,6 +183,8 @@ SoMTD::Tower::handle_attacking_state(unsigned now, unsigned)
                 if (distance < range()+target()->animation()->width()/2) {
                     m_target->suffer(damage());
                     m_cooldown = now+1000*attack_speed();
+                    if (m_id == 0x001)
+                        m_player->increase_gold(damage());
                 } else {
                     m_actual_state = SoMTD::Tower::IDLE;
                     m_target = nullptr;
@@ -232,6 +234,17 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
                 newtarget->suffer(damage());
                 newtarget->suffer_bleed(damage(), 10000, now, last);
             }
+            break;
+
+        case 0x1:
+            if (m_cooldown < now) {
+                m_cooldown = now+attack_speed()*1000;
+                m_target = newtarget;
+                newtarget->suffer(damage());
+                m_actual_state = State::ATTACKING;
+                m_player->increase_gold(damage());
+            }
+            break;
 
         case 0x102:
             if (m_cooldown < now) {
@@ -240,6 +253,7 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
                 newtarget->suffer(damage());
                 newtarget->suffer_poison(damage()*5, 10000, now, last);
             }
+            break;
 
         default:
             m_cooldown = now+attack_speed()*1000;
