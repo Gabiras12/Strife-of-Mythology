@@ -172,6 +172,5 @@ SoMTD::Button::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
         tower_name.append(".png");
         c->draw(expression, m_x+50, m_y+90);
         c->draw(ijengine::resources::get_texture(tower_name).get(), m_x+15, m_y-10);
-        // printf("desenhando o %s\n", tower_name.c_str());
     }
 }

@@ -128,7 +128,7 @@ tower_34 = {
   total_states = 1,
   frame_per_state = 1,
   selected_file_path = "tower_34.png",
-  attack_speed = 0.1,
+  attack_speed = 1,
   damage = 5,
   id = 0x102
 }

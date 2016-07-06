@@ -78,18 +78,15 @@ SoMTD::MapLevel::load_tiles()
             std::ostringstream convert;
             convert << m_labyrinth->m_grid[line][column];
             if (m_labyrinth->m_grid[line][column] == 0x0 || m_labyrinth->m_grid[line][column] == 0xA) {
-                printf("origin: %d %d\n", column, line);
                 origin.first = column;
                 origin.second = line;
             } else if (m_labyrinth->m_grid[line][column] == 0x9 || m_labyrinth->m_grid[line][column] == 0x13) {
-                printf("destination : %d %d\n", column, line);
                 destiny.first = column;
                 destiny.second = line;
             }
             expression.append(convert.str());
             expression.append(".png");
             _id = m_labyrinth->m_grid[line][column];
-            std::cout << "path: " << expression.c_str() << std::endl;
             add_child(new SoMTD::LevelArea(expression, _id, column, line, 0));
         }
     }
@@ -419,6 +416,7 @@ SoMTD::MapLevel::load_spawners()
     int unit_hp_discount_unit_win;
     std::string unit_slowedpath;
     std::string unit_bleedpath;
+    std::string unit_poisonpath;
 
     for (std::string it : unit_names) {
         unit_path = units_list.get<std::string>((it + ".file_path").c_str());
@@ -431,8 +429,9 @@ SoMTD::MapLevel::load_spawners()
         unit_hp_discount_unit_win = units_list.get<int>((it + ".hp_discount_unit_win").c_str());
         unit_slowedpath = units_list.get<std::string>((it + ".slowed_path").c_str());
         unit_bleedpath = units_list.get<std::string>((it + ".bleeding_path").c_str());
+        unit_poisonpath = units_list.get<std::string>((it + ".poisoned_path").c_str());
 
-        myunit = new SoMTD::MovableUnit(origin, destiny, unit_path, m_labyrinth->solution, m_player, (Animation::StateStyle)unit_statestyle, unit_frame_per_state, unit_total_states, unit_hp, unit_gold_reward, unit_time_per_tile, unit_hp_discount_unit_win, unit_slowedpath, unit_bleedpath);
+        myunit = new SoMTD::MovableUnit(origin, destiny, unit_path, m_labyrinth->solution, m_player, (Animation::StateStyle)unit_statestyle, unit_frame_per_state, unit_total_states, unit_hp, unit_gold_reward, unit_time_per_tile, unit_hp_discount_unit_win, unit_slowedpath, unit_bleedpath, unit_poisonpath);
         spawner = new SoMTD::Spawner<MovableUnit>(myunit);
         spawners.push_back(spawner);
     }
