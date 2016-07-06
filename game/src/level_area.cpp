@@ -38,8 +38,21 @@ SoMTD::LevelArea::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
     int myh = m_texture->h();
 
     std::pair<int, int> p = SoMTD::tools::grid_to_isometric(m_x, m_y, myw, myh, 1024/2, 11);
-
     canvas->draw(m_texture.get(), p.first, p.second);
+}
+
+void
+SoMTD::LevelArea::draw_self_after(ijengine::Canvas *canvas, unsigned, unsigned)
+{
+    int myw = m_texture->w();
+    int myh = m_texture->h();
+    if ((m_id % 10) == 0) {
+        std::pair<int, int> p = SoMTD::tools::grid_to_isometric(m_x, m_y, myw, myh, 1024/2, 11);
+        canvas->draw(ijengine::resources::get_texture("start.png").get(), p.first+(80-myw/2), p.second+81/2-myh);
+    } else if ((m_id == 9 || m_id == 19 || m_id == 29)) {
+        std::pair<int, int> p = SoMTD::tools::grid_to_isometric(m_x, m_y, myw, myh, 1024/2, 11);
+        canvas->draw(ijengine::resources::get_texture("destination.png").get(), p.first+(80-myw/2), p.second+81/2-myh);
+    }
 }
 
 void

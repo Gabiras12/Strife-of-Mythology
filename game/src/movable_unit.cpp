@@ -127,6 +127,7 @@ SoMTD::MovableUnit::update_self(unsigned now, unsigned)
                                     m_last_poison_tick = now;
                                 }
                             }
+                            break;
 
                         default:
                             break;
