@@ -167,27 +167,6 @@ SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 {
     canvas->clear();
     canvas->draw(ijengine::resources::get_texture("background.png").get(), 0, 0);
-    draw_help_text(canvas);
-}
-
-void
-SoMTD::MapLevel::draw_help_text(ijengine::Canvas *canvas)
-{
-    std::shared_ptr< ijengine::Texture > help_text;
-    if (m_player->state == SoMTD::Player::PlayerState::IDLE) {
-        help_text = ijengine::resources::get_texture("press_b.png");
-    } else if (m_player->state == SoMTD::Player::PlayerState::HOLDING_BUILD) {
-        help_text = ijengine::resources::get_texture("click_to_build.png");
-    } else if (m_player->state == SoMTD::Player::PlayerState::INVALID_BUILD) {
-        help_text = ijengine::resources::get_texture("invalid_location.png");
-    } else if (m_player->state == SoMTD::Player::PlayerState::NOT_ENOUGH_GOLD) {
-        help_text = ijengine::resources::get_texture("not_enough_gold.png");
-    } else {
-        help_text = ijengine::resources::get_texture("click_to_build.png");
-    }
-    const int window_width = 1024;
-    const int y_position = 160;
-    canvas->draw(help_text.get(), window_width - help_text->w(), y_position);
 }
 
 bool
