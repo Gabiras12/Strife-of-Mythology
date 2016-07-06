@@ -138,10 +138,10 @@ tower_4_button = {
   requirements = 0x0008
 }
 
--- tier buttons below 
+-- tier buttons below
 tier_2_button = {
-  file_path = "button/hero_button.png",
-  mouseover_file_path = "button/hero_button_mouseover.png",
+  file_path = "button/tier2.png",
+  mouseover_file_path = "button/tier2_mouseover.png",
   screen_position = {
     x = 20,
     y = 500
@@ -155,8 +155,8 @@ tier_2_button = {
 }
 
 tier_3_button = {
-  file_path = "button/hero_button.png",
-  mouseover_file_path = "button/hero_button_mouseover.png",
+  file_path = "button/tier3.png",
+  mouseover_file_path = "button/tier3_mouseover.png",
   screen_position = {
     x = 86,
     y = 500
@@ -170,8 +170,8 @@ tier_3_button = {
 }
 
 tier_4_button = {
-  file_path = "button/hero_button.png",
-  mouseover_file_path = "button/hero_button_mouseover.png",
+  file_path = "button/tier4.png",
+  mouseover_file_path = "button/tier4_mouseover.png",
   screen_position = {
     x = 152,
     y = 500
