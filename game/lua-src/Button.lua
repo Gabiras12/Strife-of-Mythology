@@ -38,8 +38,8 @@ poseidon_button = {
 poseidon_button.screen_position.x = poseidon_button.screen_position.x + poseidon_button.width*2
 
 play_button = {
-  file_path = "Play.png",
-  mouseover_file_path = "Play.png",
+  file_path = "button/play_black.png",
+  mouseover_file_path = "button/play_white.png",
   screen_position = {
     x = 943,
     y = 380
@@ -51,8 +51,8 @@ play_button = {
 }
 
 credits_button = {
-  file_path = "Credits.png",
-  mouseover_file_path = "Credits.png",
+  file_path = "button/credits_black.png",
+  mouseover_file_path = "button/credits_white.png",
   screen_position = {
     x = 910,
     y = 450
@@ -64,8 +64,8 @@ credits_button = {
 }
 
 exit_button = {
-  file_path = "exit.png",
-  mouseover_file_path = "exit.png",
+  file_path = "button/exit_black.png",
+  mouseover_file_path = "button/exit_white.png",
   screen_position = {
     x = 945,
     y = 535
