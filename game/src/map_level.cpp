@@ -361,10 +361,10 @@ SoMTD::MapLevel::draw_selected_panel(ijengine::Canvas *c, unsigned, unsigned)
         convert << t->damage();
         expression.append(convert.str());
         c->draw(expression, 950, 600);
-        expression = "Range: ";
+        expression = "Attack speed: ";
         convert.str("");
         convert.clear();
-        convert << t->range();
+        convert << t->attack_speed();
         expression.append(convert.str());
         c->draw(expression, 950, 500);
         expression = "Level: ";
