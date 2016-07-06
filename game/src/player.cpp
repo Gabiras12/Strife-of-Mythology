@@ -54,7 +54,7 @@ void
 SoMTD::Player::discount_gold(int value)
 {
 	m_gold -= value;
-    ijengine::audio::play_sound_effect("res/gold.ogg");
+    ijengine::audio::play_sound_effect("res/sound_efects/gold.ogg");
 }
 
 void

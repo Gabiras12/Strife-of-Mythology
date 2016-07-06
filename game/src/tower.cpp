@@ -22,7 +22,7 @@ SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::st
     m_attack_speed = newattackspeed;
     m_damage = newdamage;
     m_level = 1;
-    m_range = 110.0;
+    m_range = 85.0;
     m_texture = ijengine::resources::get_texture(texture_name);
     m_animation = new Animation(x, y, texture_name, statestyle, frame_per_state, total_states);
     ijengine::event::register_listener(this);
@@ -83,7 +83,7 @@ SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned a1, unsigned a2)
         std::pair<int, int> pos = m_animation->screen_position();
         int half_h = m_animation->height()/2;
         for (double theta=0.0; theta < 360; ++theta) {
-            double myx = ( (m_range * cos(theta)) + pos.first + m_animation->width() );
+            double myx = ( (m_range * cos(theta)) + pos.first + m_animation->width()-15);
             double myy = ( m_range * sin(theta) + pos.second + half_h/2);
             ijengine::Point myp(myx, myy);
             canvas->draw(myp);

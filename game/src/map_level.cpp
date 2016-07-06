@@ -74,7 +74,7 @@ SoMTD::MapLevel::load_tiles()
         int column_count = m_labyrinth->m_grid[line].size();
         for (auto column = 0; column < column_count; ++column) {
             string expression;
-            expression = "tile_";
+            expression = "Tiles/tile_";
             std::ostringstream convert;
             convert << m_labyrinth->m_grid[line][column];
             if (m_labyrinth->m_grid[line][column] == 0x0 || m_labyrinth->m_grid[line][column] == 0xA) {
@@ -127,7 +127,7 @@ SoMTD::MapLevel::update_self(unsigned now, unsigned last)
 {
     if (m_player->hp() <= 0 && actual_state() != SoMTD::MapLevel::State::OVER) {
         transition_to(actual_state(), SoMTD::MapLevel::State::OVER, now, last);
-        ijengine::audio::play_sound_effect("res/lose.ogg");
+        ijengine::audio::play_sound_effect("res/sound_efects/lose.ogg");
         m_next = "mainmenu";
     }
 
@@ -209,14 +209,14 @@ SoMTD::MapLevel::on_event(const ijengine::GameEvent& event)
                         build_tower(m_player->desired_tower(), tile_position.first, tile_position.second);
                         m_player->discount_gold(m_player->m_desired_tower_price);
                     } else {
-                        ijengine::audio::play_sound_effect("res/invalidaction.ogg");
+                        ijengine::audio::play_sound_effect("res/sound_efects/invalidaction.ogg");
                     }
                 } else {
                     printf("You need moar gold! (%d)\n", m_player->gold());
-                    ijengine::audio::play_sound_effect("res/invalidaction.ogg");
+                    ijengine::audio::play_sound_effect("res/sound_efects/invalidaction.ogg");
                 }
             } else {
-                ijengine::audio::play_sound_effect("res/invalidaction.ogg");
+                ijengine::audio::play_sound_effect("res/sound_efects/invalidaction.ogg");
             }
             m_player->state = SoMTD::Player::PlayerState::IDLE;
             return true;
@@ -498,7 +498,7 @@ SoMTD::MapLevel::build_tower(unsigned tower_id, int x, int y)
     int tower_damage = towers_list.get<int>((affix + ".damage").c_str());
     int towerid = towers_list.get<int>((affix + ".id").c_str());
 
-    ijengine::audio::play_sound_effect("res/success.ogg");
+    ijengine::audio::play_sound_effect("res/sound_efects/success.ogg");
     SoMTD::Tower *m_tower = new SoMTD::Tower(tower_path, towerid, x, y, selected_tower_path, m_player, (Animation::StateStyle)tower_state_style, frame_per_state, total_states, tower_attack_speed, tower_damage);
     m_tower->set_priority(50000+(5*x*y));
     add_child(m_tower);
@@ -617,7 +617,7 @@ SoMTD::MapLevel::transition_to(MapLevel::State from, MapLevel::State to, unsigne
     if (from == RESTING && to == PLAYING) {
         if (m_current_wave >= (int)m_waves.size()-1) {
             transition_to(MapLevel::State::RESTING, MapLevel::State::WIN, now, last);
-            ijengine::audio::play_sound_effect("res/victory.ogg");
+            ijengine::audio::play_sound_effect("res/sound_efects/victory.ogg");
         } else {
             m_current_wave++;
         }

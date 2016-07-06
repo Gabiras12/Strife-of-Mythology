@@ -1,6 +1,6 @@
 zeus_button = {
-  file_path = "hero_button.png",
-  mouseover_file_path = "hero_button_mouseover.png",
+  file_path = "button/hero_button.png",
+  mouseover_file_path = "button/hero_button_mouseover.png",
   screen_position = {
     x = 20,
     y = 600
@@ -11,8 +11,8 @@ zeus_button = {
   height = 65
 }
 hades_button = {
-  file_path = "hero_button.png",
-  mouseover_file_path = "hero_button_mouseover.png",
+  file_path = "button/hero_button.png",
+  mouseover_file_path = "button/hero_button_mouseover.png",
   screen_position = {
     x = 20,
     y = 600
@@ -24,8 +24,8 @@ hades_button = {
 }
 hades_button.screen_position.x = hades_button.screen_position.x + hades_button.width
 poseidon_button = {
-  file_path = "hero_button.png",
-  mouseover_file_path = "hero_button_mouseover.png",
+  file_path = "button/hero_button.png",
+  mouseover_file_path = "button/hero_button_mouseover.png",
   screen_position = {
     x = 20,
     y = 600
@@ -79,8 +79,8 @@ exit_button = {
 -- towers buttons below
 -- info[0] = tower price, info[1] = tower prerequisites
 tower_1_button = {
-  file_path = "buy_tower.png",
-  mouseover_file_path = "buy_tower_mouseover.png",
+  file_path = "button/buy_tower.png",
+  mouseover_file_path = "button/buy_tower_mouseover.png",
   screen_position = {
     x = 315,
     y = 550
@@ -94,8 +94,8 @@ tower_1_button = {
 }
 
 tower_2_button = {
-  file_path = "buy_tower.png",
-  mouseover_file_path = "buy_tower_mouseover.png",
+  file_path = "button/buy_tower.png",
+  mouseover_file_path = "button/buy_tower_mouseover.png",
   screen_position = {
     x = 445,
     y = 550
@@ -109,8 +109,8 @@ tower_2_button = {
 }
 
 tower_3_button = {
-  file_path = "buy_tower.png",
-  mouseover_file_path = "buy_tower_mouseover.png",
+  file_path = "button/buy_tower.png",
+  mouseover_file_path = "button/buy_tower_mouseover.png",
   screen_position = {
     x = 574,
     y = 550
@@ -124,8 +124,8 @@ tower_3_button = {
 }
 
 tower_4_button = {
-  file_path = "buy_tower.png",
-  mouseover_file_path = "buy_tower_mouseover.png",
+  file_path = "button/buy_tower.png",
+  mouseover_file_path = "button/buy_tower_mouseover.png",
   screen_position = {
     x = 702,
     y = 550
@@ -140,8 +140,8 @@ tower_4_button = {
 
 -- tier buttons below 
 tier_2_button = {
-  file_path = "hero_button.png",
-  mouseover_file_path = "hero_button_mouseover.png",
+  file_path = "button/hero_button.png",
+  mouseover_file_path = "button/hero_button_mouseover.png",
   screen_position = {
     x = 20,
     y = 500
@@ -155,8 +155,8 @@ tier_2_button = {
 }
 
 tier_3_button = {
-  file_path = "hero_button.png",
-  mouseover_file_path = "hero_button_mouseover.png",
+  file_path = "button/hero_button.png",
+  mouseover_file_path = "button/hero_button_mouseover.png",
   screen_position = {
     x = 86,
     y = 500
@@ -170,8 +170,8 @@ tier_3_button = {
 }
 
 tier_4_button = {
-  file_path = "hero_button.png",
-  mouseover_file_path = "hero_button_mouseover.png",
+  file_path = "button/hero_button.png",
+  mouseover_file_path = "button/hero_button_mouseover.png",
   screen_position = {
     x = 152,
     y = 500
