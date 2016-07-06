@@ -9,7 +9,7 @@ ijengine::Level *
 SoMTD::LevelFactory::make_level(const string& level_id)
 {
     if (level_id == "mainmenu")
-        return new SoMTD::MenuLevel("mainmenu", "map003", "res/reaper.wav");
+        return new SoMTD::MenuLevel("mainmenu", "map003", "res/sound_efects/somtd-menu.ogg");
     else if (level_id == "map003")
         return new SoMTD::MapLevel("map002", "map001");
     else if (level_id == "map002")

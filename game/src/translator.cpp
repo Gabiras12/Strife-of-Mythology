@@ -77,11 +77,6 @@ SoMTD::Translator::translate(ijengine::GameEvent& to, const ijengine::KeyboardEv
             id = 777;
             break;
 
-        case ijengine::KeyboardEvent::U:
-            if (from.state() == ijengine::KeyboardEvent::State::PRESSED)
-                id = SoMTD::UPGRADE_TOWER;
-            break;
-
         case ijengine::KeyboardEvent::S:
             id = SoMTD::SPAWN_UNIT;
             break;
