@@ -60,7 +60,7 @@ SoMTD::Animation::draw(ijengine::Canvas *c, unsigned, unsigned)
         rect.set_position((m_actual_frame*m_width)+(m_width*m_frame_per_state*m_actual_state), 0);
 
     m_texture = ijengine::resources::get_texture(m_file_path);
-    if (m_file_path == "cyclop.png") {
+    if (m_file_path == "towers/missiles/bullet_skull.png") {
         // printf("desenhando..\n");
         // std::cout << "position: " << m_screen_position.first << ", " << m_screen_position.second << std::endl;
         c->draw(m_texture.get(), m_tile.first, m_tile.second);

@@ -192,7 +192,7 @@ SoMTD::Tower::handle_attacking_state(unsigned now, unsigned)
                 double dy = animation()->screen_position().second - target()->animation()->screen_position().second;
                 double distance = sqrt(dx*dx + dy*dy);
                 if (distance < range()+target()->animation()->width()/2) {
-                    Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "cyclop.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+                    Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "towers/missiles/bullet_skull.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
                     m_projectiles->push_back(p);
                     m_cooldown = now+1000*attack_speed();
                     if (m_id == 0x001)
@@ -243,8 +243,10 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
             if (m_cooldown < now) {
                 m_cooldown = now+attack_speed()*1000;
                 m_target = newtarget;
+                                printf("attack agora\n");
+
                 m_actual_state = State::ATTACKING;
-                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "cyclop.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "towers/missiles/bullet_skull.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
                 m_projectiles->push_back(p);
                 newtarget->suffer_bleed(damage(), 10000, now, last);
             }
@@ -254,7 +256,8 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
             if (m_cooldown < now) {
                 m_cooldown = now+attack_speed()*1000;
                 m_target = newtarget;
-                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "cyclop.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+                printf("attack agora\n");
+                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "towers/missiles/bullet_skull.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
                 m_projectiles->push_back(p);
                 m_actual_state = State::ATTACKING;
                 m_player->increase_gold(damage());
@@ -266,7 +269,8 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
                 m_cooldown = now+attack_speed()*1000;
                 m_target = newtarget;
                 m_actual_state = State::ATTACKING;
-                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "cyclop.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+                printf("attack agora\n");
+                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "towers/missiles/bullet_skull.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
                 m_projectiles->push_back(p);
                 newtarget->suffer_poison(damage()*5, 10000, now, last);
             }
@@ -275,7 +279,8 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
         default:
             m_cooldown = now+attack_speed()*1000;
             m_target = newtarget;
-            Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "cyclop.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+            printf("attack agora\n");
+            Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "towers/missiles/bullet_skull.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
             m_projectiles->push_back(p);
             m_actual_state = State::ATTACKING;
             break;
