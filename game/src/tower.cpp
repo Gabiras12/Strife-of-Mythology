@@ -192,7 +192,7 @@ SoMTD::Tower::handle_attacking_state(unsigned now, unsigned)
                 double dy = animation()->screen_position().second - target()->animation()->screen_position().second;
                 double distance = sqrt(dx*dx + dy*dy);
                 if (distance < range()+target()->animation()->width()/2) {
-                    Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "cyclop.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+                    Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_caveira.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
                     m_projectiles->push_back(p);
                     m_cooldown = now+1000*attack_speed();
                     if (m_id == 0x001)
@@ -216,6 +216,7 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
 {
     // If it is a poseidon tower, it can have multiple targets
     switch (id()) {
+        // poseidon towers
         case 0x10:
         case 0x11:
         case 0x12:
@@ -239,43 +240,49 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
             }
             break;
 
-        case 0x103:
-            if (m_cooldown < now) {
-                m_cooldown = now+attack_speed()*1000;
-                m_target = newtarget;
-                m_actual_state = State::ATTACKING;
-                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "cyclop.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
-                m_projectiles->push_back(p);
-                newtarget->suffer_bleed(damage(), 10000, now, last);
-            }
-            break;
-
+        //zeus towers
+        case 0x0:
         case 0x1:
+        case 0x2:
+        case 0x3:
             if (m_cooldown < now) {
                 m_cooldown = now+attack_speed()*1000;
                 m_target = newtarget;
-                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "cyclop.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_zeus2.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
                 m_projectiles->push_back(p);
                 m_actual_state = State::ATTACKING;
                 m_player->increase_gold(damage());
             }
             break;
 
-        case 0x102:
+         //hades towers
+
+         case 0x102:
+             if (m_cooldown < now) {
+                 m_cooldown = now+attack_speed()*1000;
+                 m_target = newtarget;
+                 m_actual_state = State::ATTACKING;
+                 Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_caveira.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+                 m_projectiles->push_back(p);
+                 newtarget->suffer_poison(damage()*5, 10000, now, last);
+             }
+             break;
+
+        case 0x103:
             if (m_cooldown < now) {
                 m_cooldown = now+attack_speed()*1000;
                 m_target = newtarget;
                 m_actual_state = State::ATTACKING;
-                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "cyclop.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_caveira.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
                 m_projectiles->push_back(p);
-                newtarget->suffer_poison(damage()*5, 10000, now, last);
+                newtarget->suffer_bleed(damage(), 10000, now, last);
             }
             break;
 
         default:
             m_cooldown = now+attack_speed()*1000;
             m_target = newtarget;
-            Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "cyclop.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+            Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_caveira.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
             m_projectiles->push_back(p);
             m_actual_state = State::ATTACKING;
             break;
