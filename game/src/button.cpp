@@ -10,7 +10,7 @@
 #include "button.h"
 #include <vector>
 
-SoMTD::Button::Button(std::string texture_name, unsigned id, int x, int y, std::string mtexture, Player *m, int myp, std::vector<int> *args) :
+SoMTD::Button::Button(std::string texture_name, unsigned id, int x, int y, std::string mtexture, Player *m, int myp, std::vector<int> *args, std::string newdescription) :
     m_texture(ijengine::resources::get_texture(texture_name)),
     m_id(id),
     m_x(x),
@@ -18,6 +18,7 @@ SoMTD::Button::Button(std::string texture_name, unsigned id, int x, int y, std::
     m_mouseover_texture(ijengine::resources::get_texture(mtexture)),
     m_player(m)
 {
+    m_description = newdescription;
     set_priority(myp);
     m_mouseover = false;
     m_menu_level = nullptr;
@@ -178,5 +179,9 @@ SoMTD::Button::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
         tower_name.append(".png");
         c->draw(expression, m_x+50, m_y+90);
         c->draw(ijengine::resources::get_texture(tower_name).get(), m_x+15, m_y-10);
+        if (m_mouseover) {
+            c->draw(ijengine::resources::get_texture("upgrade_panel.png").get(), m_x, m_y-300);
+            c->draw(m_description, m_x+15, m_y-290);
+        }
     }
 }

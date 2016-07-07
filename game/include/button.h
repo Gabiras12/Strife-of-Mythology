@@ -14,7 +14,7 @@
 namespace SoMTD {
     class Button : public ijengine::GameObject, public ijengine::GameEventsListener {
     public:
-        Button(std::string texture_name, unsigned id, int x, int y, std::string mouseover_texture, Player *m, int myp, std::vector<int> *args);
+        Button(std::string texture_name, unsigned id, int x, int y, std::string mouseover_texture, Player *m, int myp, std::vector<int> *args, std::string newdescription);
         ~Button();
         void set_menu_level(SoMTD::MenuLevel *ml);
 
@@ -38,6 +38,7 @@ namespace SoMTD {
         int m_priority;
         SoMTD::MenuLevel *m_menu_level;
         std::vector<int> *m_infos;
+        std::string m_description;
     };
 }
 

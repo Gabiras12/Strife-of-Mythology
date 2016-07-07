@@ -251,6 +251,7 @@ SoMTD::MapLevel::load_buttons()
     int button_id;
     int button_priority = 0;
     std::string button_mouseover_path;
+    std::string tower_description;
 
     std::vector< std::string > button_names {
         "zeus_button", "hades_button", "poseidon_button",
@@ -267,6 +268,7 @@ SoMTD::MapLevel::load_buttons()
         button_priority = button_list.get<int>((it + ".priority").c_str());
         button_mouseover_path = button_list.get<std::string>((it + ".mouseover_file_path").c_str());
         std::vector<int> *infos = new std::vector<int>();
+        tower_description = button_list.get<std::string>((it + ".description").c_str());
         switch (button_id) {
             case 0x2000:
             case 0x2001:
@@ -287,7 +289,7 @@ SoMTD::MapLevel::load_buttons()
                 break;
         }
 
-        SoMTD::Button *b = new SoMTD::Button(button_file_path, button_id, button_screen_position.first, button_screen_position.second, button_mouseover_path, m_player, button_priority, infos);
+        SoMTD::Button *b = new SoMTD::Button(button_file_path, button_id, button_screen_position.first, button_screen_position.second, button_mouseover_path, m_player, button_priority, infos, tower_description);
         add_child(b);
     }
 }

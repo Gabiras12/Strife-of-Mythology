@@ -8,7 +8,8 @@ zeus_button = {
   priority = 50000,
   id = 0x0,
   width = 66,
-  height = 65
+  height = 65,
+  description = ""
 }
 hades_button = {
   file_path = "button/hero_button.png",
@@ -20,7 +21,8 @@ hades_button = {
   priority = 50000,
   id = 0x1,
   width = 66,
-  height = 65
+  height = 65,
+  description = ""
 }
 hades_button.screen_position.x = hades_button.screen_position.x + hades_button.width
 poseidon_button = {
@@ -33,7 +35,8 @@ poseidon_button = {
   priority = 50000,
   id = 0x2,
   width = 66,
-  height = 65
+  height = 65,
+  description = ""
 }
 poseidon_button.screen_position.x = poseidon_button.screen_position.x + poseidon_button.width*2
 
@@ -47,7 +50,8 @@ play_button = {
   priority = 50000,
   id = 1000,
   width = 81,
-  height = 35
+  height = 35,
+  description = ""
 }
 
 credits_button = {
@@ -60,7 +64,8 @@ credits_button = {
   priority = 50000,
   id = 1001,
   width = 66,
-  height = 65
+  height = 65,
+  description = ""
 }
 
 exit_button = {
@@ -73,7 +78,8 @@ exit_button = {
   priority = 50000,
   id = 1002,
   width = 66,
-  height = 65
+  height = 65,
+  description = ""
 }
 
 -- towers buttons below
@@ -90,7 +96,8 @@ tower_1_button = {
   width = 105,
   height = 134,
   tower_price = 150,
-  requirements = 0x0001
+  requirements = 0x0001,
+  description = "TORRE EXCELRENTEc"
 }
 
 tower_2_button = {
@@ -105,7 +112,8 @@ tower_2_button = {
   width = 105,
   height = 134,
   tower_price = 200,
-  requirements = 0x0002
+  requirements = 0x0002,
+  description = "TORRE MT BOA"
 }
 
 tower_3_button = {
@@ -120,7 +128,8 @@ tower_3_button = {
   width = 105,
   height = 134,
   tower_price = 300,
-  requirements = 0x0004
+  requirements = 0x0004,
+  description = "TORRE BOA 3"
 }
 
 tower_4_button = {
@@ -135,7 +144,8 @@ tower_4_button = {
   width = 105,
   height = 134,
   tower_price = 500,
-  requirements = 0x0008
+  requirements = 0x0008,
+  description = "TORRE BOA"
 }
 
 -- tier buttons below
@@ -151,7 +161,8 @@ tier_2_button = {
   width = 66,
   height = 134,
   requirements = 0x0001,
-  upgrade_price = 1000
+  upgrade_price = 1000,
+  description = ""
 }
 
 tier_3_button = {
@@ -166,7 +177,8 @@ tier_3_button = {
   width = 66,
   height = 134,
   requirements = 0x0002,
-  upgrade_price = 3000
+  upgrade_price = 3000,
+  description = ""
 }
 
 tier_4_button = {
@@ -181,5 +193,6 @@ tier_4_button = {
   width = 66,
   height = 134,
   requirements = 0x0004,
-  upgrade_price = 10000
+  upgrade_price = 10000,
+  description = "HELLLO!!"
 }
