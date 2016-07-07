@@ -60,6 +60,7 @@ SoMTD::Animation::draw(ijengine::Canvas *c, unsigned, unsigned)
         rect.set_position((m_actual_frame*m_width)+(m_width*m_frame_per_state*m_actual_state), 0);
 
     m_texture = ijengine::resources::get_texture(m_file_path);
+
     if (m_file_path == "projectiles/projetil_poseidon.png" || m_file_path == "projectiles/projetil_caveira.png" || m_file_path == "projectiles/projetil_zeus2.png") {
         // printf("desenhando..\n");
         // std::cout << "position: " << m_screen_position.first << ", " << m_screen_position.second << std::endl;

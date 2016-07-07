@@ -256,7 +256,6 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
             break;
 
          //hades towers
-
          case 0x102:
              if (m_cooldown < now) {
                  m_cooldown = now+attack_speed()*1000;
