@@ -135,13 +135,14 @@ O \textit{\textbf{SoMTD}} é um jogo de estilo\textit{ Tower Defense}, onde o ob
 
 \section{Glossário}
 \begin{itemize}
-\item \textbf{Wave}: Inimigos que nascem em conjunto em momentos do jogo.
-\item \textbf{Caminho}: Caminho pré-determinado que será seguido pelas \textit{waves}. Caso um inimigo chegue ao fim da trilha, o jogador sofre uma punição.
-\item \textbf{Tower Defense}: Um estilo de jogo onde um jogador deve impedir unidades inimigas de completarem seu objetivo utilizando torres.
-\item \textbf{Health Point(HP)}: Atributo referente a vida \textit{player}.
-\item \textbf{Def} - Defense : refere-se neste contexto, aos pontos de ataques ao monstro, a defesa aqui é o nível de resistência a ataques comuns.
-\item \textbf{Sp} - Speed : refere-se a velocidade com que as waves se movem.
-\item \textbf{gold}: única remuneração do jogo.
+\item Wave: Inimigos que nascem em conjunto em momentos do jogo.
+\item Trilha: Caminho pré-determinado que será seguido pelas \textit{waves}. Caso um inimigo chegue ao fim da trilha, o jogador sofre uma punição.
+\item Tower Defense: Um estilo de jogo onde um jogador deve impedir unidades inimigas de completarem seu objetivo utilizando torres.
+\item HP - Health Point : Atributo referente a vida \textit{player}.
+\item Sp - Speed : refere-se a velocidade com que as \textit{waves} se movem.
+\item GoldA - Gold reaward  : refere-se a quantia de \textit{gold} ganha ao derrotar o monstro.
+\item DiscountHP - Discount Health Point : refere-se a quantia de \textit{HP} perdida quando o monstro atravessar a trilha.
+\item Gold: única remuneração do jogo.
 \end{itemize} 
  
 \section{Conceito do jogo}
@@ -150,7 +151,7 @@ As torres pertencem  três Deuses sendo eles:
 \begin{itemize}
 \item Hades.
 \item Zeus.
-\item Poseidom.
+\item Poseidon.
 \end{itemize}
 
 Cada Deus terá um conjunto de Torres a seu dispor, divididas em 2 categorias sendo que cada categoria possuirá uma singularidade em relação as demais, possuindo assim vantagens em relação a alguns tipos de monstros e desvantagens em relação a outros tipos de monstros.
@@ -341,13 +342,13 @@ Serão três torres para cada Deus, sendo divididas em dois níveis, para subir 
 \section{Inimigos}
 \subsection{Waves} 
 
-Haverão diversas \textit{waves}, onde os monstros estarão divididas entre 4 categorias, sendo elas normal, tanker, fly e  speed, a principio não haverá um monstro o \textit{Boss}, caso o jogo evolua poderia-se pensar em um \textit{boss}.
+Haverão diversas \textit{waves}, onde os monstros estarão divididas entre 4 categorias, sendo elas normal, tanker, fly e  speed, a principio não haverá um monstro \textit{Boss}, caso o jogo evolua poderia-se pensar em um \textit{boss}.
 
-As \textit{waves} sempre nascerão no mesmo lugar, que pode ser alternado somente entre as fases do jogo, ao nascer as \textit{waves} farão sempre o mesmo caminho seguindo a trilha pre-definida e indicada por uma cor diferente no mapa, mantendo uma velocidade constante da sua categoria de \textit{waves}. 
+As \textit{waves} sempre nascerão no mesmo lugar, que pode ser alternado somente entre as fases do jogo, este lugar é indicado com uma bandeira verde, ao nascer as \textit{waves} farão sempre o mesmo caminho seguindo a trilha pre-definida e indicada por uma cor diferente no mapa com o final da trilha indicado com uma bandeira vermelha, mantendo uma velocidade constante da sua categoria de \textit{waves}. 
 
-As \textit{waves} não interagirão no cenário ou seja não atacarão as torres nem possuirão um mecanismo para evitar ataques das torres, ou seja ao entrar no campo de visão de ataque de uma torre as \textit{waves} serão atacadas, porém caso a torre já esteja atacando um monstro esta continuara atacando a este monstro enquanto o monstro tiver no campo de visão da torre, podendo atacar o novo monstro somente quando o monstro anterior sair do campo de visão da torre.  
+As \textit{waves} não interagirão no cenário ou seja não atacarão as torres nem possuirão um mecanismo para evitar ataques das torres, ou seja ao entrar no campo de visão de ataque de uma torre as \textit{waves} serão atacadas, porém caso a torre já esteja atacando um monstro esta continuara atacando a este monstro enquanto o monstro tiver no campo de visão da torre.
 
-Para a derrota da \textit{wave}, serão atribuídos \textit{golds} para cada monstro derrotado e caso toda a wave seja derrotada, sem que nenhum mostro consiga completar o percurso chegando ao outro lado do mapa, um bônus extra em \textit{gold} será atribuído ao jogador. 
+Para a derrota da \textit{wave}, serão atribuídos \textit{golds} para cada monstro derrotado. 
 
 Cada monstro terá uma quantia de \textit{HP} especifica variando de acordo a sua categoria, no qual eles somente serão derrotados ao zerar este \textit{HP}, e caso isto ocorrer eles automaticamente somem do mapa e uma quantia de \textit{gold} é atribuída ao jogador.
 
@@ -356,64 +357,71 @@ As \textit{waves} terão uma quantia de inimigos randômica, podendo variar entr
 Devido ao tempo de desenvolvimento de jogo não haverá diferenciação de inimigos por fases no jogo, isto acarretaria um esforço gigantesco na criação de personagens uma vez que por fase são 4 categorias diferentes de inimigos, ocasionando um grande trabalho inicialmente desnecessário. 
 
 \subsection{categorias}
-Descrição dos inimigos pertencentes as \textit{waves}, como o jogo é um \textit{Tower Defense} estes inimigos serão inseridos randomicamente nas fases do jogo, no caso inicialmente serão desenvolvidas somente três níveis, que alternam somente o mapa e cenário do jogo, assim não haverá diferenciação dos inimigos nos níveis que compõem o jogo.
+Descrição dos inimigos pertencentes as \textit{waves}:
 
-\textbf{{ {\large Normal}}} – na primeira categoria de inimigos tem-se os inimigos do tipo normal, estes não terão nenhum beneficio sendo bem equilibrados e aparecerão em maior quantidade, esta categoria de monstro será representada pela \textbf{Meduza}, que será como dito na mitologia grega uma mulher com cabeça de cobra e neste casso com um corpo de cobra abaixo da cintura.
+Os inimigos serão inseridos randomicamente nas fases do jogo, no caso serão desenvolvidas somente três níveis, que alternam somente o mapa e cenário do jogo, não havendo diferenciação dos inimigos nos níveis que compõem o jogo.
+
+Tem-se para todos os inimigos quatro tipos de cores, a normal e outras três verde, azul e vermelho, que são ativadas no ataque de torres especificas. 
+
+\textbf{{\large Normal}} – na primeira categoria de inimigos tem-se os inimigos do tipo normal, estes não terão nenhum beneficio sendo bem equilibrados e aparecerão em maior quantidade. Esta categoria de monstro será representada pelo \textit{ciclope}.
+\begin{itemize}
+\item HP - 100
+\item Sp - 200 milesegundos.
+\item DiscountHP - 1 \textit{hp's}.
+\item GoldR - 10 golds.
+\end{itemize}
+
+\begin{figure*}[!htp]
+\centering
+\advance\leftskip-3cm
+\advance\rightskip-3cm
+\includegraphics[scale=2]{res/units/ciclope/cyclop.png} \quad
+\includegraphics[scale=1]{res/units/ciclope/ciclopsheet.png} \quad
+\includegraphics[scale=1]{res/units/ciclope/ciclopsheet_congelado.png} \quad
+\includegraphics[scale=1]{res/units/ciclope/ciclopsheet_verde.png} \quad
+\includegraphics[scale=1]{res/units/ciclope/ciclopsheet_vermelho.png} 
+\caption{Spritsheet esquerda-direita do ciclope.}
+\label{ciclopesheet}
+\end{figure*}
+
+\newpage
+\textbf{{ {\large Speed}}} – A\textbf{Meduza} representa o tipo \textit{speed}, sendo bem rápida, porém com um baixo \textit{hp}, e será como dito na mitologia grega uma mulher com cabeça de cobra e neste casso com um corpo de cobra abaixo da cintura.
 
 \begin{itemize}
-\item HP - 50
-\item Def - 50
-\item Sp - 50
-\item Death - 50 golds.
+\item HP - 80
+\item Sp - 80 milesegundos.
+\item DiscountHP - 2 \textit{hp's}.
+\item GoldR - 15 golds.
 \end{itemize}
 
 \begin{figure}[!htp]
 \centering
 \includegraphics[scale=4]{res/characters/medusa.png}
 \caption{Meduza do jogo}
-\label{Meduza}
+\label{Medusa}
 \end{figure}
+
+\begin{figure*}[!htp]
+\centering
+\advance\leftskip-3cm
+\advance\rightskip-3cm
+\includegraphics[scale=]{res/units/medusa/medusasheet.png} \quad
+\includegraphics[scale=1]{res/units/medusa/medusasheet_congelada.png} \quad
+\includegraphics[scale=1]{res/units/medusa/medusasheet_verde.png} \quad
+\includegraphics[scale=1]{res/units/medusa/medusasheet_vermelho.png} 
+\caption{Spritsheet esquerda-direita do ciclope.}
+\label{ciclopesheet}
+\end{figure*}
 
 \newpage
 
-\textbf{{\large Tanker}} – Os \textit{tankers}, serão inimigos que possuirão um HP mais alto do que os outros monstros, sendo necessário vários ataques para causar danos, eles serão os \textit{cyclops}.
+\textbf{{\large Tanker}} – Os \textit{Centauros}, serão os inimigos do tipo \textit{Tanker}, possuindo um alto \textit{hp} e uma alta recompensa em \textit{golds}, porém uma mobilidade reduzida possuirão, além disso estes inimigos retiram uma alta quantia de \textit{hp}.
+
 \begin{itemize}
-\item HP - 150
-\item Def - 50
-\item Sp - 50
-\item Death - 100 golds
-\end{itemize}
-
-\begin{figure}[!htp]
-\centering
-\includegraphics[scale=1]{res/characters/cyclop.png} 
-\caption{cyclop sprite sheet}
-\label{cyclops}
-\end{figure}
-
-\newpage
-
-\textbf{{\large Fly}} – Os \textit{Fly}, serão inimigos que possuirão uma defesa elevada sendo necessário ataques fortes para causar dano, porém mantém um hp normal, estes inimigos são as \textit{harpias}.
-\begin{itemize}
-\item HP - 50
-\item Def - 100
-\item Sp -50
-\item Deth - 75 golds.
-\end{itemize}
-
-\begin{figure}[!htp]
-\centering
-\includegraphics[scale=0.75]{res/characters/harpia.png} \quad
-\includegraphics[scale=2]{res/characters/bat.png} 
-\caption{harpia conceito}
-\label{cyclops}
-\end{figure}
-
-\textbf{{\large Speed}} – Os \textit{Centauros}, serão os inimigos do tipo \textit{speed}, estes possuirão uma alta velocidade, porém um baixo hp.
-\begin{itemize}
-\item HP - 50
-\item Def - 50
-\item Sp -80
+\item HP - 400
+\item Sp - 250 milesegundos.
+\item DiscountHP - 4 \textit{hp's}.
+\item GoldR - 40 golds.
 \end{itemize}
 
 \begin{figure}[!htp]
@@ -423,6 +431,51 @@ Descrição dos inimigos pertencentes as \textit{waves}, como o jogo é um \text
 \caption{Exemplo de centauros e pixel-art do centauro}
 \label{cyclops}
 \end{figure}
+
+\begin{figure*}[!htp]
+\centering
+\advance\leftskip-3cm
+\advance\rightskip-3cm
+\includegraphics[scale=2]{res/units/centauro/centauro.png} \quad
+\includegraphics[scale=0.7]{res/units/centauro/centaurosheet.png} \quad
+\includegraphics[scale=0.7]{res/units/centauro/centaurosheet_congelado.png} \quad
+\includegraphics[scale=0.7]{res/units/centauro/centaurosheet_verde.png} \quad
+\includegraphics[scale=0.7]{res/units/centauro/centaurosheet_vermelho.png} 
+\caption{Spritsheet esquerda-direita do centauro.}
+\label{centaurosheet}
+\end{figure*}
+
+\newpage
+
+\textbf{{\large Fly}} – As \textit{Harpias} são os inimigos do tipo\textit{Fly}, serão inimigos rápidos, porém com hp um pouco acima do normal, que possuirão uma fraca recompensa em gold, porém terão um alto impacto no \textit{hp}.
+
+\begin{itemize}
+\item HP - 80
+\item Sp - 80 milesegundos.
+\item DiscountHP - 2 \textit{hp's}.
+\item GoldR - 15 golds.
+\end{itemize}
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.75]{res/characters/harpia.png} \quad
+\includegraphics[scale=2]{res/characters/bat.png} 
+\caption{harpia conceito inicial}
+\label{harpia}
+\end{figure}
+
+\begin{figure*}[!htp]
+\centering
+\advance\leftskip-4cm
+\advance\rightskip-3cm
+\includegraphics[scale=2]{res/units/harpia/preharpia.png} \quad
+\includegraphics[scale=0.7]{res/units/harpia/harpiasheet.png} \quad
+\includegraphics[scale=0.7]{res/units/harpia/harpiasheet_congelado.png} \quad
+\includegraphics[scale=0.7]{res/units/harpia/harpiasheet_verde.png} \quad
+\includegraphics[scale=0.7]{res/units/harpia/harpiasheet_vermelho.png} 
+\caption{Spritsheet esquerda-direita da harpia.}
+\label{harpiasheet}
+\end{figure*}
 
 \newpage
 
