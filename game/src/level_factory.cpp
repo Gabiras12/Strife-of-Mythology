@@ -13,7 +13,7 @@ SoMTD::LevelFactory::make_level(const string& level_id)
     else if (level_id == "map001")
         return new SoMTD::MapLevel("map002", "map001", "res/sound_efects/music/gameplay.ogg");
     else if (level_id == "map002")
-        return new SoMTD::MapLevel("map003", "map002", "res/sound_efects/music/gameplay.ogg");
+        return new SoMTD::MapLevel("map003", "map002", "res/sound_efects/music/gameplay_map2.ogg");
     else if (level_id == "map003")
         return new SoMTD::MapLevel("mainmenu", "map003", "res/sound_efects/music/gameplay.ogg");
     else if (level_id == "menuoptions")
