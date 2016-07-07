@@ -170,10 +170,10 @@ SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
         canvas->draw(ijengine::resources::get_texture("background3.png").get(), 0, 0);
      else if (m_current == "map002")
      {
-        canvas->draw(ijengine::resources::get_texture("background2.png").get(), 0, 0);        
+        canvas->draw(ijengine::resources::get_texture("background2.png").get(), 0, 0);
      } else if (m_current == "map003")
      {
-        canvas->draw(ijengine::resources::get_texture("background1.png").get(), 0, 0);        
+        canvas->draw(ijengine::resources::get_texture("background1.png").get(), 0, 0);
      }
 }
 
@@ -355,6 +355,20 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2)
     }
     if (m_actual_state == OVER)
         c->draw(ijengine::resources::get_texture("Game_Over.png").get(), 0, 0);
+    if (m_actual_state == WIN) {
+        c->draw(ijengine::resources::get_texture("win/quadro_background.png").get(), (1124/2)-(510/2), 0);
+        c->draw(ijengine::resources::get_texture("win/quadro_vitoria.png").get(), (1124/2)-(510/2), 0);
+        if (player()->upgrade_state()[1]) {
+            c->draw(ijengine::resources::get_texture("win/star_01.png").get(), (1124/2)-(510/2), 0);
+            if (player()->upgrade_state()[2]) {
+                c->draw(ijengine::resources::get_texture("win/star_02.png").get(), (1124/2)-(510/2) + 100, 0);
+                if (player()->upgrade_state()[3]) {
+                    c->draw(ijengine::resources::get_texture("win/star_03.png").get(), (1124/2)-(510/2) + 200, 0);
+                }
+            }
+        }
+    }
+
 }
 
 void
@@ -605,6 +619,12 @@ SoMTD::MapLevel::transition_to(MapLevel::State from, MapLevel::State to, unsigne
 {
     m_actual_state = to;
     m_state_started_at = now;
+    if (from == PLAYING && to == RESTING) {
+        if (m_current_wave >= (int)m_waves.size()-1) {
+            transition_to(MapLevel::State::RESTING, MapLevel::State::WIN, now, last);
+            ijengine::audio::play_sound_effect("res/sound_efects/victory.ogg");
+        }
+    }
     if (from == RESTING && to == PLAYING) {
         if (m_current_wave >= (int)m_waves.size()-1) {
             transition_to(MapLevel::State::RESTING, MapLevel::State::WIN, now, last);
