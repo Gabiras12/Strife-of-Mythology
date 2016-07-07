@@ -32,6 +32,7 @@ namespace SoMTD {
         void next_frame();
         void update_texture(std::string new_path);
         void update_screen_position(std::pair<int, int> new_pos);
+        void update_tile(std::pair<int, int> new_pos);
 
         std::pair<int, int> screen_position() const;
         std::pair<int, int> tile() const;
