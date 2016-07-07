@@ -358,16 +358,20 @@ SoMTD::MapLevel::draw_self_after(ijengine::Canvas *c, unsigned a1, unsigned a2)
     if (m_actual_state == WIN) {
         c->draw(ijengine::resources::get_texture("win/quadro_background.png").get(), (1124/2)-(510/2), 0);
         c->draw(ijengine::resources::get_texture("win/quadro_vitoria.png").get(), (1124/2)-(510/2), 0);
-        if (player()->upgrade_state()[1]) {
-            c->draw(ijengine::resources::get_texture("win/star_01.png").get(), (1124/2)-(510/2), 0);
-            if (player()->upgrade_state()[2]) {
-                c->draw(ijengine::resources::get_texture("win/star_02.png").get(), (1124/2)-(510/2) + 100, 0);
-                if (player()->upgrade_state()[3]) {
-                    c->draw(ijengine::resources::get_texture("win/star_03.png").get(), (1124/2)-(510/2) + 200, 0);
-                }
-            }
-        }
-    }
+
+         if (m_current == "map001")
+            c->draw(ijengine::resources::get_texture("win/star_01.png").get(), (1124/2)-(510/2)+55, +75);
+         else if (m_current == "map002")
+         {
+            c->draw(ijengine::resources::get_texture("win/star_01.png").get(), (1124/2)-(510/2)+55, +75);
+            c->draw(ijengine::resources::get_texture("win/star_02.png").get(), (1124/2)-(510/2) + 195, 52);
+         } else if (m_current == "map003")
+         {  c->draw(ijengine::resources::get_texture("win/star_01.png").get(), (1124/2)-(510/2)+55, +75);
+            c->draw(ijengine::resources::get_texture("win/star_02.png").get(), (1124/2)-(510/2) + 195, 52);
+            c->draw(ijengine::resources::get_texture("win/star_03.png").get(), (1124/2)-(510/2) + 337, 75);
+         }
+
+   }
 
 }
 
