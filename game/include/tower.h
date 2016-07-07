@@ -9,6 +9,7 @@
 #include "player.h"
 #include "animation.h"
 #include "movable_unit.h"
+#include "projectile.h"
 
 /* IDS FOR TOWERS:
  * 0x0000 = zeus tower
@@ -44,6 +45,7 @@ namespace SoMTD {
         double attack_speed() const;
         unsigned id() const;
         SoMTD::Player* player() const;
+        std::list<Projectile*>* projectiles() const;
 
     protected:
         void level_up();
@@ -70,7 +72,7 @@ namespace SoMTD {
         SoMTD::MovableUnit* m_target;
         unsigned m_cooldown;
         double m_attack_speed;
-
+        std::list<Projectile*> *m_projectiles;
     };
 }
 

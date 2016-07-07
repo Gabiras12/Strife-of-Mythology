@@ -1,5 +1,6 @@
 #include "animation.h"
 #include "game.h"
+#include <iostream>
 
 SoMTD::Animation::Animation(int new_grid_x, int new_grid_y, std::string new_file_path, StateStyle new_state_style, int new_frame_per_state, int new_total_states)
 {
@@ -59,7 +60,12 @@ SoMTD::Animation::draw(ijengine::Canvas *c, unsigned, unsigned)
         rect.set_position((m_actual_frame*m_width)+(m_width*m_frame_per_state*m_actual_state), 0);
 
     m_texture = ijengine::resources::get_texture(m_file_path);
-    c->draw(m_texture.get(), rect, m_screen_position.first+(100-m_width)/2, m_screen_position.second+81/2-m_height);
+    if (m_file_path == "cyclop.png") {
+        // printf("desenhando..\n");
+        // std::cout << "position: " << m_screen_position.first << ", " << m_screen_position.second << std::endl;
+        c->draw(m_texture.get(), m_tile.first, m_tile.second);
+    } else
+        c->draw(m_texture.get(), rect, m_screen_position.first+(100-m_width)/2, m_screen_position.second+81/2-m_height);
 }
 
 void
@@ -116,4 +122,10 @@ SoMTD::Animation::update_direction(SoMTD::Animation::DirectionState ds)
 {
     if (m_total_states >= (int)ds)
         m_actual_state = (int)ds;
+}
+
+void
+SoMTD::Animation::update_tile(std::pair<int, int> to)
+{
+    m_tile = to;
 }

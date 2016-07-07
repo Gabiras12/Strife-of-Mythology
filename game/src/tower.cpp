@@ -29,10 +29,12 @@ SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::st
     mytimer = 0;
     m_cooldown = 0;
     m_actual_state = IDLE;
+    m_projectiles = new std::list<Projectile*>();
 }
 
 SoMTD::Tower::~Tower()
 {
+    delete m_projectiles;
     ijengine::event::unregister_listener(this);
 }
 
@@ -79,6 +81,11 @@ void
 SoMTD::Tower::draw_self(ijengine::Canvas *canvas, unsigned a1, unsigned a2)
 {
     m_animation->draw(canvas, a1, a2);
+
+    for (auto it=m_projectiles->begin(); it != m_projectiles->end(); ++it) {
+        (*it)->draw_self(canvas, a1, a2);
+    }
+
     if (m_mouseover) {
         std::pair<int, int> pos = m_animation->screen_position();
         int half_h = m_animation->height()/2;
@@ -102,6 +109,14 @@ SoMTD::Tower::update_self(unsigned now, unsigned last)
         m_animation->next_frame();
         m_next_frame_time += 1000/m_animation->frame_per_state();
     }
+
+    for (auto it=m_projectiles->begin(); it != m_projectiles->end(); ++it) {
+        if ((*it)->done())
+            it = m_projectiles->erase(it);
+        else
+            (*it)->update_self(now, last);
+    }
+
     switch (actual_state()) {
         case IDLE:
             handle_idle_state(now, last);
@@ -143,9 +158,11 @@ SoMTD::Tower::range() const
 }
 
 void
-SoMTD::Tower::draw_self_after(ijengine::Canvas* c, unsigned, unsigned)
+SoMTD::Tower::draw_self_after(ijengine::Canvas* c, unsigned a1, unsigned a2)
 {
-
+    for (auto it=m_projectiles->begin(); it != m_projectiles->end(); ++it) {
+        (*it)->draw_self_after(c, a1, a2);
+    }
 }
 
 SoMTD::Animation*
@@ -175,7 +192,8 @@ SoMTD::Tower::handle_attacking_state(unsigned now, unsigned)
                 double dy = animation()->screen_position().second - target()->animation()->screen_position().second;
                 double distance = sqrt(dx*dx + dy*dy);
                 if (distance < range()+target()->animation()->width()/2) {
-                    m_target->suffer(damage());
+                    Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "cyclop.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+                    m_projectiles->push_back(p);
                     m_cooldown = now+1000*attack_speed();
                     if (m_id == 0x001)
                         m_player->increase_gold(damage());
@@ -226,7 +244,8 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
                 m_cooldown = now+attack_speed()*1000;
                 m_target = newtarget;
                 m_actual_state = State::ATTACKING;
-                newtarget->suffer(damage());
+                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "cyclop.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+                m_projectiles->push_back(p);
                 newtarget->suffer_bleed(damage(), 10000, now, last);
             }
             break;
@@ -235,7 +254,8 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
             if (m_cooldown < now) {
                 m_cooldown = now+attack_speed()*1000;
                 m_target = newtarget;
-                newtarget->suffer(damage());
+                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "cyclop.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+                m_projectiles->push_back(p);
                 m_actual_state = State::ATTACKING;
                 m_player->increase_gold(damage());
             }
@@ -246,7 +266,8 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
                 m_cooldown = now+attack_speed()*1000;
                 m_target = newtarget;
                 m_actual_state = State::ATTACKING;
-                newtarget->suffer(damage());
+                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "cyclop.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+                m_projectiles->push_back(p);
                 newtarget->suffer_poison(damage()*5, 10000, now, last);
             }
             break;
@@ -254,7 +275,8 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
         default:
             m_cooldown = now+attack_speed()*1000;
             m_target = newtarget;
-            newtarget->suffer(damage());
+            Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "cyclop.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+            m_projectiles->push_back(p);
             m_actual_state = State::ATTACKING;
             break;
     }
