@@ -159,7 +159,7 @@ SoMTD::Button::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
 {
     if (m_id >= 0x2000 && m_id < 0x2100 && m_player->state == SoMTD::Player::PlayerState::OPENED_TOWER_PANEL) {
         auto font = ijengine::resources::get_font("Inconsolata-Regular.ttf", 20);
-        std::string tower_name = "tower_";
+        std::string tower_name = "towers/tower_";
         c->set_font(font);
         std::ostringstream convert;
         std::string expression;
