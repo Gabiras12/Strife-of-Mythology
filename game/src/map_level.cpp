@@ -166,7 +166,15 @@ void
 SoMTD::MapLevel::draw_self(ijengine::Canvas *canvas, unsigned, unsigned)
 {
     canvas->clear();
-    canvas->draw(ijengine::resources::get_texture("background.png").get(), 0, 0);
+     if (m_current == "map001")
+        canvas->draw(ijengine::resources::get_texture("background3.png").get(), 0, 0);
+     else if (m_current == "map002")
+     {
+        canvas->draw(ijengine::resources::get_texture("background2.png").get(), 0, 0);        
+     } else if (m_current == "map003")
+     {
+        canvas->draw(ijengine::resources::get_texture("background1.png").get(), 0, 0);        
+     }
 }
 
 bool
