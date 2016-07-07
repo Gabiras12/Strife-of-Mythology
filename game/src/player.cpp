@@ -66,7 +66,8 @@ SoMTD::Player::increase_gold(int value)
 void
 SoMTD::Player::discount_hp(int value)
 {
-	m_hp -= value;
+	m_hp -= value;    
+    ijengine::audio::play_sound_effect("res/sound_efects/hp_baixo.ogg");
 }
 
 std::list<int>*
@@ -104,4 +105,5 @@ void
 SoMTD::Player::research(std::bitset<12> upgrade)
 {
     m_upgrade_state |= upgrade;
+    ijengine::audio::play_sound_effect("res/sound_efects/Level_up.ogg");
 }

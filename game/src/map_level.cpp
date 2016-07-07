@@ -645,7 +645,7 @@ SoMTD::MapLevel::set_time_to_start_wave(unsigned now){
   std::ostringstream convert;
 
   convert << 5 - (now - m_state_started_at)/1000;
-
+  ijengine::audio::play_sound_effect("res/sound_efects/start_waves.ogg");
   return convert.str();
 }
 
