@@ -231,7 +231,7 @@ O HUD (Heads-Up Display) será composto de um menu inferior o qual será dividid
 
 \begin{figure}[!htp]
 \centering
-\includegraphics[scale=0.4]{res/gameplay.jpg}
+\includegraphics[scale=0.4]{res/gameplay2.png}
 \caption{Hud}
 \label{HUD}
 \end{figure}
@@ -553,55 +553,56 @@ Nesta tela haverá a imagem do jogo ao fundo, e um menu com as seguintes opçõe
 \textit{Play Game} que levará o jogador para a tela de \textit{Gameplay}.
 \textit{Crédits} para exibição dos créditos.
 \textit{Exit} que fechara o jogo.
+Estes botões serão pretos, e quando o jogador passar o mouse por cima destes botões, eles ficarão brancos.\\
 
 \begin{figure}[!htp]
 \centering
-\includegraphics[scale=0.4]{res/abertura.png}
-\caption{Exemplo de Abertura}
+\includegraphics[scale=0.4]{res/menu_display.png}
+\caption{Tela de Abertura}
 \label{Abertura}
-\end{figure}
-
-\subsection{Tela de Fases}
-Nesta tela o jogador escolhe as fases que desejá jogar, ao inicio do jogo somente a primeira fase encontra-se disponível, para abrir as subsequentes é necessário sobreviver nas fases anteriores.
-
-As fases abertas estarão com uma imagem do mapa visível, já as imagens fechadas estarão cinzas.
-
-Nesta tela, haverá também um ícone para voltar a tela anterior.  
-
-Ao selecionar uma fase, aparecerá uma mensagem pedindo a confirmação da escolha e o jogador será redirecionado para a página de \textit{Gameplay}, caso concorde.
-
-\begin{figure}[!htp]
-\centering
-\includegraphics[scale=1]{res/fases.jpg}
-\caption{Exemplo da tela de fases}
-\label{Fases}
 \end{figure}
 
 \newpage
 
 \subsection{Tela de Gameplay}
 
-Tela principal do jogo, nesta tela tem-se um menu na parte inferior da tela, com as informações do Deus no quadro inferior esquerdo, ao clicar no Deus sua torre é selecionada e aparece no quadro inferior direito.
-No quadro inferior central tem-se as informações sobre as torres, sendo que as torres disponíveis ficam com a imagem da torre visível já as torres indisponíveis ficam com um "\textbf{x}", há também um pequeno quadro indicando quanto de \textit{gold} falta para evoluir a torre e liberar o próximo tier.
+Tela principal do jogo, nesta tela tem-se um menu na parte inferior da tela, com as informações das torres de cada Deus no quadro inferior direito, ao clicar no Deus abre-se um menu na parte inferior do mapa com as torres associadas a este deus. Ao selecionar uma torre a mesma passa a ocupar o lugar do mouse até ser posicionada.
 
-Para adicionar uma nova torre o jogador deverá clicar na torre no box inferior direito e arrasta-lá no mapa até a posição desejado.
+Para adicionar uma nova torre o jogador deverá clicar no deus, e depois no torre no quadro inferior central e arrasta a torre no mapa até a posição desejado. Há também em cada torre um pequeno quadro indicando quanto de \textit{gold} custa esta torre.
+
+Para a evolução das eras, tem-se três botões no box inferior esquerdo, no qual o jogador ao clica-lo comprido os requisitos e com a quantia de gold necessária evolui de era.
 
 O mapa fica no centro da tela, ocupando o máximo de área possível.
 
-Na parte superior direita haverá um relógio contendo o tempo restante de fase.
+Na parte superior direita haverá uma barra indicando a \textit{hp} do jogador
 
-Na parte superior central tem-se informações sobre as \textit{waves}.
+Na parte superior direita tem-se um box indicando a quantia de gold disponível do jogador.
 
 \begin{figure}[!htp]
 \centering
-\includegraphics[scale=0.5]{res/gameplay.jpg}
-\caption{Exemplo de Gameplay}
+\includegraphics[scale=0.3]{res/gameplay_display.png}
+\caption{Tela de Gameplay}
+\end{figure}
+
+Na parte superior central tem-se informações sobre as \textit{waves}, tem-se também um relógio, que aparece ante do inicio de uma nova \textit{wave}.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.3]{res/gameplay2.png}
+\caption{Tela de Gameplay, com o time das waves e com a box de torres aberta.}
 \end{figure}
 
 \newpage
 \subsection{Tela de Créditos}
 
-Na tela de \textit{Cr} exibe-se o nome e a função de cada um dos integrantes da equipe, sendo de \textit{Desnvolvimento}, \textit{artes} e \textit{música}.
+Na tela de \textit{Cr} exibe-se o nome e a função de cada um dos integrantes da equipe, sendo de \textit{Desenvolvimento}, \textit{artes} e \textit{música}.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.3]{res/credits_display.png}
+\caption{Logo da SDL}
+\label{Logo da SDL}
+\end{figure}
 
 \newpage
 
