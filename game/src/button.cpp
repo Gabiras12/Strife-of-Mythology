@@ -180,8 +180,8 @@ SoMTD::Button::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
         c->draw(expression, m_x+50, m_y+90);
         c->draw(ijengine::resources::get_texture(tower_name).get(), m_x+15, m_y-10);
         if (m_mouseover) {
-            c->draw(ijengine::resources::get_texture("upgrade_panel.png").get(), m_x, m_y-300);
-            c->draw(m_description, m_x+15, m_y-290);
+            c->draw(ijengine::resources::get_texture("towers/containertorre.png").get(), m_x - 70, m_y-180);
+            c->draw(m_description, m_x-10, m_y-120);
         }
     }
 }

@@ -6,7 +6,7 @@ SoMTD::Player::Player() :
     m_x(0)
 {
     state = 0x0000;
-    m_gold = 20000;
+    m_gold = 1000;
     m_units_events = new std::list<int>();
     m_event_args = new std::list<int>();
     m_buy_tower_panel_opened = false;
@@ -66,7 +66,7 @@ SoMTD::Player::increase_gold(int value)
 void
 SoMTD::Player::discount_hp(int value)
 {
-	m_hp -= value;    
+	m_hp -= value;
     ijengine::audio::play_sound_effect("res/sound_efects/hp_baixo.ogg");
 }
 
