@@ -143,6 +143,8 @@ O \textit{\textbf{SoMTD}} é um jogo de estilo\textit{ Tower Defense}, onde o ob
 \item Sp - Speed : refere-se a velocidade com que as \textit{waves} se movem.
 \item GoldA - Gold reaward  : refere-se a quantia de \textit{gold} ganha ao derrotar o monstro.
 \item DiscountHP - Discount Health Point : refere-se a quantia de \textit{HP} perdida quando o monstro atravessar a trilha.
+\item Attack Speed - velocidade em segundos que um tiro demora para alcançar uma torre
+\item Damage - dano causado pelo ataque de uma torre.
 \item Gold: única remuneração do jogo.
 \end{itemize} 
  
@@ -341,11 +343,23 @@ Botão de heras com os respectivos valores para a evolução das eras.
 \caption{Projetil utilizados pelas torres de Zeus.}
 \end{figure}
 
+Torre de Zeus 0: Esta torre tem como forma uma nuvem e ataca com raios
+\begin{enumerate}
+\item Attack Speed 2 segundos.
+\item DAmage 50 hp.
+\end{enumerate}
+
 \begin{figure}[!htp]
 \centering
 \includegraphics[scale=1]{res/towers/tower_0.png}
 \caption{torre de Zeus 0}
 \end{figure}
+
+Torre de Zeus 1: Esta torre tem como forma um tufão, sendo mais rápida que a torre 0, e causando o dobro de dano ao monstro.
+\begin{enumerate}
+\item Attack Speed 1.5 segundos.
+\item DAmage 100 hp.
+\end{enumerate}
 
 \begin{figure}[!htp]
 \centering
@@ -353,6 +367,11 @@ Botão de heras com os respectivos valores para a evolução das eras.
 \caption{torre de Zeus 1}
 \end{figure}
 
+Torre de Zeus 2: Esta torre tem como forma uma montanha com um raio em cima da mesma, ela ataca com um raio forte e rápido.
+\begin{enumerate}
+\item Attack Speed 1.5 segundos.
+\item DAmage 150 hp.
+\end{enumerate}
 
 \begin{figure}[!htp]
 \centering
@@ -360,6 +379,11 @@ Botão de heras com os respectivos valores para a evolução das eras.
 \caption{torre de Zeus2 }
 \end{figure}
 
+Torre de Zeus 3: Esta torre tem como forma uma montanha rodeada com nuvens, por ser a torre de Tier mais elevado, esta possui um ataque bem poderoso em um curto espaço de tempo.
+\begin{enumerate}
+\item Attack Speed 1 segundos.
+\item DAmage 200 hp.
+\end{enumerate}
 
 \begin{figure}[!htp]
 \centering
@@ -377,11 +401,23 @@ Botão de heras com os respectivos valores para a evolução das eras.
 \caption{Projetil utilizados pelas torres de Poseidon.}
 \end{figure}
 
+Torre Poseidon 16: Esta torre tem como forma uma montanha com um cristal azul em cima da mesma, utiliza como ataque um \textit{slow} em um inimigo próximo. Como é uma torre de \textit{slow} não possui dano.
+\begin{enumerate}
+\item Attack Speed 3 segundos.
+\item DAmage 0 hp.
+\end{enumerate}
+
 \begin{figure}[!htp]
 \centering
 \includegraphics[scale=1]{res/towers/tower_16.png}
 \caption{torre Poseidon16}
 \end{figure}
+
+Torre Poseidon 17: Esta torre tem como forma um barquinho, é menos lenta que a anterior.
+\begin{enumerate}
+\item Attack Speed 2 segundos.
+\item DAmage 0 hp.
+\end{enumerate}
 
 \begin{figure}[!htp]
 \centering
@@ -389,6 +425,11 @@ Botão de heras com os respectivos valores para a evolução das eras.
 \caption{torre de Poseidon17}
 \end{figure}
 
+Torre Poseidon 18: Esta torre tem como forma um Polvo amarelo sendo bem rápida no ataque.
+\begin{enumerate}
+\item Attack Speed 2 segundos.
+\item DAmage 0 hp.
+\end{enumerate}
 
 \begin{figure}[!htp]
 \centering
@@ -396,6 +437,11 @@ Botão de heras com os respectivos valores para a evolução das eras.
 \caption{torre de Poseidon18}
 \end{figure}
 
+Torre Poseidon 19: Esta torre tem como forma um Polvo Azul, por ser extremamente rápida, consegue atingir inúmeros monstros..
+\begin{enumerate}
+\item Attack Speed 2 segundos.
+\item DAmage 0 hp.
+\end{enumerate}
 
 \begin{figure}[!htp]
 \centering
@@ -413,11 +459,23 @@ Botão de heras com os respectivos valores para a evolução das eras.
 \caption{Projetil utilizados pelas torres de Hades.}
 \end{figure}
 
+Torre Hade 32: Esta torre tem como forma um Obelisco, tem um ataque bem rápido funcionando quase como uma metralhadora, assim mesmo que seus tiros sejam relativamente fracos é uma torre forte.
+\begin{enumerate}
+\item Attack Speed 03 segundos.
+\item Damage 20 hp.
+\end{enumerate}
+
 \begin{figure}[!htp]
 \centering
 \includegraphics[scale=1]{res/towers/tower_32.png}
 \caption{torre Hades32}
 \end{figure}
+
+Torre Hade 33: Esta torre tem como forma uma caveira roxa, possui um ataque de \textit{poison} que troca a cor do inimigo para verde.
+\begin{enumerate}
+\item Attack Speed 0.3 segundos.
+\item DAmage 30 hp.
+\end{enumerate}
 
 \begin{figure}[!htp]
 \centering
@@ -427,6 +485,11 @@ Botão de heras com os respectivos valores para a evolução das eras.
 \caption{torre de Hades33}
 \end{figure}
 
+Torre Hade 34: Esta torre tem como forma uma caveira verde, possui um ataque de rápido.
+\begin{enumerate}
+\item Attack Speed 0.2 segundos.
+\item DAmage 30 hp.
+\end{enumerate}
 
 \begin{figure}[!htp]
 \centering
@@ -436,6 +499,12 @@ Botão de heras com os respectivos valores para a evolução das eras.
 \caption{torre de Hades34}
 \end{figure}
 
+
+Torre Hade 35: Esta torre tem como forma uma caveira em cima de um mastro, é a torre mais rápida.
+\begin{enumerate}
+\item Attack Speed 0.1 segundos.
+\item DAmage 30 hp.
+\end{enumerate}
 
 \begin{figure}[!htp]
 \centering
@@ -897,94 +966,81 @@ Para a composição da musica do jogo tem-se três categorias uma abertura, fase
 \end{enumerate}
 
 \subsection{Efeitos Sonoros}
-{\LARGE \textbf{Deuses}}
 
 \begin{LARGE}
 \textbf{Waves}
-
 \end{LARGE}
-\item
-\textbf{Nome:} Anuncio de waves.
 
-\textbf{Descrição:} Tintilar de sino indicando que uma nova wave esta chegando. 
-
-\textbf{Utilização:} com 2 segundos para a entrada de uma nova \textit{wave}.
-
-\item
-\textbf{Nome:} Som referente ao tipo.
-
-\textbf{Descrição:} barulho característico ao tipo de monstro.
-
-\textbf{Utilização:} na entrada do monstro no campo.
-
-
-{\LARGE \textbf{Torres}}
-
-\item
-\textbf{Nome:} Som de ataque.
-
-\textbf{Descrição:} como cada Deus terá duas torres, tem-se duas sons de ataque diferentes um para cada torre, porém nestes três tipos de ataque acontecem variações de sons referentes ao deus associado a torre.
-
-\textbf{Utilização:} 
+\begin{enumerate}
+\item \begin{itemize}
+\item \textbf{Nome:} Anuncio de waves.
+\item \textbf{Descrição:} Tintilar de sino indicando que uma nova wave esta chegando. 
+\item \textbf{Utilização:} com 2 segundos para a entrada de uma nova \textit{wave}.
+\end{itemize}
+\item \begin{itemize}
+\item \textbf{Nome:} Som referente ao tipo.
+\item \textbf{Descrição:} barulho característico ao tipo de monstro.
+\item \textbf{Utilização:} na entrada do monstro no campo.
+\end{itemize}
+\item {\LARGE \textbf{Torres}}
 \begin{itemize}
+\item \textbf{Nome:} Som de ataque.
+\item \textbf{Descrição:} como cada Deus terá duas torres, tem-se duas sons de ataque diferentes um para cada torre, porém nestes três tipos de ataque acontecem variações de sons referentes ao deus associado a torre.
+\item \textbf{Utilização:} 
+\end{itemize}
+\item \begin{itemize}
 \item \textbf{Zeus}: Ao atacarem as torres terão variações de ataques com ruídos de raios e trovões.
 \item \textbf{Hades}: Para as torres de \textit{Hades}, tem-se variações ruídos de magia, semelhantes ao barulho de fumaça dos filmes.
 \item \textbf{Poseidon}: Para as torres do Poseidon, tem-se sons semelhantes ao barulho de água batendo no chão além de ondas de água.
 \end{itemize}
+\item {\LARGE \textbf{Cenário}}
 
-{\LARGE \textbf{Cenário}}
-
-\item
-\textbf{Nome:} Tilintar de moedas
-
-\textbf{Descrição:} um barulho de tilintar de moedas para indicar que houve alteração no \textit{gold} durante a compra de uma torre. 
-
-\textbf{Utilização:} é utilizado quando o \textit{gold} do jogador é reduzido.
-
-\item
-\textbf{Nome:} Vitoria
-
-\textbf{Descrição:} Uma dublagem semelhante a frase "\textit{You wim}" de jogos antigos, com um barulho de fundo semelhante a um "\textit{tam tanram}".
-
-\textbf{Utilização:} é utilizada quando o jogador vence as \textit{waves}.
-
-\item
-\textbf{Nome:} Derrota
-
-\textbf{Descrição:} Semelhante ao efeito de vitoria porém esta é inspirada na derrota de jogos como "God of War" ou "Mortal Kombat", sendo algo parecido com um tintilar de metais, além de uma frase parecida com "\textit{You Lose}".
-
-\textbf{Utilização:} utilizada quando o jogador morre.
-
-\item
-\textbf{Nome:} Click.
-
-\textbf{Descrição:} som de espada.
-\textbf{Utilização:} utilizado no menu de abertura.
-
-\item
-\textbf{Nome:} Hp baixando.
-
-\textbf{Descrição:} som indicando que o hp baixou.
-\textbf{Utilização:} utilizado quando um monstro atravessa a trilha.
-
-\item
-\textbf{Nome:} Level up.
-
-\textbf{Descrição:} som indicando a troca de eras.
-\textbf{Utilização:} na troca de eras.
-
-\item
-\textbf{Nome:} Local invalido
-
-\textbf{Descrição:} som indicando que o jogador tentou colocar uma torre em um local invalido.
-\textbf{Utilização:} ao tentar posicionar uma torre em um local invalido.
-
-\item
-\textbf{Nome:} Torre assentada no terreno
-
-\textbf{Descrição:} som indicando que a torre foi colocada no mapa.
-\textbf{Utilização:} ao inserir uma torre no mapa.
+\begin{itemize}
+\item \textbf{Nome:} Tilintar de moedas
+\item \textbf{Descrição:} um barulho de tilintar de moedas para indicar que houve alteração no \textit{gold} durante a compra de uma torre. 
+\item \textbf{Utilização:} é utilizado quando o \textit{gold} do jogador é reduzido.
+\end{itemize}
+\item \begin{itemize}
+\item \textbf{Nome:} Vitoria
+\item \textbf{Descrição:} Uma dublagem semelhante a frase "\textit{You wim}" de jogos antigos, com um barulho de fundo semelhante a um "\textit{tam tanram}".
+\item \textbf{Utilização:} é utilizada quando o jogador vence as \textit{waves}.
+\end{itemize}
+\item \begin{itemize}
+\item \textbf{Nome:} Derrota
+\item \textbf{Descrição:} Semelhante ao efeito de vitoria porém esta é inspirada na derrota de jogos como "God of War" ou "Mortal Kombat", sendo algo parecido com um tintilar de metais, além de uma frase parecida com "\textit{You Lose}".
+\item \textbf{Utilização:} utilizada quando o jogador morre.
+\end{itemize}
+\item \begin{itemize}
+\item \textbf{Nome:} Click.
+\item \textbf{Descrição:} som de espada.
+\item \textbf{Utilização:} utilizado no menu de abertura.
+\end{itemize}
+\item \begin{itemize}
+\item \textbf{Nome:} Hp baixando.
+\item \textbf{Descrição:} som indicando que o hp baixou.
+\item \textbf{Utilização:} utilizado quando um monstro atravessa a trilha.
+\end{itemize}
+\item \begin{itemize}
+\item \textbf{Nome:} Level up.
+\item \textbf{Descrição:} som indicando a troca de eras.
+\item \textbf{Utilização:} na troca de eras.
+\end{itemize}
+\item \begin{itemize}
+\item \textbf{Nome:} Local invalido
+\item \textbf{Descrição:} som indicando que o jogador tentou colocar uma torre em um local invalido.
+\item \textbf{Utilização:} ao tentar posicionar uma torre em um local invalido.
+\end{itemize}
+\item \begin{itemize}
+\item \textbf{Nome:} Torre assentada no terreno
+\item \textbf{Descrição:} som indicando que a torre foi colocada no mapa.
+\item \textbf{Utilização:} ao inserir uma torre no mapa.
+\end{itemize}
 \end{enumerate}
+
+
+
+
+
 \section{Requisitos tecnológicos}
 
 \begin{figure}[!htp]
