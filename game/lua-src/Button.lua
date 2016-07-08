@@ -97,7 +97,8 @@ tower_1_button = {
   height = 134,
   tower_price = 150,
   requirements = 0x0001,
-  description = "TORRE EXCELRENTEc"
+  description = "Descrição 1"
+
 }
 
 tower_2_button = {
@@ -113,7 +114,7 @@ tower_2_button = {
   height = 134,
   tower_price = 200,
   requirements = 0x0002,
-  description = "TORRE MT BOA"
+  description = "Descrição 2"
 }
 
 tower_3_button = {
@@ -129,7 +130,7 @@ tower_3_button = {
   height = 134,
   tower_price = 300,
   requirements = 0x0004,
-  description = "TORRE BOA 3"
+  description = "Descrição 3"
 }
 
 tower_4_button = {
@@ -145,7 +146,7 @@ tower_4_button = {
   height = 134,
   tower_price = 500,
   requirements = 0x0008,
-  description = "TORRE BOA"
+  description = "Descrição 4"
 }
 
 -- tier buttons below
