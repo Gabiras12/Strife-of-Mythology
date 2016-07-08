@@ -8,6 +8,7 @@
 #include <bitset>
 
 #include "button.h"
+#include "luascript.h"
 #include <vector>
 
 SoMTD::Button::Button(std::string texture_name, unsigned id, int x, int y, std::string mtexture, Player *m, int myp, std::vector<int> *args, std::string newdescription) :
@@ -180,8 +181,18 @@ SoMTD::Button::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
         c->draw(expression, m_x+50, m_y+90);
         c->draw(ijengine::resources::get_texture(tower_name).get(), m_x+15, m_y-10);
         if (m_mouseover) {
+            int last_bit_button = (m_id & 0xF);
+            int last_bit_panel = m_player->tower_panel_id() & 0xF;
+            last_bit_panel = last_bit_panel << 4;
+            int desired_tower = last_bit_panel | last_bit_button;
+            LuaScript towers_list("lua-src/Tower.lua");
+            std::string affix = "tower_";
+            ostringstream convert2;
+            convert2 << desired_tower;
+            affix.append(convert2.str());
+
             c->draw(ijengine::resources::get_texture("towers/containertorre.png").get(), m_x - 70, m_y-180);
-            c->draw(m_description, m_x-10, m_y-120);
+            c->draw(towers_list.get<std::string>((affix) + ".description").c_str(), m_x-10, m_y-120);
         }
     }
 }

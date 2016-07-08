@@ -8,7 +8,8 @@ tower_0 = {
   selected_file_path = "towers/tower_0.png",
   attack_speed = 2.0,
   damage = 50,
-  id = 0x0
+  id = 0x0,
+  description = "Olympus Guard Tower"
 }
 
 tower_1 = {
@@ -20,7 +21,8 @@ tower_1 = {
   selected_file_path = "towers/tower_1.png",
   attack_speed = 1.5,
   damage = 100,
-  id = 0x1
+  id = 0x1,
+  description = "desc1"
 }
 
 tower_2 = {
@@ -32,7 +34,8 @@ tower_2 = {
   selected_file_path = "towers/tower_2.png",
   attack_speed = 1.5,
   damage = 150,
-  id = 0x2
+  id = 0x2,
+  description = "desc1"
 }
 
 tower_3 = {
@@ -44,7 +47,8 @@ tower_3 = {
   selected_file_path = "towers/tower_3.png",
   attack_speed = 1.0,
   damage = 200,
-  id = 0x3
+  id = 0x3,
+  description = "desc1"
 }
 
 -- POSEIDON TOWERS
@@ -57,7 +61,8 @@ tower_16 = {
   selected_file_path = "towers/tower_16.png",
   attack_speed = 3,
   damage = 0,
-  id = 0x10
+  id = 0x10,
+  description = "desc1"
 }
 
 tower_17 = {
@@ -69,7 +74,8 @@ tower_17 = {
   selected_file_path = "towers/tower_17.png",
   attack_speed = 2,
   damage = 0,
-  id = 0x11
+  id = 0x11,
+  description = "desc1"
 }
 
 tower_18 = {
@@ -81,7 +87,8 @@ tower_18 = {
   selected_file_path = "towers/tower_18.png",
   attack_speed = 2.0,
   damage = 0,
-  id = 0x12
+  id = 0x12,
+  description = "desc1"
 }
 
 tower_19 = {
@@ -93,7 +100,8 @@ tower_19 = {
   selected_file_path = "towers/tower_19.png",
   attack_speed = 1.5,
   damage = 0,
-  id = 0x13
+  id = 0x13,
+  description = "desc1"
 }
 
 -- HADES TOWERS
@@ -107,7 +115,8 @@ tower_32 = {
   attack_speed = 0.3,
   damage = 20,
 
-  id = 0x100
+  id = 0x100,
+  description = "desc1"
 }
 
 tower_33 = {
@@ -119,7 +128,8 @@ tower_33 = {
   selected_file_path = "towers/tower_33_holding.png",
   attack_speed = 0.3,
   damage = 30,
-  id = 0x101
+  id = 0x101,
+  description = "desc"
 }
 
 tower_34 = {
@@ -131,7 +141,8 @@ tower_34 = {
   selected_file_path = "towers/tower_34_holding.png",
   attack_speed = 0.2,
   damage = 30,
-  id = 0x102
+  id = 0x102,
+  description = "desc"
 }
 
 tower_35 = {
@@ -143,5 +154,6 @@ tower_35 = {
   selected_file_path = "towers/tower_35_holding.png",
   attack_speed = 0.1,
   damage = 30,
-  id = 0x103
+  id = 0x103,
+  description = "desc"
 }
