@@ -131,7 +131,8 @@
 \section{Objetivo do jogo}
 
 O \textit{\textbf{SoMTD}} é um jogo de estilo\textit{ Tower Defense}, onde o objetivo é impedir que as \textit{waves} de monstros avancem pela caminho utilizando torres que atacam estas \textit{waves}, estas torres são pertencentes a três Deuses.
- A medida em que as \textit{waves} são vencidas, elas ficam mais fortes e difíceis de derrotar. Nisto haverá um recurso que servirá para evoluir e construir novas torres, o qual será obtido conforme os monstros forem derrotados.
+
+ A medida em que as \textit{waves} são vencidas, elas ficam mais fortes e difíceis de derrotar. Nisto haverá um recurso que servirá para evoluir, desbloquear e construir novas torres, o qual será obtido conforme os monstros forem derrotados.
 
 \section{Glossário}
 \begin{itemize}
@@ -154,9 +155,9 @@ As torres pertencem  três Deuses sendo eles:
 \item Poseidon.
 \end{itemize}
 
-Cada Deus terá um conjunto de Torres a seu dispor, divididas em 2 categorias sendo que cada categoria possuirá uma singularidade em relação as demais, possuindo assim vantagens em relação a alguns tipos de monstros e desvantagens em relação a outros tipos de monstros.
+Cada Deus terá um conjunto de quatro Torres a seu dispor, divididas em 4 categorias sendo que cada categoria possuirá uma singularidade em relação as demais, possuindo assim vantagens em relação a alguns tipos de monstros e desvantagens em relação a outros tipos de monstros.
 
-Ao iniciar o jogo, o jogador terá uma quantidade de ouro suficiente para adquirir e colocar torres de forma estratégica, tentando evitar a passagem dos inimigos pela trilha, sendo que no início do jogo apenas um tipo de torre por Deus estará disponível, tais torres podem ser evoluídas ao passo que a torre selecionada consiga destruir os monstros. 
+Ao iniciar o jogo, o jogador terá uma quantidade de ouro suficiente para adquirir e colocar torres de forma estratégica, tentando evitar a passagem dos inimigos pela trilha, sendo que no início do jogo apenas um tipo de torre por Deus estará disponível, tais torres podem ser evoluídas ao passo que o jogador consiga evoluir de era. 
 
 A mudança de cenário ocorrerá ao decorrer do jogo, a medida em que as \textit{waves} forem derrotadas o jogador alcançará pontos de performance, que ao completar a barra referente a estes pontos, ocorrerá uma troca de era, havendo assim a mudança de fase e consequentemente de cenário. 
 
@@ -183,7 +184,7 @@ A movimentação das \textit{waves} será em um caminho pré-determinado, cabend
 \subsubsection{Resolução}
 A resolução do jogo será de 1124x700 \textit{pixels}, esta resolução deve dar um tamanho confortável para o jogador que terá a disposição um mapa relativamente grande.
 
-Os monstros terão uma resolução que pode variar bastante dependo do artista que desenvolver o protótipo para tal monstro, sendo aconselhável que tenha aproximadamente 30 \textit{pixels} de largura e 50 \textit{pixels} de largura, porém este valor é relativo uma vez que os monstros possuem características físicas diferentes.
+Os monstros terão uma resolução que pode variar bastante dependo do artista que desenvolver o protótipo para tal monstro, sendo aconselhável que tenha aproximadamente 30 \textit{pixels} de largura e 50 \textit{pixels} de altura, porém este valor é relativo uma vez que os monstros possuem características físicas diferentes.
 
 Para as torres definimos algo entre 80 a 100 \textit{pixels} de altura e 50 a 70 \textit{pixels} de largura, porém se o artista achar necessário fugir um pouco deste \textit{range}, para melhorar a caracterização do personagem e permanecendo dentro do \textit{Tile}, poderá haver esta mudança.
 
@@ -222,8 +223,15 @@ A câmera do jogo será 2D estática em um mapa isométrico, como exemplificado 
 
 O HUD (Heads-Up Display) será composto de um menu inferior o qual será dividido em três secções, sendo elas:
 \begin{itemize}
-\item Um box contendo os três Deuses, ao clicar no Deus, atualizara o menu central que contem as três torres, duas de \textit{Tiler 1} e uma de \textit{Tiler 2}, exibindo os valores referentes as torres deste deus.
-\item Continuando no box inferior esquerdo, tem-se um espaço para exibição de uma breve descrição sobre o Deus, que pode ser exibida a medida que o jogador passa o mouse em cima de cada \textit{deus}.
+\item Um box contendo os três Deuses e os botões referentes as eras, ao clicar no Deus ocorre a atualização do menu central que contem as quatros torres deste deus, estas torres terão níveis de poder diferentes iniciando obviamente na mais fraca até a mais forte, ao passar o mouse em cima das torres uma box exibindo as informações referentes a esta torres é exibida.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=1]{res/box_dos_deuses.png}
+\caption{Box dos Deuses, com os botões das eras e dos deuses}
+\label{HUD}
+\end{figure}
+
 \item No centro como dito anteriormente tem-se as três torres existentes sendo que as torres disponíveis possuem uma estrela para indicar que as mesmas são selecionáveis, caso a torre esteja bloqueada, um \textit{\textbf{"X"}} ocupa o lugar da estrela. Há também neste box, abaixo da figura das torres uma representação em \textit{gold} alcançada pelas torres deste tipo.
 \item No box do conto inferior direito tem-se a torre selecionada, esta torre fica com um tom mais claro no menu central.
 \item No canto superior esquerdo tem-se a barra de \textit{HP}, do jogador.
