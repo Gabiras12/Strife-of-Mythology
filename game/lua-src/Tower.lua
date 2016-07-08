@@ -7,7 +7,7 @@ tower_0 = {
   frame_per_state = 4,
   selected_file_path = "towers/tower_0.png",
   attack_speed = 2.0,
-  damage = 100,
+  damage = 50,
   id = 0x0
 }
 
@@ -18,8 +18,8 @@ tower_1 = {
   total_states = 1,
   frame_per_state = 4,
   selected_file_path = "towers/tower_1.png",
-  attack_speed = 2.0,
-  damage = 40,
+  attack_speed = 1.5,
+  damage = 100,
   id = 0x1
 }
 
@@ -30,8 +30,8 @@ tower_2 = {
   total_states = 1,
   frame_per_state = 4,
   selected_file_path = "towers/tower_2.png",
-  attack_speed = 2.0,
-  damage = 100,
+  attack_speed = 1.5,
+  damage = 150,
   id = 0x2
 }
 
@@ -42,8 +42,8 @@ tower_3 = {
   total_states = 1,
   frame_per_state = 4,
   selected_file_path = "towers/tower_3.png",
-  attack_speed = 2.0,
-  damage = 100,
+  attack_speed = 1.0,
+  damage = 200,
   id = 0x3
 }
 
