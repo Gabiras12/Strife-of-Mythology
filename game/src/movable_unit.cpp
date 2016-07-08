@@ -181,8 +181,19 @@ SoMTD::MovableUnit::draw_self(ijengine::Canvas *c, unsigned a1, unsigned a2)
 void
 SoMTD::MovableUnit::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
 {
-    ijengine::Rectangle rect(m_x+100/2, m_y-20, 100*hp_percentage()/200, 5);
-    c->draw(rect);
+    int width = ijengine::resources::get_texture("lifesheet.png")->w()/20;
+
+    ijengine::Rectangle rect(0, 0, 460/20, 6);
+    int total = 100;
+    for (int i=0; i < 20; ++i) {
+        if (hp_percentage() >= total) {
+            rect.set_position(width*i, 0);
+            break;
+        }
+        total -= 5;
+    }
+
+    c->draw(ijengine::resources::get_texture("lifesheet.png").get(), rect, m_x+100/2, m_y-20);
 }
 
 int
