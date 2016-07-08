@@ -854,7 +854,7 @@ Um circulo em volta do cursor será formado, para indicar o alcance de ataque da
 
 \section{Front End}
 
-O \textit{Front End} do jogo terá  cinco telas principais, sendo elas, menu de \textit{Abertura}, \textit{Gameplay} e \textit{Créditos}, uma quarta tela de vitoria e a quinta tela de game over. A seguir uma representação das telas do jogo.
+O \textit{Front End} do jogo terá seis telas principais, sendo elas, menu de \textit{Abertura}, \textit{Gameplay} e \textit{Créditos}, uma quarta tela de vitoria, a quinta tela de game over e a sexta a tela de opções. A seguir uma representação das telas do jogo.
 
 \subsection{Tela de Abertura}
 A tela de abertura do jogo dará acesso para outras duas telas, que são: \textit{Gameplay} e \textit{Credits}.
@@ -864,6 +864,7 @@ Nesta tela haverá a imagem do jogo ao fundo, e um menu com as seguintes opçõe
 \textit{Crédits} para exibição dos créditos.
 \textit{Exit} que fechara o jogo.
 Estes botões serão pretos, e quando o jogador passar o mouse por cima destes botões, eles ficarão brancos.\\
+\textit{Tela de Opções} para configurações a respeito do jogo, como o volume.
 
 \begin{figure}[!htp]
 \centering
@@ -910,12 +911,21 @@ Na tela de \textit{Cr} exibe-se o nome e a função de cada um dos integrantes d
 \begin{figure}[!htp]
 \centering
 \includegraphics[scale=0.3]{res/credits_display.png}
-\caption{Logo da SDL}
-\label{Logo da SDL}
+\caption{Creditos}
 \end{figure}
 
 \newpage
 
+\subsection{Tela de Opções}
+Nesta tela é possível configurar o volume da musica e dos efeitos sonoros do jogo.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.3]{res/musica.png}
+\caption{Tela de Opções}
+\end{figure}
+
+\newpage
 \subsection{Tela de Game Over}
 
 Para a tela de game over, tem-se somente a imagem de game over no centro da tela, e um delay de cinco segundos que redireciona para a tela de abertura do jogo. 
