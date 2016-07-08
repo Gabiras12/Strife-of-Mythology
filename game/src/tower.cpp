@@ -190,7 +190,7 @@ SoMTD::Tower::handle_idle_state(unsigned, unsigned)
 }
 
 void
-SoMTD::Tower::handle_attacking_state(unsigned now, unsigned)
+SoMTD::Tower::handle_attacking_state(unsigned now, unsigned last)
 {
     if (now > m_cooldown) {
         if (m_target) {
@@ -199,9 +199,8 @@ SoMTD::Tower::handle_attacking_state(unsigned now, unsigned)
                 double dy = animation()->screen_position().second - target()->animation()->screen_position().second;
                 double distance = sqrt(dx*dx + dy*dy);
                 if (distance < range()+target()->animation()->width()/2) {
-                    Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_caveira.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
-                    m_projectiles->push_back(p);
-                    m_cooldown = now+1000*attack_speed();
+                    attack(m_target, now, last);
+
                     if (m_id == 0x001)
                         m_player->increase_gold(damage());
                 } else {
@@ -225,8 +224,49 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
     switch (id()) {
         // poseidon towers
         case 0x10:
+
+          if (m_cooldown < now) {
+            m_cooldown = now+attack_speed()*1000;
+            m_target = newtarget;
+            m_actual_state = State::ATTACKING;
+            Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_poseidon.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+            m_projectiles->push_back(p);
+            newtarget->suffer_slow(700, 2000, now, last);
+          }
+          break;
+
         case 0x11:
+          if (m_cooldown < now) {
+            m_cooldown = now+attack_speed()*1000;
+            m_target = newtarget;
+            m_actual_state = State::ATTACKING;
+            Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_poseidon.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+            m_projectiles->push_back(p);
+            newtarget->suffer_slow(700, 1500, now, last);
+          }
+          break;
+
         case 0x12:
+
+        if (m_cooldown < now) {
+            m_cooldown = now+attack_speed()*1000;
+            m_actual_state = IDLE;
+
+            /* pushing an slow event to the queue of events. the first
+             * argument is the x_position of the unit, the second argument
+             * is the y_position of the unit, the third argument is the
+             * range of the slow, 4th argument is the dmg of the slow,
+             * 5th argument is the slow coefficient, and 6th the time penalization */
+            player()->units_events()->push_back(0x000);
+            player()->event_args()->push_back((int)newtarget->x());
+            player()->event_args()->push_back((int)newtarget->y());
+            player()->event_args()->push_back(50);
+            player()->event_args()->push_back(damage());
+            player()->event_args()->push_back(600);
+            player()->event_args()->push_back(2000);
+        }
+        break;
+
         case 0x13:
             if (m_cooldown < now) {
                 m_cooldown = now+attack_speed()*1000;
@@ -243,7 +283,7 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
                 player()->event_args()->push_back(50);
                 player()->event_args()->push_back(damage());
                 player()->event_args()->push_back(500);
-                player()->event_args()->push_back(2000);
+                player()->event_args()->push_back(3000);
             }
             break;
 
