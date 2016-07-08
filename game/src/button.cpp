@@ -192,7 +192,7 @@ SoMTD::Button::draw_self_after(ijengine::Canvas *c, unsigned, unsigned)
             affix.append(convert2.str());
 
             c->draw(ijengine::resources::get_texture("towers/containertorre.png").get(), m_x - 70, m_y-180);
-            c->draw(towers_list.get<std::string>((affix) + ".description").c_str(), m_x-10, m_y-120);
+            c->draw(towers_list.get<std::string>((affix) + ".description").c_str(), m_x-50, m_y-120);
         }
     }
 }

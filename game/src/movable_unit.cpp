@@ -64,6 +64,7 @@ SoMTD::MovableUnit::MovableUnit(
 SoMTD::MovableUnit::~MovableUnit()
 {
     delete m_status_list;
+    delete m_animation;
     ijengine::event::unregister_listener(this);
 }
 

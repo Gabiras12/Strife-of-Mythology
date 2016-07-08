@@ -22,7 +22,7 @@ tower_1 = {
   attack_speed = 1.5,
   damage = 100,
   id = 0x1,
-  description = "desc1"
+  description = "Olympus Advanced Guard Tower"
 }
 
 tower_2 = {
@@ -35,7 +35,7 @@ tower_2 = {
   attack_speed = 1.5,
   damage = 150,
   id = 0x2,
-  description = "desc1"
+  description = "Olympus Wonder Tower"
 }
 
 tower_3 = {
@@ -48,7 +48,7 @@ tower_3 = {
   attack_speed = 1.0,
   damage = 200,
   id = 0x3,
-  description = "desc1"
+  description = "Olympus Gold Tower"
 }
 
 -- POSEIDON TOWERS
@@ -62,7 +62,7 @@ tower_16 = {
   attack_speed = 3,
   damage = 0,
   id = 0x10,
-  description = "desc1"
+  description = "Atlantis Crystal Tower"
 }
 
 tower_17 = {
@@ -75,7 +75,7 @@ tower_17 = {
   attack_speed = 2,
   damage = 0,
   id = 0x11,
-  description = "desc1"
+  description = "Atlantis Guard Boat Tower"
 }
 
 tower_18 = {
@@ -88,7 +88,7 @@ tower_18 = {
   attack_speed = 2.0,
   damage = 0,
   id = 0x12,
-  description = "desc1"
+  description = "Atlantis Kraken Tower"
 }
 
 tower_19 = {
@@ -101,7 +101,7 @@ tower_19 = {
   attack_speed = 1.5,
   damage = 0,
   id = 0x13,
-  description = "desc1"
+  description = "Atlantis Forbidden Kraken Tower"
 }
 
 -- HADES TOWERS
@@ -114,9 +114,8 @@ tower_32 = {
   selected_file_path = "towers/tower_32_holding.png",
   attack_speed = 0.3,
   damage = 20,
-
   id = 0x100,
-  description = "desc1"
+  description = "Underworld Obelisk"
 }
 
 tower_33 = {
@@ -129,7 +128,7 @@ tower_33 = {
   attack_speed = 0.3,
   damage = 30,
   id = 0x101,
-  description = "desc"
+  description = "Underworld Death Tower"
 }
 
 tower_34 = {
@@ -142,7 +141,7 @@ tower_34 = {
   attack_speed = 0.2,
   damage = 30,
   id = 0x102,
-  description = "desc"
+  description = "Underworld Poisoned Death Tower"
 }
 
 tower_35 = {
@@ -155,5 +154,5 @@ tower_35 = {
   attack_speed = 0.1,
   damage = 30,
   id = 0x103,
-  description = "desc"
+  description = "Underworld Sacrifice Tower"
 }

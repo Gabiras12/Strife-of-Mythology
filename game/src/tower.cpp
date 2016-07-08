@@ -35,6 +35,7 @@ SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::st
 SoMTD::Tower::~Tower()
 {
     delete m_projectiles;
+    delete m_animation;
     ijengine::event::unregister_listener(this);
 }
 
