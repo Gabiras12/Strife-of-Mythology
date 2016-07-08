@@ -677,7 +677,7 @@ Tem-se para todos os inimigos quatro tipos de cores, a normal e outras três ver
 
 \section{Saúde}
 
-O jogador terá uma barra de vida com 50 HP, esta barra não conterá valores visíveis ao jogador, sendo uma longa barra vermelha no canto superior esquerdo, a qual terá o símbolo em formato de cruz vermelha, mundialmente conhecido como símbolo de saúde.
+O jogador terá uma barra de vida com 100 HP, esta barra não conterá valores visíveis ao jogador, sendo uma longa barra vermelha no canto superior esquerdo, a qual terá o símbolo em formato de cruz vermelha, mundialmente conhecido como símbolo de saúde.
 
 \begin{figure}[!htp]
 \centering
@@ -686,28 +686,7 @@ O jogador terá uma barra de vida com 50 HP, esta barra não conterá valores vi
 \label{Saúde}
 \end{figure}
  
-A barra de hp decairá a medida que os inimigos atravessem o mapa, sendo que cada tipo de inimigo tem uma pontuação diferente, tais valores são estes abaixo:
-
-\begin{itemize}
- \item Norma = -2 
- \item Tanker = -5
- \item Speed = -3
- \item Fly = -3
- \end{itemize} 
-
-Quando a saúde atingir um nível de 20\% a música será trocada para um ritmo mais tenso, para dar mais emoção ao jogo, também ocorrerá a troca da imagem de fundo para um tom mais avermelhado.
-
-\begin{figure}[!htp]
-\centering
-\includegraphics[scale=0.3]{res/danger.png}
-\caption{Demonstração da Saúde no mapa do jogo em um baixa hp}
-\label{Saúde}
-\end{figure}
-
-\subsection{Restauração}
-A saúde não será restaurada durante a partida, acontecendo somente quando o jogador passar de fase, quando ocorrer o jogador terá sua barra de \textit{HP} restaurada em 30 HP, ou seja se o jogador terminou a primeira fase com somente 10 de \textbf{HP}, ele começara a segunda fase com \textbf{40 HP}, e assim sucessivamente nas demais fases do jogo.  
-
-O estado do jogo não será salvo, somente os mapas abertos serão salvos no jogo.
+A barra de hp decairá a medida que os inimigos atravessem o mapa, sendo que cada tipo de inimigo tem uma pontuação diferente, tal valor esta descrito na secção inimigos, no tópico \textbf{DiscountHP}:
 
 \subsection{Game Over}
 O \textit{game Over} só ocorrera se a barra de \textbf{HP} for zerada, assim quando ocorrer uma grande mensagem cobrira a tela do jogo com a frase de \textbf{Game Over}, e as opções para uma nova partida ou para fechar o jogo.
@@ -729,30 +708,27 @@ Os \textit{golds}, são acumulativos ao decorrer das fases, sendo perdidos somen
 Toda pontuação do jogador será obtido através dos monstros derrotados, quanto mais forte for o inimigo  maior será a recompensa em ouro, sendo que cada um dos monstros possuem uma pontuação diferente, tal pontuação possui os seguinte valores:
 
 \begin{itemize}
- \item Norma = 2 Golds
- \item Tanker = 5 Golds
- \item Speed = 3 Golds
- \item Fly = 3 Golds
+ \item Norma = 10 Golds
+ \item Tanker = 40 Golds
+ \item Speed = 15 Golds
+ \item Fly = 8 Golds
  \end{itemize} 
  
-Como as torres tem dois \textit{Tiers}, haverá valores diferentes para as torres de cada \textit{Tiers}, assim para as torres de \textit{Tier 1}, ou seja de nível mais baixo, serão necessários 20 \textit{Golds} para aquisição das mesmas, já para as torres de \textit{Tier 2} será necessária a quantia de 40 \textit{golds} para aquisição das mesmas, caso estas estejam disponíveis, uma vez que para liberar o acesso a torres de \textit{Tier 2} é necessário alcançar 40 golds na torre de \textit{Tier 1} respectiva, por exemplo para liberar as torres de \textit{Tier 2} do \textit{Deus} \textbf{Zeus} é necessário alcançar a marca de 40 golds nas torres de \textit{Tier 1} do \textbf{Zeus}, e assim respectivamente nos outros \textbf{Deuses}.
+Como as torres tem quatro \textit{Tiers}, haverá valores diferentes para as torres de cada \textit{Tiers}, assim para as torres de \textit{Tier 1}, ou seja de nível mais baixo, serão necessários 150 \textit{Golds} para aquisição das mesmas, já para as torres de \textit{Tier 2} será necessária a quantia de 200 \textit{golds} para aquisição das mesmas, caso estas estejam disponíveis.
 
-Não haverá diferenciação nos valores entre as torres por Deuses, somente entre os \textit{Tiers} das torres, assim cada Deus terá torres nos dois \textit{Tiers} existentes.
+\begin{itemize}
+ \item Tier 1 = 150 Golds
+ \item Tier 2 = 200 Golds
+ \item Tier 3 = 300 Golds
+ \item Tier 4 = 500 Golds
+ \end{itemize} 
  
-No inicio do jogo, tem-se disponível a quantia de ouro suficiente para a compra de somente duas torres de \textit{Tier 1}, ou seja 40 golds, as quais podem ser de investidas nas torres de qualquer um dos Deuses.  
-
-Caso o jogador se arrependa de ter posicionado uma torre em um local ineficiente, ou por qualquer outro motivo que seja, ele terá a opção de recupera metade do \textit{gold} investido, retirando a torre do local, ou sejá uma torre que custa 20 golds, terá 10 \textit{golds} recuperados.
  
+Não haverá diferenciação nos valores entre as torres por Tier, ou seja uma torre de tier 1 do Zeus custa o mesmo valor que uma torre de Tier 1 do Poseidon.Assim cada Deus terá torres em todos os \textit{Tiers} existentes.
+ 
+No inicio do jogo, tem-se disponível a quantia de 1000 golds em ouro, suficiente para a compra de alguns torres que pode ser de investidas nas torres de qualquer um dos Deuses.
  
 O \textit{gold} será representado por um imagem de ouro e uma quantia ao lado da imagem, essa representação será posicionada no canto superior direito da tela. Também tem-se uma imagem contendo o valor de \textit{gold} alcançado por cada torre existente, este valor fica no HUD abaixo da torre em questão.
-
-Resumindo tem-se a seguinte lista com os valores das torres:
-\begin{itemize}
- \item Tier 1 = 20 Golds.
- \item Tier 2 = 40 Golds.
- \item Liberar Tier 2 = 40 Golds em uma torre de Tier 1.
- \item Recuperar torre = perca de metade dos golds.
-\end{itemize} 
 
 \begin{figure}[!htp]
 \centering
@@ -923,48 +899,23 @@ Para a composição da musica do jogo tem-se três categorias uma abertura, fase
 \subsection{Efeitos Sonoros}
 {\LARGE \textbf{Deuses}}
 
-\begin{enumerate}
-\item 
-\textbf{Nome:} Dublagem. 
-
-\textbf{Descrição}: haverá uma dublagem relativa ao deus e quando um deus for selecionado uma a frase especifica será lançada.
-
-\textbf{Utilização:} Será utilizada quando o jogador clicar na imagem de um deus no painel. Tem-se as seguintes frases relativas aos deuses:
-\begin{itemize}
-\item \textbf{Zeus}: "Eu sou o pai dos homens e dos Deuses".
-\item \textbf{Hades}: "Temam o poder do deus do sub mundo".
-\item \textbf{Poseidon}: "Eu sou o Deus supremo dos mares e dos Oceanos, temam o meu poder".
-\end{itemize}
-
-\item
-\textbf{Nome:} Efeito ao selecionar o Deus.
-
-\textbf{Descrição}: Ao clicar em um deus além da dublagem tem-se um efeito característico ao Deus associado, este efeito é rápido e com um volume baixo, uma vez que o jogador ira clicar varias vezes nos Deuses ao decorrer da partida, este efeito pode ser desligado, porém ao desliga-lo, desliga-se também a dublagem.
-
-\textbf{Utilização:} Será utilizado ao clicar em um deus.
-\begin{itemize}
-\item \textbf{Zeus}: barulho de trovão.
-\item \textbf{Hades}: ruídos de magia.
-\item \textbf{Poseidon}: barulho de ondas.
-\end{itemize}
-
 \begin{LARGE}
 \textbf{Waves}
 
 \end{LARGE}
 \item
-\textbf{Nome:} Movimentação das waves
+\textbf{Nome:} Anuncio de waves.
 
-\textbf{Descrição:} tem-se um leve barulho de passos para os monstros (\textit{medusa, minotauro, cyclop} e um som de bater de assas para as harpias, estes sons devem ser baixos e acontecem principalmente quando uma nova \textit{wave} está entrando no cenário, diminuindo gradativamente na partida, para evitar uma poluição sonora no jogo.  
+\textbf{Descrição:} Tintilar de sino indicando que uma nova wave esta chegando. 
 
-\textbf{Utilização:} utiliza-se este efeito quando as \textit{waves} entrarem no cenário.
+\textbf{Utilização:} com 2 segundos para a entrada de uma nova \textit{wave}.
 
 \item
-\textbf{Nome:} Morte dos monstros
+\textbf{Nome:} Som referente ao tipo.
 
-\textbf{Descrição:} leve efeito semelhante a um "\textit{pou}", ou um barulho de fumaça. Este efeito é bem curto com aproximadamente 1 segundo. Todos os monstros compartilharão do mesmo efeito.
+\textbf{Descrição:} barulho característico ao tipo de monstro.
 
-\textbf{Utilização:} na morte de um monstro.
+\textbf{Utilização:} na entrada do monstro no campo.
 
 
 {\LARGE \textbf{Torres}}
@@ -1005,11 +956,34 @@ Para a composição da musica do jogo tem-se três categorias uma abertura, fase
 \textbf{Utilização:} utilizada quando o jogador morre.
 
 \item
-\textbf{Nome:} Inimigo atravessando o campo.
+\textbf{Nome:} Click.
 
-\textbf{Descrição:} Um chiado para representar que um inimigo chegou ao final do campo.
-\textbf{Utilização:} utilizado quando um inimigo atravessa e chega no final do campo.
+\textbf{Descrição:} som de espada.
+\textbf{Utilização:} utilizado no menu de abertura.
 
+\item
+\textbf{Nome:} Hp baixando.
+
+\textbf{Descrição:} som indicando que o hp baixou.
+\textbf{Utilização:} utilizado quando um monstro atravessa a trilha.
+
+\item
+\textbf{Nome:} Level up.
+
+\textbf{Descrição:} som indicando a troca de eras.
+\textbf{Utilização:} na troca de eras.
+
+\item
+\textbf{Nome:} Local invalido
+
+\textbf{Descrição:} som indicando que o jogador tentou colocar uma torre em um local invalido.
+\textbf{Utilização:} ao tentar posicionar uma torre em um local invalido.
+
+\item
+\textbf{Nome:} Torre assentada no terreno
+
+\textbf{Descrição:} som indicando que a torre foi colocada no mapa.
+\textbf{Utilização:} ao inserir uma torre no mapa.
 \end{enumerate}
 \section{Requisitos tecnológicos}
 
