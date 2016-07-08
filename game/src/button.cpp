@@ -24,6 +24,7 @@ SoMTD::Button::Button(std::string texture_name, unsigned id, int x, int y, std::
     m_mouseover = false;
     m_infos = args;
     ijengine::event::register_listener(this);
+    m_menu_level = nullptr;
 }
 
 SoMTD::Button::~Button()
@@ -60,7 +61,7 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
                 m_player->open_tower_panel(m_id);
                 return true;
             }
-            if (m_menu_level != nullptr && m_menu_level->m_level_name == "menuoptions") {
+            if (m_menu_level != nullptr && m_menu_level && m_menu_level->m_level_name == "menuoptions") {
                 switch (m_id) {
                     case 40:
                         ijengine::audio::set_audio_volume(0.0);
