@@ -122,3 +122,13 @@ coins_tier_panel_3 = {
   priority = 500220,
   id = 0xFFF8,
 }
+
+options_panel = {
+  file_path = "options_panel.png",
+  screen_position = {
+    x = 154,
+    y = 200
+  },
+  priority = 500220,
+  id = 0xFFF8,
+}
