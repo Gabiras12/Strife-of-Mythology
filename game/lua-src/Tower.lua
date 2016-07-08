@@ -55,7 +55,7 @@ tower_16 = {
   total_states = 1,
   frame_per_state = 4,
   selected_file_path = "towers/tower_16.png",
-  attack_speed = 2,
+  attack_speed = 3,
   damage = 0,
   id = 0x10
 }
@@ -67,7 +67,7 @@ tower_17 = {
   total_states = 1,
   frame_per_state = 4,
   selected_file_path = "towers/tower_17.png",
-  attack_speed = 1.0,
+  attack_speed = 2,
   damage = 0,
   id = 0x11
 }

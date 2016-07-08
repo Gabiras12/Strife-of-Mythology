@@ -231,7 +231,7 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
             m_actual_state = State::ATTACKING;
             Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_poseidon.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
             m_projectiles->push_back(p);
-            newtarget->suffer_slow(700, 2000, now, last);
+            newtarget->suffer_slow(400, 3000, now, last);
           }
           break;
 
@@ -242,7 +242,7 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
             m_actual_state = State::ATTACKING;
             Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_poseidon.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
             m_projectiles->push_back(p);
-            newtarget->suffer_slow(700, 1500, now, last);
+            newtarget->suffer_slow(400, 2000, now, last);
           }
           break;
 
