@@ -854,7 +854,7 @@ Um circulo em volta do cursor será formado, para indicar o alcance de ataque da
 
 \section{Front End}
 
-O \textit{Front End} do jogo terá  quatro telas principais, sendo elas, menu de \textit{Abertura}, \textit{Fases}, \textit{Gameplay} e \textit{Créditos}, além de uma tela auxiliar de carregamento \textit{loading screen}. A seguir uma representação das telas do jogo.
+O \textit{Front End} do jogo terá  cinco telas principais, sendo elas, menu de \textit{Abertura}, \textit{Gameplay} e \textit{Créditos}, uma quarta tela de vitoria e a quinta tela de game over. A seguir uma representação das telas do jogo.
 
 \subsection{Tela de Abertura}
 A tela de abertura do jogo dará acesso para outras duas telas, que são: \textit{Gameplay} e \textit{Credits}.
@@ -916,6 +916,38 @@ Na tela de \textit{Cr} exibe-se o nome e a função de cada um dos integrantes d
 
 \newpage
 
+\subsection{Tela de Game Over}
+
+Para a tela de game over, tem-se somente a imagem de game over no centro da tela, e um delay de cinco segundos que redireciona para a tela de abertura do jogo. 
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.3]{res/game_over.png}
+\caption{Tela de Game Over}
+\label{Game Over}
+\end{figure}
+\newpage
+\newpage
+
+\subsection{Tela de Vitoria}
+
+Na tela tem um box central transparente com o nome "congratulations" escrito, e acima deste nome tem-se o espaço para três estrelas que refere-se as fases vencidas pelo jogado, caso ele tenha vencido a fase o espaço fica preenchido com uma estrela amarela, caso contrario fica vazio.
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.3]{res/win_display_all.png}
+\caption{Tela de vitoria com todas as fases vencidas}
+\label{Logo da SDL}
+\end{figure}
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[scale=0.3]{res/win_display_fase1.png}
+\caption{Tela de vitoria com somente a primeira fase vencida}
+\label{Logo da SDL}
+\end{figure}
+
+
+\newpage
 \subsection{Logo}
 
 A logo a seguir o logo do SomTD].
