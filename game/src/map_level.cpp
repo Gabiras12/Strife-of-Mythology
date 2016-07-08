@@ -519,7 +519,7 @@ SoMTD::MapLevel::handle_idle_state(unsigned now, unsigned last)
 {
     if (not m_state_started_at)
         m_state_started_at = now;
-    if (now > 5000+m_state_started_at) {
+    if (now > 10000+m_state_started_at) {
         transition_to(IDLE, PLAYING, now, last);
     }
 }
@@ -527,7 +527,7 @@ SoMTD::MapLevel::handle_idle_state(unsigned now, unsigned last)
 void
 SoMTD::MapLevel::handle_resting_state(unsigned now, unsigned last)
 {
-    if (now > m_state_started_at + 5000) {
+    if (now > m_state_started_at + 10000) {
         transition_to(RESTING, PLAYING, now, last);
     }
 }
@@ -643,8 +643,8 @@ std::string
 SoMTD::MapLevel::set_time_to_start_wave(unsigned now){
 
   std::ostringstream convert;
-  convert << 5 - (now - m_state_started_at)/1000;
-  if (( 5 - (now - m_state_started_at)/1000)<2)
+  convert << 10 - (now - m_state_started_at)/1000;
+  if (( 10 - (now - m_state_started_at)/1000)<2)
   {
      ijengine::audio::play_sound_effect("res/sound_efects/start_waves.ogg");
   }
