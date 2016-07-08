@@ -102,10 +102,10 @@ tower_32 = {
   file_path = "towers/tower_32.png",
   state_style = 1,
   total_states = 1,
-  frame_per_state = 1,
+  frame_per_state = 6,
   selected_file_path = "towers/tower_32_holding.png",
-  attack_speed = 1,
-  damage = 15,
+  attack_speed = 0.3,
+  damage = 20,
   id = 0x100
 }
 
@@ -116,8 +116,8 @@ tower_33 = {
   total_states = 1,
   frame_per_state = 6,
   selected_file_path = "towers/tower_33_holding.png",
-  attack_speed = 0.1,
-  damage = 5,
+  attack_speed = 0.3,
+  damage = 30,
   id = 0x101
 }
 
@@ -128,8 +128,8 @@ tower_34 = {
   total_states = 1,
   frame_per_state = 6,
   selected_file_path = "towers/tower_34_holding.png",
-  attack_speed = 1,
-  damage = 5,
+  attack_speed = 0.2,
+  damage = 30,
   id = 0x102
 }
 
@@ -140,7 +140,7 @@ tower_35 = {
   total_states = 1,
   frame_per_state = 1,
   selected_file_path = "towers/tower_35_holding.png",
-  attack_speed = 1,
-  damage = 10,
+  attack_speed = 0.1,
+  damage = 30,
   id = 0x103
 }
