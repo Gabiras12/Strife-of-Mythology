@@ -197,3 +197,132 @@ tier_4_button = {
   upgrade_price = 10000,
   description = "HELLLO!!"
 }
+
+options_button = {
+  file_path = "menuopcoes.png",
+  mouseover_file_path = "menuopcoes.png",
+  screen_position = {
+    x = 8,
+    y = 600
+  },
+  priority = 50000,
+  id = 0x0f,
+  width = 61,
+  height = 50,
+  description = ""
+}
+
+slider0 = {
+  file_path = "slider.png",
+  mouseover_file_path = "slider.png",
+  screen_position = {
+    x = 350,
+    y = 210
+  },
+  priority = 50000,
+  id = 40,
+  width = 61,
+  height = 50,
+  description = ""
+}
+
+
+slider1 = {
+  file_path = "slider.png",
+  mouseover_file_path = "slider.png",
+  screen_position = {
+    x = 450,
+    y = 210
+  },
+  priority = 50000,
+  id = 41,
+  width = 61,
+  height = 50,
+  description = ""
+}
+
+slider2 = {
+  file_path = "slider.png",
+  mouseover_file_path = "slider.png",
+  screen_position = {
+    x = 550,
+    y = 210
+  },
+  priority = 50000,
+  id = 42,
+  width = 61,
+  height = 50,
+  description = ""
+}
+
+slider3 = {
+  file_path = "slider.png",
+  mouseover_file_path = "slider.png",
+  screen_position = {
+    x = 700,
+    y = 210
+  },
+  priority = 50000,
+  id = 43,
+  width = 61,
+  height = 50,
+  description = ""
+}
+
+slider4 = {
+  file_path = "slider.png",
+  mouseover_file_path = "slider.png",
+  screen_position = {
+    x = 350,
+    y = 450
+  },
+  priority = 50000,
+  id = 44,
+  width = 61,
+  height = 50,
+  description = ""
+}
+
+
+slider5 = {
+  file_path = "slider.png",
+  mouseover_file_path = "slider.png",
+  screen_position = {
+    x = 500,
+    y = 450
+  },
+  priority = 50000,
+  id = 45,
+  width = 61,
+  height = 50,
+  description = ""
+}
+
+slider6 = {
+  file_path = "slider.png",
+  mouseover_file_path = "slider.png",
+  screen_position = {
+    x = 600,
+    y = 450
+  },
+  priority = 50000,
+  id = 46,
+  width = 61,
+  height = 50,
+  description = ""
+}
+
+slider7 = {
+  file_path = "slider.png",
+  mouseover_file_path = "slider.png",
+  screen_position = {
+    x = 700,
+    y = 450
+  },
+  priority = 50000,
+  id = 47,
+  width = 61,
+  height = 50,
+  description = ""
+}
+

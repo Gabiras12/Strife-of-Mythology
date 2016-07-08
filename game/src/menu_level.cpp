@@ -5,6 +5,7 @@
 #include <ijengine/canvas.h>
 #include "luascript.h"
 #include "button.h"
+#include "panel.h"
 #include "player.h"
 
 SoMTD::MenuLevel::MenuLevel(std::string mapname, std::string _new_map_path, std::string p_audio) :
@@ -18,9 +19,14 @@ SoMTD::MenuLevel::MenuLevel(std::string mapname, std::string _new_map_path, std:
         m_texture = ijengine::resources::get_texture("Menu.png");
     else if (mapname == "menucredits")
         m_texture = ijengine::resources::get_texture("telacreditos.png");
+    else if (mapname == "menuoptions")
+        m_texture = ijengine::resources::get_texture("options_panel.png");
+
 
     ijengine::event::register_listener(this);
     load_buttons();
+    if (mapname == "menuoptions") {
+    }
 }
 
 SoMTD::MenuLevel::~MenuLevel()
@@ -89,8 +95,20 @@ SoMTD::MenuLevel::load_buttons()
     std::string button_mouseover_path;
 
     std::vector< std::string > button_names {
-        "play_button", "exit_button", "credits_button"
+        "play_button", "exit_button", "credits_button",
+        "options_button"
     };
+
+    if (m_level_name == "menuoptions") {
+        button_names.push_back("slider0");
+        button_names.push_back("slider1");
+        button_names.push_back("slider2");
+        button_names.push_back("slider3");
+        button_names.push_back("slider4");
+        button_names.push_back("slider5");
+        button_names.push_back("slider6");
+        button_names.push_back("slider7");
+    }
 
     for (std::string it : button_names) {
         button_file_path = button_list.get<std::string>((it + ".file_path").c_str());

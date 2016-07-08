@@ -18,6 +18,7 @@ namespace SoMTD {
         void finish();
         void exit_game();
         void update_next_level(std::string next_map);
+        std::string m_level_name="";
 
     protected:
         void draw_self(ijengine::Canvas *c, unsigned, unsigned);
@@ -32,7 +33,6 @@ namespace SoMTD {
     private:
         std::string m_next;
         std::string m_audio="";
-        std::string m_level_name="";
         bool m_done;
         std::shared_ptr<ijengine::Texture> m_texture;
         void load_buttons();

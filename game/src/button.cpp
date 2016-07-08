@@ -22,7 +22,6 @@ SoMTD::Button::Button(std::string texture_name, unsigned id, int x, int y, std::
     m_description = newdescription;
     set_priority(myp);
     m_mouseover = false;
-    m_menu_level = nullptr;
     m_infos = args;
     ijengine::event::register_listener(this);
 }
@@ -61,6 +60,56 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
                 m_player->open_tower_panel(m_id);
                 return true;
             }
+            if (m_menu_level != nullptr && m_menu_level->m_level_name == "menuoptions") {
+                switch (m_id) {
+                    case 40:
+                        ijengine::audio::set_audio_volume(0.0);
+                        ijengine::audio::play_sound_effect("res/sound_efects/menu-button.ogg");
+                        return true;
+                        break;
+
+                    case 41:
+                        ijengine::audio::set_audio_volume(0.25);
+                        ijengine::audio::play_sound_effect("res/sound_efects/menu-button.ogg");
+                        return true;
+                        break;
+
+                    case 42:
+                        ijengine::audio::set_audio_volume(0.50);
+                        ijengine::audio::play_sound_effect("res/sound_efects/menu-button.ogg");
+                        return true;
+                        break;
+                    case 43:
+                        ijengine::audio::set_audio_volume(1.0);
+                        ijengine::audio::play_sound_effect("res/sound_efects/menu-button.ogg");
+                        return true;
+                        break;
+
+                    case 44:
+                        ijengine::audio::set_sound_effect_volume(0.0);
+                        ijengine::audio::play_sound_effect("res/sound_efects/menu-button.ogg");
+                        return true;
+                        break;
+                    case 45:
+                        ijengine::audio::set_sound_effect_volume(0.25);
+                        ijengine::audio::play_sound_effect("res/sound_efects/menu-button.ogg");
+                        return true;
+                        break;
+                    case 46:
+                        ijengine::audio::set_sound_effect_volume(0.50);
+                        ijengine::audio::play_sound_effect("res/sound_efects/menu-button.ogg");
+                        return true;
+                        break;
+                    case 47:
+                        ijengine::audio::set_sound_effect_volume(1.0);
+                        ijengine::audio::play_sound_effect("res/sound_efects/menu-button.ogg");
+                        return true;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
 
             int last_bit_button;
             int last_bit_panel;
@@ -68,6 +117,12 @@ SoMTD::Button::on_event(const ijengine::GameEvent& event)
             bool result1;
             std::bitset<12> upgrade_state;
             switch (m_id) {
+                case 0xf:
+                    m_menu_level->update_next_level("menuoptions");
+                    m_menu_level->finish();
+                    return true;
+                    break;
+
                 case 1000:
                     m_menu_level->finish();
                     ijengine::audio::play_sound_effect("res/sound_efects/menu-button.ogg");
