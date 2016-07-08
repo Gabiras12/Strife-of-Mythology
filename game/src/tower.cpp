@@ -303,18 +303,30 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
             break;
 
          //hades towers
-         case 0x102:
-             if (m_cooldown < now) {
-                 m_cooldown = now+attack_speed()*1000;
-                 m_target = newtarget;
-                 m_actual_state = State::ATTACKING;
-                 Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_caveira.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
-                 m_projectiles->push_back(p);
-                 newtarget->suffer_poison(damage()*5, 10000, now, last);
-             }
-             break;
+         case 0x100:
+         case 0x101:
+           if (m_cooldown < now) {
+               m_cooldown = now+attack_speed()*1000;
+               m_target = newtarget;
+               m_actual_state = State::ATTACKING;
+               Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_caveira.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+               m_projectiles->push_back(p);
+           }
+           break;
 
-        case 0x103:
+         case 0x102:
+           if (m_cooldown < now) {
+               m_cooldown = now+attack_speed()*1000;
+               m_target = newtarget;
+               Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_caveira.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+               m_projectiles->push_back(p);
+               newtarget->suffer_poison(damage(), 8000, now, last);
+               m_actual_state = State::ATTACKING;
+
+           }
+           break;
+
+         case 0x103:
             if (m_cooldown < now) {
                 m_cooldown = now+attack_speed()*1000;
                 m_target = newtarget;
@@ -328,7 +340,7 @@ SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
         default:
             m_cooldown = now+attack_speed()*1000;
             m_target = newtarget;
-            Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_caveira.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+            Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_poseidon.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
             m_projectiles->push_back(p);
             m_actual_state = State::ATTACKING;
             break;
