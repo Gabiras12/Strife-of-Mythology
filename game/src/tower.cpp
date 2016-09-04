@@ -8,6 +8,8 @@
 #include "game.h"
 #include "tower.h"
 #include "animation.h"
+#include "attack.h"
+#include "poison.h"
 
 SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::string image_selected, Player *p,
         Animation::StateStyle statestyle, int frame_per_state, int total_states, float newattackspeed,
@@ -19,8 +21,6 @@ SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::st
     m_imageselected_path(image_selected),
     m_player(p)
 {
-    m_attack_speed = newattackspeed;
-    m_damage = newdamage;
     m_level = 1;
     m_range = 85.0;
     m_texture = ijengine::resources::get_texture(texture_name);
@@ -30,12 +30,14 @@ SoMTD::Tower::Tower(std::string texture_name, unsigned id, int x, int y, std::st
     m_cooldown = 0;
     m_actual_state = IDLE;
     m_projectiles = new std::list<Projectile*>();
+    m_attack = new SoMTD::Poison((double)newdamage, (double)newattackspeed);
 }
 
 SoMTD::Tower::~Tower()
 {
     delete m_projectiles;
     delete m_animation;
+    delete m_attack;
     ijengine::event::unregister_listener(this);
 }
 
@@ -146,12 +148,6 @@ SoMTD::Tower::level() const
     return m_level;
 }
 
-int
-SoMTD::Tower::damage() const
-{
-    return m_damage;
-}
-
 double
 SoMTD::Tower::range() const
 {
@@ -200,10 +196,10 @@ SoMTD::Tower::handle_attacking_state(unsigned now, unsigned last)
                 double dy = animation()->screen_position().second - target()->animation()->screen_position().second;
                 double distance = sqrt(dx*dx + dy*dy);
                 if (distance < range()+target()->animation()->width()/2) {
-                    attack(m_target, now, last);
+                        attack()->attack(m_target, now, last);
 
                     if (m_id == 0x001)
-                        m_player->increase_gold(damage());
+                        m_player->increase_gold(attack()->damage());
                 } else {
                     m_actual_state = SoMTD::Tower::IDLE;
                     m_target = nullptr;
@@ -218,146 +214,140 @@ SoMTD::Tower::handle_attacking_state(unsigned now, unsigned last)
     }
 }
 
-void
-SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
-{
-    // If it is a poseidon tower, it can have multiple targets
-    switch (id()) {
-        // poseidon towers
-        case 0x10:
-
-          if (m_cooldown < now) {
-            m_cooldown = now+attack_speed()*1000;
-            m_target = newtarget;
-            m_actual_state = State::ATTACKING;
-            Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_poseidon.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
-            m_projectiles->push_back(p);
-            newtarget->suffer_slow(400, 3000, now, last);
-          }
-          break;
-
-        case 0x11:
-          if (m_cooldown < now) {
-            m_cooldown = now+attack_speed()*1000;
-            m_target = newtarget;
-            m_actual_state = State::ATTACKING;
-            Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_poseidon.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
-            m_projectiles->push_back(p);
-            newtarget->suffer_slow(400, 2000, now, last);
-          }
-          break;
-
-        case 0x12:
-
-        if (m_cooldown < now) {
-            m_cooldown = now+attack_speed()*1000;
-            m_actual_state = IDLE;
-
-            /* pushing an slow event to the queue of events. the first
-             * argument is the x_position of the unit, the second argument
-             * is the y_position of the unit, the third argument is the
-             * range of the slow, 4th argument is the dmg of the slow,
-             * 5th argument is the slow coefficient, and 6th the time penalization */
-            player()->units_events()->push_back(0x000);
-            player()->event_args()->push_back((int)newtarget->x());
-            player()->event_args()->push_back((int)newtarget->y());
-            player()->event_args()->push_back(50);
-            player()->event_args()->push_back(damage());
-            player()->event_args()->push_back(600);
-            player()->event_args()->push_back(2000);
-        }
-        break;
-
-        case 0x13:
-            if (m_cooldown < now) {
-                m_cooldown = now+attack_speed()*1000;
-                m_actual_state = IDLE;
-
-                /* pushing an slow event to the queue of events. the first
-                 * argument is the x_position of the unit, the second argument
-                 * is the y_position of the unit, the third argument is the
-                 * range of the slow, 4th argument is the dmg of the slow,
-                 * 5th argument is the slow coefficient, and 6th the time penalization */
-                player()->units_events()->push_back(0x000);
-                player()->event_args()->push_back((int)newtarget->x());
-                player()->event_args()->push_back((int)newtarget->y());
-                player()->event_args()->push_back(50);
-                player()->event_args()->push_back(damage());
-                player()->event_args()->push_back(500);
-                player()->event_args()->push_back(3000);
-            }
-            break;
-
-        //zeus towers
-        case 0x0:
-        case 0x1:
-        case 0x2:
-        case 0x3:
-            if (m_cooldown < now) {
-                m_cooldown = now+attack_speed()*1000;
-                m_target = newtarget;
-                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_zeus2.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
-                m_projectiles->push_back(p);
-                m_actual_state = State::ATTACKING;
-                m_player->increase_gold(damage());
-            }
-            break;
-
-         //hades towers
-         case 0x100:
-         case 0x101:
-           if (m_cooldown < now) {
-               m_cooldown = now+attack_speed()*1000;
-               m_target = newtarget;
-               m_actual_state = State::ATTACKING;
-               Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_caveira.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
-               m_projectiles->push_back(p);
-           }
-           break;
-
-         case 0x102:
-           if (m_cooldown < now) {
-               m_cooldown = now+attack_speed()*1000;
-               m_target = newtarget;
-               Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_caveira.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
-               m_projectiles->push_back(p);
-               newtarget->suffer_poison(damage(), 8000, now, last);
-               m_actual_state = State::ATTACKING;
-
-           }
-           break;
-
-         case 0x103:
-            if (m_cooldown < now) {
-                m_cooldown = now+attack_speed()*1000;
-                m_target = newtarget;
-                m_actual_state = State::ATTACKING;
-                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_caveira.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
-                m_projectiles->push_back(p);
-                newtarget->suffer_bleed(damage(), 10000, now, last);
-            }
-            break;
-
-        default:
-            m_cooldown = now+attack_speed()*1000;
-            m_target = newtarget;
-            Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_poseidon.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
-            m_projectiles->push_back(p);
-            m_actual_state = State::ATTACKING;
-            break;
-    }
-}
+// void
+// SoMTD::Tower::attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last)
+// {
+//     // If it is a poseidon tower, it can have multiple targets
+//     switch (id()) {
+//         // poseidon towers
+//         case 0x10:
+//
+//           if (m_cooldown < now) {
+//             m_cooldown = now+attack_speed()*1000;
+//             m_target = newtarget;
+//             m_actual_state = State::ATTACKING;
+//             Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_poseidon.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+//             m_projectiles->push_back(p);
+//             newtarget->suffer_slow(400, 3000, now, last);
+//           }
+//           break;
+//
+//         case 0x11:
+//           if (m_cooldown < now) {
+//             m_cooldown = now+attack_speed()*1000;
+//             m_target = newtarget;
+//             m_actual_state = State::ATTACKING;
+//             Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_poseidon.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+//             m_projectiles->push_back(p);
+//             newtarget->suffer_slow(400, 2000, now, last);
+//           }
+//           break;
+//
+//         case 0x12:
+//
+//         if (m_cooldown < now) {
+//             m_cooldown = now+attack_speed()*1000;
+//             m_actual_state = IDLE;
+//
+//             #<{(| pushing an slow event to the queue of events. the first
+//              * argument is the x_position of the unit, the second argument
+//              * is the y_position of the unit, the third argument is the
+//              * range of the slow, 4th argument is the dmg of the slow,
+//              * 5th argument is the slow coefficient, and 6th the time penalization |)}>#
+//             player()->units_events()->push_back(0x000);
+//             player()->event_args()->push_back((int)newtarget->x());
+//             player()->event_args()->push_back((int)newtarget->y());
+//             player()->event_args()->push_back(50);
+//             player()->event_args()->push_back(damage());
+//             player()->event_args()->push_back(600);
+//             player()->event_args()->push_back(2000);
+//         }
+//         break;
+//
+//         case 0x13:
+//             if (m_cooldown < now) {
+//                 m_cooldown = now+attack_speed()*1000;
+//                 m_actual_state = IDLE;
+//
+//                 #<{(| pushing an slow event to the queue of events. the first
+//                  * argument is the x_position of the unit, the second argument
+//                  * is the y_position of the unit, the third argument is the
+//                  * range of the slow, 4th argument is the dmg of the slow,
+//                  * 5th argument is the slow coefficient, and 6th the time penalization |)}>#
+//                 player()->units_events()->push_back(0x000);
+//                 player()->event_args()->push_back((int)newtarget->x());
+//                 player()->event_args()->push_back((int)newtarget->y());
+//                 player()->event_args()->push_back(50);
+//                 player()->event_args()->push_back(damage());
+//                 player()->event_args()->push_back(500);
+//                 player()->event_args()->push_back(3000);
+//             }
+//             break;
+//
+//         //zeus towers
+//         case 0x0:
+//         case 0x1:
+//         case 0x2:
+//         case 0x3:
+//             if (m_cooldown < now) {
+//                 m_cooldown = now+attack_speed()*1000;
+//                 m_target = newtarget;
+//                 Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_zeus2.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+//                 m_projectiles->push_back(p);
+//                 m_actual_state = State::ATTACKING;
+//                 m_player->increase_gold(damage());
+//             }
+//             break;
+//
+//          //hades towers
+//          case 0x100:
+//          case 0x101:
+//            if (m_cooldown < now) {
+//                m_cooldown = now+attack_speed()*1000;
+//                m_target = newtarget;
+//                m_actual_state = State::ATTACKING;
+//                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_caveira.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+//                m_projectiles->push_back(p);
+//            }
+//            break;
+//
+//          case 0x102:
+//            if (m_cooldown < now) {
+//                m_cooldown = now+attack_speed()*1000;
+//                m_target = newtarget;
+//                Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_caveira.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+//                m_projectiles->push_back(p);
+//                newtarget->suffer_poison(damage(), 8000, now, last);
+//                m_actual_state = State::ATTACKING;
+//
+//            }
+//            break;
+//
+//          case 0x103:
+//             if (m_cooldown < now) {
+//                 m_cooldown = now+attack_speed()*1000;
+//                 m_target = newtarget;
+//                 m_actual_state = State::ATTACKING;
+//                 Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_caveira.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+//                 m_projectiles->push_back(p);
+//                 newtarget->suffer_bleed(damage(), 10000, now, last);
+//             }
+//             break;
+//
+//         default:
+//             m_cooldown = now+attack_speed()*1000;
+//             m_target = newtarget;
+//             Projectile* p = new Projectile(target(), std::make_pair(target()->animation()->screen_position().first, target()->animation()->screen_position().second), "projectiles/projetil_poseidon.png", std::make_pair(animation()->screen_position().first, animation()->screen_position().second), 1, 1, damage());
+//             m_projectiles->push_back(p);
+//             m_actual_state = State::ATTACKING;
+//             break;
+//     }
+// }
 
 SoMTD::MovableUnit*
 SoMTD::Tower::target() const
 {
     return m_target;
-}
-
-double
-SoMTD::Tower::attack_speed() const
-{
-    return m_attack_speed;
 }
 
 unsigned
@@ -370,4 +360,10 @@ SoMTD::Player*
 SoMTD::Tower::player() const
 {
     return m_player;
+}
+
+SoMTD::Attack*
+SoMTD::Tower::attack() const
+{
+        return m_attack;
 }

@@ -386,13 +386,13 @@ SoMTD::MapLevel::draw_selected_panel(ijengine::Canvas *c, unsigned, unsigned)
 
         SoMTD::Tower* t = dynamic_cast<SoMTD::Tower*>(player()->selected_object);
         expression = "Damage: ";
-        convert << t->damage();
+        convert << t->attack()->damage();
         expression.append(convert.str());
         c->draw(expression, 950, 600);
         expression = "Attack speed: ";
         convert.str("");
         convert.clear();
-        convert << t->attack_speed();
+        convert << t->attack()->attack_speed();
         expression.append(convert.str());
         c->draw(expression, 950, 500);
         expression = "Level: ";
@@ -610,7 +610,7 @@ SoMTD::MapLevel::check_towers_collisions(unsigned now, unsigned last)
                     double dy = (*tower)->animation()->screen_position().second - (*unit)->animation()->screen_position().second;
                     double distance = sqrt(dx*dx + dy*dy);
                     if (distance < ((*tower)->range()+(*unit)->animation()->width()/2)) {
-                        (*tower)->attack(*unit, now, last);
+                        (*tower)->attack()->attack(*unit, now, last);
                     }
                 }
             }

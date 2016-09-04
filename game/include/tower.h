@@ -10,6 +10,7 @@
 #include "animation.h"
 #include "movable_unit.h"
 #include "projectile.h"
+#include "attack.h"
 
 /* IDS FOR TOWERS:
  * 0x0000 = zeus tower
@@ -35,17 +36,17 @@ namespace SoMTD {
         bool on_event(const ijengine::GameEvent& event);
         void update_self(unsigned, unsigned);
         int level() const;
-        void attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last);
+        // void attack(SoMTD::MovableUnit* newtarget, unsigned now, unsigned last);
         double range() const;
         SoMTD::Animation *animation() const;
         unsigned mytimer;
         Tower::State actual_state() const;
         int damage() const;
         SoMTD::MovableUnit* target() const;
-        double attack_speed() const;
         unsigned id() const;
         SoMTD::Player* player() const;
         std::list<Projectile*>* projectiles() const;
+        Attack *attack() const;
 
     protected:
         void level_up();
@@ -71,8 +72,8 @@ namespace SoMTD {
         void handle_attacking_state(unsigned now, unsigned last);
         SoMTD::MovableUnit* m_target;
         unsigned m_cooldown;
-        double m_attack_speed;
         std::list<Projectile*> *m_projectiles;
+        Attack *m_attack;
     };
 }
 
