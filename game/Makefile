@@ -15,8 +15,9 @@ CFLAGS = -pedantic -std=c++11 -MMD -g3 -g -fPIC\
 		 -Wmissing-include-dirs -Wnoexcept -Woverloaded-virtual -Wredundant-decls\
 		 -Wsign-promo -Wstrict-null-sentinel -Wswitch-default -Wundef\
 		 -Wzero-as-null-pointer-constant -Wuseless-cast -Wnon-virtual-dtor
-INCLUDES = -Iinclude `sdl2-config --cflags` -I/usr/local/include/ijengine -I/usr/include/lua5.2
-LIBS =  -L/usr/local/lib -lijengine `sdl2-config --libs` -lSDL2_image -lSDL2_ttf -lSDL2_mixer -ldl -llua5.2
+
+INCLUDES = -Iinclude -I/usr/local/include -D_THREAD_SAFE -I/usr/local/include/ijengine -I/usr/include/lua5.2
+LIBS =  -L/usr/local/lib -lijengine -L/usr/local/lib -llua.5.2 -L/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer -ldl
 
 SRC = ${wildcard $(SRC_DIR)/*.cpp}
 OBJ = ${addprefix $(OBJ_DIR)/, ${notdir ${SRC:.cpp=.o}}}
